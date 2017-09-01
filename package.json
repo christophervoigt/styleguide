@@ -1,0 +1,12 @@
+{
+  "name": "ds-example",
+  "version": "0.1.0",
+  "description": "sample project that may serve as module library and styleguide",
+  "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
+  "scripts": {
+    "build": "npm run build:lib && npm run build:app",
+    "build:lib": "node alpha.js",
+    "build:app": "echo \"Error: not yet implemented\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
