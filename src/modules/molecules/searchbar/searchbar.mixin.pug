@@ -1,0 +1,8 @@
+include ../../atoms/input/input.mixin
+include ../../atoms/button/button.mixin
+
+
+mixin searchbar()
+    .searchbar&attributes(attributes)
+        +input('text', 'search', 'Type something').searchbar-input
+        +button('button', 'Search').searchbar-button
