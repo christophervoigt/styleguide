@@ -7,7 +7,7 @@ sample project that may serve as module library and styleguide
 | path | description                              |
 | ---- | ---------------------------------------- |
 | src  | contains sourcecode of modules           |
-| lib  | contains compiled and reusable modules   |
+| dist | contains compiled and reusable modules   |
 | app  | contains the styleguide                  |
 
 ## build process
@@ -21,7 +21,7 @@ npm run build
 
 1. sources should be compiled to create a library
 ```bash
-npm run build:lib
+npm run build:dist
 ```
 
 2. library and documentation sources are used to create a styleguide app
