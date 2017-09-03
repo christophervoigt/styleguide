@@ -1,30 +1,26 @@
+import Organism from '../organism';
+import Searchbar from '../../molecules/searchbar/searchbar';
 
-import Organism from '../organism.js'
+export default function Header(options) {
+  Organism.call(this, options);
 
-import Searchbar from '../../molecules/searchbar/searchbar.js'
+  const defaults = {
+    selector: '.header',
+    scope: document,
+  };
 
+  this.options = Object.assign({}, defaults, options);
 
-export default function Header (options) {
-    Organism.call(this, options)
+  this.childScope = this.options.scope.querySelector(this.options.selector);
 
-    const defaults = {
-        selector: '.header',
-        scope: document
-    }
-
-    this.options = Object.assign({}, defaults, options)
-
-    this.childScope = this.options.scope.querySelector(this.options.selector)
-
-
-    this.headerSearchbar = new Searchbar({
-        selector: '.header-searchbar',
-        scope:  this.childScope
-    })
-    this.headerSearchbar.subscribe('search', this)
+  this.headerSearchbar = new Searchbar({
+    selector: '.header-searchbar',
+    scope: this.childScope,
+  });
+  this.headerSearchbar.subscribe('search', this);
 }
 
-Header.prototype = Object.create(Organism.prototype)
-Header.prototype.constructor = Header
+Header.prototype = Object.create(Organism.prototype);
+Header.prototype.constructor = Header;
 
 // TODO: implement custom notify function

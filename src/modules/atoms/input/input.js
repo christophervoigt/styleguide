@@ -1,19 +1,15 @@
+import Atom from '../atom';
 
-import Atom from '../atom.js'
+export default function Input(options) {
+  Atom.call(this, options);
 
+  const defaults = {
+    selector: 'input[type="text"]',
+    scope: document,
+  };
 
-
-
-export default function Input (options) {
-    Atom.call(this, options)
-
-    const defaults = {
-        selector: 'input[type="text"]',
-        scope: document
-    }
-
-    this.options = Object.assign({}, defaults, options)
+  this.options = Object.assign({}, defaults, options);
 }
 
-Input.prototype = Object.create(Atom.prototype)
-Input.prototype.constructor = Input
+Input.prototype = Object.create(Atom.prototype);
+Input.prototype.constructor = Input;

@@ -1,17 +1,17 @@
 
-import Molecule from '../molecules/molecule.js'
+import Molecule from '../molecules/molecule';
 
 
-export default function Organism (options) {
-    Molecule.call(this, options)
+export default function Organism(options) {
+  Molecule.call(this, options);
 
-    const defaults = {
-        selector: 'body',
-        scope: document
-    }
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
 
-    this.options = Object.assign({}, defaults, options)
+  this.options = Object.assign({}, defaults, options);
 }
 
-Organism.prototype = Object.create(Molecule.prototype)
-Organism.prototype.constructor = Organism
+Organism.prototype = Object.create(Molecule.prototype);
+Organism.prototype.constructor = Organism;

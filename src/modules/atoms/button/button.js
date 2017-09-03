@@ -1,19 +1,15 @@
+import Atom from '../atom';
 
-import Atom from '../atom.js'
+export default function Button(options) {
+  Atom.call(this, options);
 
+  const defaults = {
+    selector: '.button',
+    scope: document,
+  };
 
-
-
-export default function Button (options) {
-    Atom.call(this, options)
-
-    const defaults = {
-        selector: '.button',
-        scope: document
-    }
-
-    this.options = Object.assign({}, defaults, options)
+  this.options = Object.assign({}, defaults, options);
 }
 
-Button.prototype = Object.create(Atom.prototype)
-Button.prototype.constructor = Button
+Button.prototype = Object.create(Atom.prototype);
+Button.prototype.constructor = Button;

@@ -1,4 +1,3 @@
-
-console.log('loading base.js')
+console.log('loading base.js');
 
 // TODO: write something useful
