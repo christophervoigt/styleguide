@@ -29,15 +29,14 @@ npm run build:dist
 npm run build:app
 ```
 
-**ToDos:**
-* Think about: Renaming "modules" folder. (e.g. "unit")
-* Use dist folder as symlink in app. If not possible copy dist folder into app folder.
-* Include fonts and media (images/ videos) if needed.
-* Idea: Add README.md into subfolder in "modules" for documentation.
-* Use environment variables.
+**ToDo:**
 * Bundle css files (node-sass).
 * Generate app folder.
-* Add code style check (airbnb eslint?).
-* Include code copy button and highlightjs into styleguide
+* Use /dist as symlink in /app. If not possible, copy /dist into /app.
+* Include fonts and media (images/ videos) if needed.
+* Use environment variables.
 * Generate changelog file
+* Include code copy button and highlightjs into styleguide
+---
+* Idea: Add README.md into subfolder in "modules" for documentation.
 * Think about: code diff view of refactorings.
