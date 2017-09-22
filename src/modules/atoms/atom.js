@@ -1,3 +1,4 @@
+
 export default function Atom(options) {
   const defaults = {
     selector: 'body',
