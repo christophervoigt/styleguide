@@ -1,0 +1,1 @@
+{"version":3,"file":"base.js","sources":["../../src/base/base.js"],"sourcesContent":["console.log('loading base.js');\n\n// TODO: write something useful\n"],"names":["console","log"],"mappings":"8EAAAA,QAAQC,IAAI"}
