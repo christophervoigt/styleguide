@@ -6,7 +6,7 @@
   "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
   "scripts": {
     "build": "npm run build:dist && npm run build:app",
-    "build:dist": "node build.js",
+    "build:dist": "node node_tasks/javascript.js",
     "build:app": "echo \"Error: not yet implemented\" && exit 1",
     "lint": "eslint build.js ./src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"

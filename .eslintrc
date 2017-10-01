@@ -5,7 +5,7 @@
       "error",
       {
         "devDependencies": [
-          "build.js"
+          "**/*.build.js"
         ]
       }
     ]

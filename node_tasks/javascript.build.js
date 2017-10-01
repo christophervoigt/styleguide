@@ -5,8 +5,8 @@ const { minify } = require('uglify-es'); // ES6 minifier
 
 const Cattleman = require('cattleman');
 
-const build = async function () {
-  // configure path if necessary
+async function build() {
+  // configure srcPath if necessary
   const srcPath = 'src';
   const srcPathDirs = srcPath.split('/');
 
@@ -35,7 +35,7 @@ const build = async function () {
       intro: `window.addEventListener('load',function(){new ${file.name}()});`,
     });
   }));
-};
+}
 
 (async () => {
   await build();
