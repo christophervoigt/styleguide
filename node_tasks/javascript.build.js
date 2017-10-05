@@ -5,7 +5,7 @@ const { minify } = require('uglify-es'); // ES6 minifier
 
 const Cattleman = require('cattleman');
 
-async function build() {
+async function build () {
   // configure srcPath if necessary
   const srcPath = 'src';
   const srcPathDirs = srcPath.split('/');
