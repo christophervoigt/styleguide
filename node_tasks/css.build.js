@@ -18,15 +18,19 @@ async function build() {
     const moduleDirs = file.dir.split(path.sep);
     const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
     const targetPath = path.normalize(targetDirs.join(path.sep));
+    const targetDir = path.join('dist', targetPath);
 
     await sass.render({
       file: module,
-      outFile: path.join(targetPath, `${file.name}.css`),
+      outFile: path.join(targetDir, `${file.name}.css`),
       outputStyle: 'compressed',
       sourceMap: true,
     }, (error, result) => {
       if (!error) {
-        fs.writeFile(path.join(targetPath, `${file.name}.css`), result.css);
+        if (!fs.existsSync(targetDir)) { fs.mkdirSync(targetDir); }
+
+        fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
+        fs.writeFileSync(path.join(targetDir, `${file.name}.css.map`), result.map);
       }
     });
   }));
