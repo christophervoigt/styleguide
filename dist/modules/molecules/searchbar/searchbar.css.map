@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "searchbar.css",
+	"sources": [
+		"../../../../src/modules/molecules/searchbar/searchbar.scss"
+	],
+	"names": [],
+	"mappings": ""
+}
