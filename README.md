@@ -30,7 +30,6 @@ npm run build:app
 ```
 
 **ToDo:**
-* Bundle css files (node-sass).
 * Generate app folder.
 * Use /dist as symlink in /app. If not possible, copy /dist into /app.
 * Include fonts and media (images/ videos) if needed.
