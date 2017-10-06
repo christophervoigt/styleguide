@@ -15,7 +15,7 @@ export default function Molecule(options) {
 Molecule.prototype = Object.create(Atom.prototype);
 Molecule.prototype.constructor = Molecule;
 
-Molecule.prototype.notify = function (module, eventType) {
+Molecule.prototype.notify = function notify(module, eventType) {
   const self = this;
   const { selector } = self.options;
 

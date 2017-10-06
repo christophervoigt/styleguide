@@ -5,11 +5,14 @@
   "license": "MIT",
   "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
   "scripts": {
-    "build": "npm run build:dist && npm run build:app",
-    "build:dist": "node node_tasks/javascript.js",
-    "build:app": "echo \"Error: not yet implemented\" && exit 1",
-    "lint": "eslint build.js ./src/**/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build:dist",
+    "build:dist": "npm run build:dist:js && npm run build:dist:css",
+    "build:dist:js": "node node_tasks/javascript.build.js",
+    "build:dist:css": "node node_tasks/css.build.js",
+    "test": "npm run test:lint",
+    "test:lint": "npm run test:lint:js && npm run test:lint:css",
+    "test:lint:js": "eslint ./src/**/*.js ./node_tasks/**/*.build.js",
+    "test:lint:css": "stylelint ./src/**/*.scss"
   },
   "devDependencies": {
     "cattleman": "^2.0.2",
@@ -19,6 +22,7 @@
     "node-sass": "^4.5.3",
     "rollup": "^0.49.2",
     "rollup-plugin-uglify": "^2.0.1",
+    "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "uglify-es": "^3.0.28"
   }
