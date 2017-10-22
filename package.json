@@ -7,8 +7,8 @@
   "scripts": {
     "build": "npm run build:dist",
     "build:dist": "npm run build:dist:js && npm run build:dist:css",
-    "build:dist:js": "node node_tasks/javascript.build.js",
-    "build:dist:css": "node node_tasks/css.build.js",
+    "build:dist:js": "NODE_ENV=production node node_tasks/javascript.build.js",
+    "build:dist:css": "NODE_ENV=production node node_tasks/css.build.js",
     "test": "npm run test:lint",
     "test:lint": "npm run test:lint:js && npm run test:lint:css",
     "test:lint:js": "eslint ./src/**/*.js ./node_tasks/**/*.build.js",

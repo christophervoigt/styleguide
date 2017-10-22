@@ -33,7 +33,6 @@ npm run build:app
 * Generate app folder.
 * Use /dist as symlink in /app. If not possible, copy /dist into /app.
 * Include fonts and media (images/ videos) if needed.
-* Use environment variables. Only minify on production.
 * Generate changelog file
 * Include code copy button and highlightjs into styleguide
 ---

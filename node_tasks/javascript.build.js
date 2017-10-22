@@ -13,6 +13,8 @@ async function build() {
   const cattleman = new Cattleman(srcPath);
   const modules = cattleman.gatherFiles('.js');
 
+  const buildSourcemap = process.env.NODE_ENV !== 'production';
+
   await Promise.all(modules.map(async (module) => {
     const file = path.parse(module);
 
@@ -22,16 +24,14 @@ async function build() {
 
     const bundle = await rollup.rollup({
       input: module,
-      plugins: [
-        uglify({}, minify),
-      ],
+      plugins: process.env.NODE_ENV === 'production' ? [uglify({}, minify)] : [],
     });
 
     await bundle.write({
       name: file.name,
       format: 'iife',
       file: path.join('dist', targetPath, `${file.name}.js`),
-      sourcemap: true,
+      sourcemap: buildSourcemap,
       intro: `window.addEventListener('load',function(){new ${file.name}()});`,
     });
   }));

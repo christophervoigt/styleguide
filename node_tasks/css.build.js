@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const sass = require('node-sass');
 
+
 const Cattleman = require('cattleman');
 
 async function build() {
@@ -11,6 +12,8 @@ async function build() {
 
   const cattleman = new Cattleman(srcPath);
   const modules = cattleman.gatherFiles('.scss');
+
+  const buildSourceMap = process.env.NODE_ENV !== 'production';
 
   await Promise.all(modules.map(async (module) => {
     const file = path.parse(module);
@@ -23,14 +26,17 @@ async function build() {
     await sass.render({
       file: module,
       outFile: path.join(targetDir, `${file.name}.css`),
-      outputStyle: 'compressed',
-      sourceMap: true,
+      outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
+      sourceMap: buildSourceMap,
     }, (error, result) => {
       if (!error) {
         if (!fs.existsSync(targetDir)) { fs.mkdirSync(targetDir); }
 
         fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
-        fs.writeFileSync(path.join(targetDir, `${file.name}.css.map`), result.map);
+
+        if (buildSourceMap) {
+          fs.writeFileSync(path.join(targetDir, `${file.name}.css.map`), result.map);
+        }
       }
     });
   }));
