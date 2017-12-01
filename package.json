@@ -12,7 +12,8 @@
     "test": "npm run test:lint",
     "test:lint": "npm run test:lint:js && npm run test:lint:css",
     "test:lint:js": "eslint ./src/**/*.js ./tasks/**/*.build.js",
-    "test:lint:css": "stylelint ./src/**/*.scss"
+    "test:lint:css": "stylelint ./src/**/*.scss",
+    "test:lint:markdown": "remark . ./src/**/*.md"
   },
   "devDependencies": {
     "cattleman": "^2.0.2",
@@ -20,6 +21,8 @@
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "node-sass": "^4.5.3",
+    "remark-cli": "^4.0.0",
+    "remark-preset-lint-recommended": "^3.0.1",
     "rollup": "^0.49.2",
     "rollup-plugin-uglify": "^2.0.1",
     "stylelint": "^8.2.0",
