@@ -3,17 +3,17 @@ const fs = require('fs');
 const Cattleman = require('cattleman');
 const sass = require('node-sass');
 
+
 const srcPath = 'src';
 const distPath = 'dist';
 
-
 (async () => {
   const srcPathDirs = srcPath.split('/');
-  const cattleman = new Cattleman(srcPath);
-  const modules = cattleman.gatherFiles('.scss');
-
   const outputStyle = process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded';
   const buildSourceMap = process.env.NODE_ENV !== 'production';
+
+  const cattleman = new Cattleman(srcPath);
+  const modules = cattleman.gatherFiles('.scss');
 
   await Promise.all(modules.map(async (module) => {
     const file = path.parse(module);
