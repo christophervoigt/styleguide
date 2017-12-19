@@ -1,21 +1,13 @@
 extends ../base/base.layout
 
+include highlight/highlight
+
 
 block title
   title styleguide-layout
 
-block stylesheets
+block extraStylesheets
   link(rel='stylesheet', href='/dist/styleguide.css')
-  block extraStylesheets
 
-block javascripts
+block extraJavascripts
   script(src="/dist/styleguide.js", defer)
-  block extraJavascripts
-
-block header
-  // hier könnte Ihr sg-menu stehen
-
-block main
-
-
-block footer
