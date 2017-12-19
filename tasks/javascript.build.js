@@ -1,19 +1,19 @@
 const path = require('path');
+const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
 const { minify } = require('uglify-es'); // ES6 minifier
 
-const Cattleman = require('cattleman');
+const srcPath = 'src';
+const distPath = 'dist';
 
-async function build() {
-  // configure srcPath if necessary
-  const srcPath = 'src';
+(async () => {
   const srcPathDirs = srcPath.split('/');
+  const plugins = process.env.NODE_ENV === 'production' ? [uglify({}, minify)] : [];
+  const buildSourcemap = process.env.NODE_ENV !== 'production';
 
   const cattleman = new Cattleman(srcPath);
   const modules = cattleman.gatherFiles('.js');
-
-  const buildSourcemap = process.env.NODE_ENV !== 'production';
 
   await Promise.all(modules.map(async (module) => {
     const file = path.parse(module);
@@ -24,19 +24,15 @@ async function build() {
 
     const bundle = await rollup.rollup({
       input: module,
-      plugins: process.env.NODE_ENV === 'production' ? [uglify({}, minify)] : [],
+      plugins,
     });
 
     await bundle.write({
       name: file.name,
       format: 'iife',
-      file: path.join('dist', targetPath, `${file.name}.js`),
+      file: path.join(distPath, targetPath, `${file.name}.js`),
       sourcemap: buildSourcemap,
       intro: `window.addEventListener('load',function(){new ${file.name}()});`,
     });
   }));
-}
-
-(async () => {
-  await build();
 })();

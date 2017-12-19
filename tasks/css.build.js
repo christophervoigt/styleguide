@@ -1,18 +1,18 @@
 const path = require('path');
 const fs = require('fs');
+const Cattleman = require('cattleman');
 const sass = require('node-sass');
 
+const srcPath = 'src';
+const distPath = 'dist';
 
-const Cattleman = require('cattleman');
 
-async function build() {
-  // configure srcPath if necessary
-  const srcPath = 'src';
+(async () => {
   const srcPathDirs = srcPath.split('/');
-
   const cattleman = new Cattleman(srcPath);
   const modules = cattleman.gatherFiles('.scss');
 
+  const outputStyle = process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded';
   const buildSourceMap = process.env.NODE_ENV !== 'production';
 
   await Promise.all(modules.map(async (module) => {
@@ -21,12 +21,12 @@ async function build() {
     const moduleDirs = file.dir.split(path.sep);
     const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
     const targetPath = path.normalize(targetDirs.join(path.sep));
-    const targetDir = path.join('dist', targetPath);
+    const targetDir = path.join(distPath, targetPath);
 
     await sass.render({
       file: module,
       outFile: path.join(targetDir, `${file.name}.css`),
-      outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
+      outputStyle,
       sourceMap: buildSourceMap,
     }, (error, result) => {
       if (!error) {
@@ -40,8 +40,4 @@ async function build() {
       }
     });
   }));
-}
-
-(async () => {
-  await build();
 })();
