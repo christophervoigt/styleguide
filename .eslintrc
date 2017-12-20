@@ -2,13 +2,7 @@
   "extends": "airbnb-base",
   "rules": {
     "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*.build.js"
-        ],
-        "packageDir": "./src/styleguide/"
-      }
+      "error", { "devDependencies": [ "**/*.build.js" ] }
     ],
     "linebreak-style": 0
   },
