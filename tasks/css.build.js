@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const Cattleman = require('cattleman');
 const sass = require('node-sass');
-
+const importer = require('node-sass-tilde-importer');
 
 const srcPath = 'src';
 const distPath = 'dist';
@@ -25,6 +25,7 @@ const distPath = 'dist';
 
     await sass.render({
       file: module,
+      importer,
       outFile: path.join(targetDir, `${file.name}.css`),
       outputStyle,
       sourceMap: buildSourceMap,
