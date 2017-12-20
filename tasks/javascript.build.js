@@ -12,7 +12,10 @@ const distPath = 'dist';
   const plugins = process.env.NODE_ENV === 'production' ? [uglify({}, minify)] : [];
   const buildSourcemap = process.env.NODE_ENV !== 'production';
 
-  const cattleman = new Cattleman(srcPath);
+  const cattleman = new Cattleman({
+    directory: srcPath,
+    excludes: ['base', 'styleguide'],
+  });
   const modules = cattleman.gatherFiles('.js');
 
   await Promise.all(modules.map(async (module) => {

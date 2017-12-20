@@ -12,7 +12,10 @@ const distPath = 'dist';
   const outputStyle = process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded';
   const buildSourceMap = process.env.NODE_ENV !== 'production';
 
-  const cattleman = new Cattleman(srcPath);
+  const cattleman = new Cattleman({
+    directory: srcPath,
+    excludes: ['base', 'styleguide'],
+  });
   const modules = cattleman.gatherFiles('.scss');
 
   await Promise.all(modules.map(async (module) => {
