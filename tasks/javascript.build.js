@@ -2,7 +2,7 @@ const path = require('path');
 const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
-const { minify } = require('uglify-es'); // ES6 minifier
+const { minify } = require('uglify-es');
 
 const srcPath = 'src';
 const distPath = 'dist';
