@@ -6,7 +6,8 @@
       {
         "devDependencies": [
           "**/*.build.js"
-        ]
+        ],
+        "packageDir": "./src/styleguide/"
       }
     ],
     "linebreak-style": 0
