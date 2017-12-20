@@ -1,0 +1,22 @@
+.cc {
+  &-window {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 9999;
+  }
+
+  &-message {
+    display: block;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  &-compliance {
+    text-align: center;
+  }
+}

@@ -1,3 +1,7 @@
 
-@import "_variables/all";
+// node packages
 @import "~normalize.css/normalize.css";
+
+// local packages
+@import "_variables/all";
+@import "cookieconsent/cookieconsent";
