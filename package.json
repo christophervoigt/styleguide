@@ -11,13 +11,17 @@
     "build:dist": "npm run build:dist:css && npm run build:dist:js",
     "build:dist:css": "node tasks/css.build.js",
     "build:dist:js": "node tasks/javascript.build.js",
-    "clean": "rm -rf dist/ && rm -rf app/",
     "test": "npm run test:css && npm run test:js && npm run test:markdown",
     "test:css": "stylelint ./src/**/*.scss",
     "test:js": "eslint ./src/**/*.js ./tasks/**/*.build.js",
-    "test:markdown": "remark -q . ./src/**/*.md"
+    "test:markdown": "remark -q . ./src/**/*.md",
+    "clean": "rm -rf dist/ && rm -rf app/",
+    "start": "npm run build && npm run sync | npm run watch",
+    "sync": "node tasks/browsersync.js",
+    "watch": "node tasks/watch.js"
   },
   "devDependencies": {
+    "browser-sync": "2.19.0",
     "cattleman": "^2.0.2",
     "eslint": "^4.6.0",
     "eslint-config-airbnb-base": "^12.0.0",
@@ -25,6 +29,7 @@
     "jstransformer-markdown-it": "2.0.0",
     "node-sass": "^4.5.3",
     "node-sass-tilde-importer": "^1.0.0",
+    "node-watch": "0.5.5",
     "normalize.css": "^7.0.0",
     "pug": "2.0.0-rc.4",
     "remark-cli": "^4.0.0",

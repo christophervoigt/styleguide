@@ -9,10 +9,39 @@ const { minify } = require('uglify-es');
 const srcPath = 'src';
 const distPath = 'dist';
 
-(async () => {
+async function build(module) {
   const srcPathDirs = srcPath.split('/');
-  const buildSourcemap = process.env.NODE_ENV !== 'production';
+  const file = path.parse(module);
+  const moduleDirs = file.dir.split(path.sep);
+  const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
+  const targetPath = path.normalize(targetDirs.join(path.sep));
 
+  const bundle = await rollup.rollup({
+    input: module,
+    plugins: [
+      resolve({
+        jsnext: true,
+        main: true,
+      }),
+      commonjs({
+        namedExports: {
+          'node_modules/jquery/dist/jquery.min.js': ['jquery'],
+        },
+      }),
+      process.env.NODE_ENV === 'production' && uglify({}, minify),
+    ],
+  });
+
+  await bundle.write({
+    name: file.name,
+    format: 'iife',
+    file: path.join(distPath, targetPath, `${file.name}.js`),
+    sourcemap: process.env.NODE_ENV !== 'production',
+    intro: `window.addEventListener('load',function(){new ${file.name}()});`,
+  });
+}
+
+(async () => {
   const cattleman = new Cattleman({
     directory: srcPath,
     excludes: ['base', 'styleguide'],
@@ -21,34 +50,8 @@ const distPath = 'dist';
   modules.push('src/base/base.js', 'src/styleguide/styleguide.js');
 
   await Promise.all(modules.map(async (module) => {
-    const file = path.parse(module);
-
-    const moduleDirs = file.dir.split(path.sep);
-    const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
-    const targetPath = path.normalize(targetDirs.join(path.sep));
-
-    const bundle = await rollup.rollup({
-      input: module,
-      plugins: [
-        resolve({
-          jsnext: true,
-          main: true,
-        }),
-        commonjs({
-          namedExports: {
-            'node_modules/jquery/dist/jquery.min.js': ['jquery'],
-          },
-        }),
-        process.env.NODE_ENV === 'production' && uglify({}, minify),
-      ],
-    });
-
-    await bundle.write({
-      name: file.name,
-      format: 'iife',
-      file: path.join(distPath, targetPath, `${file.name}.js`),
-      sourcemap: buildSourcemap,
-      intro: `window.addEventListener('load',function(){new ${file.name}()});`,
-    });
+    await build(module);
   }));
 })();
+
+exports.build = build;
