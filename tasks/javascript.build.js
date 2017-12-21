@@ -2,6 +2,8 @@ const path = require('path');
 const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
 const { minify } = require('uglify-es');
 
 const srcPath = 'src';
@@ -9,12 +11,11 @@ const distPath = 'dist';
 
 (async () => {
   const srcPathDirs = srcPath.split('/');
-  const plugins = process.env.NODE_ENV === 'production' ? [uglify({}, minify)] : [];
   const buildSourcemap = process.env.NODE_ENV !== 'production';
 
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['base', 'styleguide'],
+    excludes: ['cookie', 'variables', 'mixins', 'highlight'],
   });
   const modules = cattleman.gatherFiles('.js');
 
@@ -27,7 +28,18 @@ const distPath = 'dist';
 
     const bundle = await rollup.rollup({
       input: module,
-      plugins,
+      plugins: [
+        resolve({
+          jsnext: true,
+          main: true,
+        }),
+        commonjs({
+          namedExports: {
+            'node_modules/jquery/dist/jquery.min.js': ['jquery'],
+          },
+        }),
+        process.env.NODE_ENV === 'production' && uglify({}, minify),
+      ],
     });
 
     await bundle.write({

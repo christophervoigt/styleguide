@@ -1,5 +1,5 @@
 
-import cookieconsent from 'cookieconsent';
+import 'cookieconsent';
 
 export default ($target) => {
   const options = {
@@ -14,7 +14,7 @@ export default ($target) => {
       message: $target.children('[data-cc-text]').html(),
       dismiss: $target.children('[data-cc-button]').text(),
     };
-    cookieconsent.initialise(options);
+    window.cookieconsent.initialise(options);
 
     $target.remove();
   });

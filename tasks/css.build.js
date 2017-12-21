@@ -14,7 +14,7 @@ const distPath = 'dist';
 
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['base', 'styleguide'],
+    excludes: ['cookie', 'variables', 'mixins', 'highlight'],
   });
   const modules = cattleman.gatherFiles('.scss');
 

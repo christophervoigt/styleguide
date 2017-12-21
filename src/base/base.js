@@ -1,9 +1,7 @@
 
 import cookieconsent from './cookieconsent/cookieconsent';
 
-export default function app() {
-  this.instances = {};
-
+export default function base() {
   function init() {
     cookieconsent('#cookieconsent');
   }
