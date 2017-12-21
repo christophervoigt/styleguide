@@ -1,5 +1,8 @@
+extends ../../../styleguide/styleguide.layout.pug
+
 include ../../molecules/searchbar/searchbar.mixin.pug
 
 
-header
+block header
+  header
     +searchbar()

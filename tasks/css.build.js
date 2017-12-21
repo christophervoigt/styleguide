@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const Cattleman = require('cattleman');
+const shell = require('shelljs');
 const sass = require('node-sass');
 const importer = require('node-sass-tilde-importer');
 
@@ -35,7 +36,7 @@ const distPath = 'dist';
       sourceMap: buildSourceMap,
     }, (error, result) => {
       if (!error) {
-        if (!fs.existsSync(targetDir)) { fs.mkdirSync(targetDir); }
+        if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
         fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
 

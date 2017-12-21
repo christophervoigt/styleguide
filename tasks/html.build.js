@@ -1,11 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const Cattleman = require('cattleman');
+const shell = require('shelljs');
 const pug = require('pug');
 
 
 const srcPath = 'src';
-const distPath = 'dist';
+const distPath = 'app';
 
 (() => {
   const srcPathDirs = srcPath.split('/');
@@ -32,7 +33,7 @@ const distPath = 'dist';
     const fn = pug.compileFile(module, options);
     const html = fn(packageJSON);
 
-    if (!fs.existsSync(targetDir)) { fs.mkdirSync(targetDir); }
+    if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
     fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
   });
