@@ -11,11 +11,10 @@
     "build:dist:css": "NODE_ENV=development node tasks/css.build.js",
     "build:app": "npm run build:app:html",
     "build:app:html": "node tasks/html.build.js",
-    "test": "npm run test:lint",
-    "test:lint": "npm run test:lint:js && npm run test:lint:css",
-    "test:lint:js": "eslint ./src/**/*.js ./tasks/**/*.build.js",
-    "test:lint:css": "stylelint ./src/**/*.scss",
-    "test:lint:markdown": "remark . ./src/**/*.md"
+    "test": "npm run test:css && npm run test:js && npm run test:markdown",
+    "test:css": "stylelint ./src/**/*.scss",
+    "test:js": "eslint ./src/**/*.js ./tasks/**/*.build.js",
+    "test:markdown": "remark -q . ./src/**/*.md"
   },
   "devDependencies": {
     "cattleman": "^2.0.2",
