@@ -15,9 +15,10 @@ const distPath = 'dist';
 
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['cookie', 'variables', 'mixins', 'highlight'],
+    excludes: ['base', 'styleguide'],
   });
   const modules = cattleman.gatherFiles('.js');
+  modules.push('src/base/base.js', 'src/styleguide/styleguide.js');
 
   await Promise.all(modules.map(async (module) => {
     const file = path.parse(module);
