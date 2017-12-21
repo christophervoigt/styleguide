@@ -1,1 +1,149 @@
-var header=function(){"use strict";function t(t){const o={selector:"body",scope:document};this.options=Object.assign({},o,t)}function o(o){t.call(this,o);const e={selector:"body",scope:document};this.options=Object.assign({},e,o)}function e(t){o.call(this,t);const e={selector:"body",scope:document};this.options=Object.assign({},e,t)}function s(o){t.call(this,o);const e={selector:".button",scope:document};this.options=Object.assign({},e,o)}function c(o){t.call(this,o);const e={selector:'input[type="text"]',scope:document};this.options=Object.assign({},e,o)}function r(t){o.call(this,t);const e={selector:".searchbar",scope:document};this.options=Object.assign({},e,t),this.childScope=this.options.scope.querySelector(this.options.selector),this.searchbarButton=new s({selector:".searchbar-button",scope:this.childScope}),this.searchbarButton.subscribe("click",this),this.searchbarInput=new c({selector:".searchbar-input",scope:this.childScope}),this.searchbarInput.subscribe("change",this)}function n(t){e.call(this,t);const o={selector:".header",scope:document};this.options=Object.assign({},o,t),this.childScope=this.options.scope.querySelector(this.options.selector),this.headerSearchbar=new r({selector:".header-searchbar",scope:this.childScope}),this.headerSearchbar.subscribe("search",this)}return window.addEventListener("load",function(){new header}),t.prototype.subscribe=function(t,o){const e=this,{scope:s,selector:c}=e.options;s.querySelectorAll(c).forEach(s=>{s.addEventListener(t,t=>{t.stopPropagation(),o.notify(e,t.type)},!0)})},o.prototype=Object.create(t.prototype),o.prototype.constructor=o,o.prototype.notify=function(t,o){const e=this,{selector:s}=e.options;console.info(s,"got",o,"Event from",t.options.selector)},e.prototype=Object.create(o.prototype),e.prototype.constructor=e,s.prototype=Object.create(t.prototype),s.prototype.constructor=s,c.prototype=Object.create(t.prototype),c.prototype.constructor=c,r.prototype=Object.create(o.prototype),r.prototype.constructor=r,n.prototype=Object.create(e.prototype),n.prototype.constructor=n,n}();
+var header = (function () {
+'use strict';
+
+window.addEventListener('load',function(){new header()});
+
+function Atom(options) {
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Atom.prototype.subscribe = function subscribe(eventType, parent) {
+  const self = this;
+  const { scope, selector } = self.options;
+
+  const nodes = scope.querySelectorAll(selector);
+
+  nodes.forEach((node) => {
+    node.addEventListener(eventType, (event) => {
+      event.stopPropagation();
+      parent.notify(self, event.type);
+    }, true);
+  });
+};
+
+function Molecule(options) {
+  Atom.call(this, options);
+
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Molecule.prototype = Object.create(Atom.prototype);
+Molecule.prototype.constructor = Molecule;
+
+Molecule.prototype.notify = function notify(module, eventType) {
+  const self = this;
+  const { selector } = self.options;
+
+  console.info(selector, 'got', eventType, 'Event from', module.options.selector);
+};
+
+function Organism(options) {
+  Molecule.call(this, options);
+
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Organism.prototype = Object.create(Molecule.prototype);
+Organism.prototype.constructor = Organism;
+
+function Button(options) {
+  Atom.call(this, options);
+
+  const defaults = {
+    selector: '.button',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Button.prototype = Object.create(Atom.prototype);
+Button.prototype.constructor = Button;
+
+function Input(options) {
+  Atom.call(this, options);
+
+  const defaults = {
+    selector: 'input[type="text"]',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Input.prototype = Object.create(Atom.prototype);
+Input.prototype.constructor = Input;
+
+function Searchbar(options) {
+  Molecule.call(this, options);
+
+  const defaults = {
+    selector: '.searchbar',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+
+  this.childScope = this.options.scope.querySelector(this.options.selector);
+
+  this.searchbarButton = new Button({
+    selector: '.searchbar-button',
+    scope: this.childScope,
+  });
+  this.searchbarButton.subscribe('click', this);
+
+  this.searchbarInput = new Input({
+    selector: '.searchbar-input',
+    scope: this.childScope,
+  });
+  this.searchbarInput.subscribe('change', this);
+}
+
+Searchbar.prototype = Object.create(Molecule.prototype);
+Searchbar.prototype.constructor = Searchbar;
+
+// TODO: implement custom notify function
+
+function Header(options) {
+  Organism.call(this, options);
+
+  const defaults = {
+    selector: '.header',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+
+  this.childScope = this.options.scope.querySelector(this.options.selector);
+
+  this.headerSearchbar = new Searchbar({
+    selector: '.header-searchbar',
+    scope: this.childScope,
+  });
+  this.headerSearchbar.subscribe('search', this);
+}
+
+Header.prototype = Object.create(Organism.prototype);
+Header.prototype.constructor = Header;
+
+// TODO: implement custom notify function
+
+return Header;
+
+}());
+//# sourceMappingURL=header.js.map

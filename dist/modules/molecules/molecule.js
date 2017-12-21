@@ -1,1 +1,53 @@
-var molecule=function(){"use strict";function o(o){const t={selector:"body",scope:document};this.options=Object.assign({},t,o)}function t(t){o.call(this,t);const e={selector:"body",scope:document};this.options=Object.assign({},e,t)}return window.addEventListener("load",function(){new molecule}),o.prototype.subscribe=function(o,t){const e=this,{scope:n,selector:s}=e.options;n.querySelectorAll(s).forEach(n=>{n.addEventListener(o,o=>{o.stopPropagation(),t.notify(e,o.type)},!0)})},t.prototype=Object.create(o.prototype),t.prototype.constructor=t,t.prototype.notify=function(o,t){const e=this,{selector:n}=e.options;console.info(n,"got",t,"Event from",o.options.selector)},t}();
+var molecule = (function () {
+'use strict';
+
+window.addEventListener('load',function(){new molecule()});
+
+function Atom(options) {
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Atom.prototype.subscribe = function subscribe(eventType, parent) {
+  const self = this;
+  const { scope, selector } = self.options;
+
+  const nodes = scope.querySelectorAll(selector);
+
+  nodes.forEach((node) => {
+    node.addEventListener(eventType, (event) => {
+      event.stopPropagation();
+      parent.notify(self, event.type);
+    }, true);
+  });
+};
+
+function Molecule(options) {
+  Atom.call(this, options);
+
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Molecule.prototype = Object.create(Atom.prototype);
+Molecule.prototype.constructor = Molecule;
+
+Molecule.prototype.notify = function notify(module, eventType) {
+  const self = this;
+  const { selector } = self.options;
+
+  console.info(selector, 'got', eventType, 'Event from', module.options.selector);
+};
+
+return Molecule;
+
+}());
+//# sourceMappingURL=molecule.js.map

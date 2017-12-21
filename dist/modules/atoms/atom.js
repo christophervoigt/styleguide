@@ -1,1 +1,32 @@
-var atom=function(){"use strict";function t(t){const o={selector:"body",scope:document};this.options=Object.assign({},o,t)}return window.addEventListener("load",function(){new atom}),t.prototype.subscribe=function(t,o){const e=this,{scope:n,selector:s}=e.options;n.querySelectorAll(s).forEach(n=>{n.addEventListener(t,t=>{t.stopPropagation(),o.notify(e,t.type)},!0)})},t}();
+var atom = (function () {
+'use strict';
+
+window.addEventListener('load',function(){new atom()});
+
+function Atom(options) {
+  const defaults = {
+    selector: 'body',
+    scope: document,
+  };
+
+  this.options = Object.assign({}, defaults, options);
+}
+
+Atom.prototype.subscribe = function subscribe(eventType, parent) {
+  const self = this;
+  const { scope, selector } = self.options;
+
+  const nodes = scope.querySelectorAll(selector);
+
+  nodes.forEach((node) => {
+    node.addEventListener(eventType, (event) => {
+      event.stopPropagation();
+      parent.notify(self, event.type);
+    }, true);
+  });
+};
+
+return Atom;
+
+}());
+//# sourceMappingURL=atom.js.map
