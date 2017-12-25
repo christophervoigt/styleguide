@@ -22,14 +22,13 @@
   "devDependencies": {
     "browser-sync": "2.19.0",
     "cattleman": "^2.0.2",
-    "eslint": "^4.6.0",
-    "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "4.14.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.8.0",
     "jstransformer-markdown-it": "2.0.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "4.7.2",
     "node-sass-tilde-importer": "^1.0.0",
     "node-watch": "0.5.5",
-    "normalize.css": "^7.0.0",
     "pug": "2.0.0-rc.4",
     "remark-cli": "^4.0.0",
     "remark-preset-lint-recommended": "^3.0.1",
@@ -38,13 +37,14 @@
     "rollup-plugin-node-resolve": "3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "shelljs": "0.7.8",
-    "stylelint": "^8.2.0",
+    "stylelint": "8.4.0",
     "stylelint-config-standard": "^17.0.0",
-    "uglify-es": "^3.0.28"
+    "uglify-es": "3.3.0"
   },
   "dependencies": {
     "cookieconsent": "^3.0.4",
     "highlightjs": "9.10.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "normalize.css": "7.0.0"
   }
 }
