@@ -16,8 +16,7 @@
     "test:js": "eslint ./src/**/*.js ./tasks/**/*.build.js",
     "test:markdown": "remark -q . ./src/**/*.md",
     "clean": "rm -rf dist/ && rm -rf app/",
-    "start": "npm run build && npm run sync | npm run watch",
-    "sync": "node tasks/browsersync.js",
+    "start": "npm run build && npm run watch",
     "watch": "node tasks/watch.js"
   },
   "devDependencies": {

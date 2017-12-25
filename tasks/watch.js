@@ -1,10 +1,20 @@
 
+const browserSync = require('browser-sync');
+const watch = require('node-watch');
+
+// tasks
 const buildCSS = require('./css.build').build;
 const buildHTML = require('./html.build').build;
 const buildJS = require('./javascript.build').build;
 
-const watch = require('node-watch');
 const srcPath = 'src';
+
+browserSync({
+  browser: 'google-chrome',
+  server: {
+    baseDir: 'app',
+  },
+});
 
 watch(srcPath, {
   recursive: true,
@@ -12,6 +22,7 @@ watch(srcPath, {
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
   buildHTML(name);
+  browserSync.reload();
 });
 
 watch(srcPath, {
@@ -20,6 +31,7 @@ watch(srcPath, {
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
   buildJS(name);
+  browserSync.reload();
 });
 
 watch(srcPath, {
@@ -28,7 +40,5 @@ watch(srcPath, {
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
   buildCSS(name);
+  browserSync.reload();
 });
-
-// todo:
-// trigger browsersync.reload after build

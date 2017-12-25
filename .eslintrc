@@ -5,7 +5,6 @@
       "error", {
         "devDependencies": [
           "**/*.build.js",
-          "**/browsersync.js",
           "**/watch.js"
         ]
       }
