@@ -45,7 +45,12 @@ async function build(module) {
     excludes: ['base', 'styleguide'],
   });
   const modules = cattleman.gatherFiles('.scss');
+
+  // TODO:
+  // Windows uses other path separators than linux/mac
+  // those file paths have to be fixed (doesn't work on windows as intended)
   modules.push('src/base/base.scss', 'src/styleguide/styleguide.scss');
+  console.log(modules);
 
   await Promise.all(modules.map(async (module) => {
     await build(module);

@@ -21,6 +21,7 @@ watch(srcPath, {
   filter: /\.pug$/,
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
+  // TODO: check if file is worth to be rebuild (no-mixins)
   buildHTML(name);
   browserSync.reload();
 });
@@ -30,6 +31,7 @@ watch(srcPath, {
   filter: /\.js$/,
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
+  // TODO: check if file is worth to be rebuild
   buildJS(name);
   browserSync.reload();
 });
@@ -39,6 +41,7 @@ watch(srcPath, {
   filter: /\.scss$/,
 }, (event, name) => {
   console.log(`rebuilding ${name}`);
+  // TODO: check if file is worth to be rebuild (no-mixins)
   buildCSS(name);
   browserSync.reload();
 });
