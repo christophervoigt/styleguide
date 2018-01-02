@@ -10,10 +10,10 @@ const buildJS = require('./javascript.build').build;
 const srcPath = 'src';
 
 browserSync({
-  browser: 'google-chrome',
   server: {
     baseDir: 'app',
   },
+  open: 'local',
 });
 
 watch(srcPath, {
