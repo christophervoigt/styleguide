@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"file": "header.css",
-	"sources": [
-		"../../../../src/modules/organisms/header/header.scss"
-	],
-	"names": [],
-	"mappings": ""
-}
