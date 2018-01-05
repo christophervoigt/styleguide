@@ -4,6 +4,14 @@
   "description": "sample project that may serve as module library and styleguide",
   "license": "MIT",
   "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chlorophyllkid/styleguide.git"
+  },
+  "engines": {
+    "node": ">=8"
+  },
   "scripts": {
     "build": "npm run clean && npm run build:dist && npm run build:app",
     "build:app": "npm run build:app:html",
@@ -17,7 +25,12 @@
     "test:markdown": "remark -q . ./src/**/*.md",
     "clean": "rm -rf dist/ && rm -rf app/",
     "start": "npm run build && npm run watch",
-    "watch": "node tasks/watch.js"
+    "watch": "node tasks/watch.js",
+    "preversion": "npm test",
+    "version": "npm run build && git add dist/*",
+    "dist-patch": "npm version patch -m \"Upgrade assets to %s\"",
+    "dist-minor": "npm version minor -m \"Upgrade assets to %s\"",
+    "dist-major": "npm version major -m \"Upgrade assets to %s\""
   },
   "devDependencies": {
     "browser-sync": "2.19.0",
