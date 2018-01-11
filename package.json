@@ -5,10 +5,6 @@
   "license": "MIT",
   "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
   "contributors": [],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chlorophyllkid/styleguide.git"
-  },
   "engines": {
     "node": ">=8"
   },
