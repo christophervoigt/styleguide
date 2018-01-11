@@ -4,7 +4,9 @@
   "description": "sample project that may serve as module library and styleguide",
   "license": "MIT",
   "author": "Christopher Voigt <chlorophyllkid@gmail.com>",
-  "contributors": [],
+  "contributors": [
+    "Anke Häslich <a.haeslich@queo-group.com>"
+  ],
   "engines": {
     "node": ">=8"
   },
