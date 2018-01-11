@@ -7,7 +7,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const { minify } = require('uglify-es');
 
 const srcPath = 'src';
-const distPath = 'dist';
+const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');

@@ -7,7 +7,7 @@ const importer = require('node-sass-tilde-importer');
 
 
 const srcPath = 'src';
-const distPath = 'dist';
+const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
