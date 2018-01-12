@@ -1,1 +1,1 @@
-input{padding:8px 12px}
+input{padding:8px 12px;background:green;border:0;color:white}input::placeholder{color:white}
