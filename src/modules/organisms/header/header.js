@@ -11,8 +11,10 @@ export default function Header(options) {
   };
 
   this.options = Object.assign({}, defaults, options);
+  console.log('selector', this.options.selector);
+  console.log('scope', this.options.scope);
 
-  this.childScope = this.options.scope.querySelector(this.options.selector);
+  this.childScope = document.querySelector(this.options.selector);
 
   this.headerSearchbar = new Searchbar({
     selector: '.header-searchbar',

@@ -8,6 +8,13 @@ const { minify } = require('uglify-es');
 
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const importMap = {};
+
+function shorten(str) {
+  let result = str.replace(/\.\.\//g, '');
+  result = result.replace(/\//g, path.sep);
+  return result;
+}
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -32,13 +39,29 @@ async function build(module) {
     ],
   });
 
-  await bundle.write({
+  const outputOptions = {
     name: file.name,
     format: 'iife',
     file: path.join(distPath, targetPath, `${file.name}.js`),
     sourcemap: process.env.NODE_ENV !== 'production',
     intro: `window.addEventListener('load',function(){new ${file.name}()});`,
-  });
+  };
+
+  await bundle.write(outputOptions);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const { map } = await bundle.generate(outputOptions);
+
+    const obj = JSON.parse(map.toString());
+    obj.sources = obj.sources.reverse();
+    const sourceFile = shorten(obj.sources[0]);
+    const sourceImports = obj.sources.slice(1);
+    if (sourceImports.length && !importMap[sourceFile]) {
+      importMap[sourceFile] = sourceImports.map(str => shorten(str));
+    }
+  }
+
+  return importMap;
 }
 
 (async () => {

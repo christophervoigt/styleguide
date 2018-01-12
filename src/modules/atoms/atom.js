@@ -6,13 +6,15 @@ export default function Atom(options) {
   };
 
   this.options = Object.assign({}, defaults, options);
+
+  // console.log('hello world');
 }
 
 Atom.prototype.subscribe = function subscribe(eventType, parent) {
   const self = this;
-  const { scope, selector } = self.options;
+  const { selector } = self.options;
 
-  const nodes = scope.querySelectorAll(selector);
+  const nodes = document.querySelectorAll(selector);
 
   nodes.forEach((node) => {
     node.addEventListener(eventType, (event) => {

@@ -12,8 +12,11 @@ export default function Searchbar(options) {
   };
 
   this.options = Object.assign({}, defaults, options);
+  console.log('selector', this.options.selector);
 
-  this.childScope = this.options.scope.querySelector(this.options.selector);
+  console.log('scope', this.options.scope);
+
+  this.childScope = document.querySelector(this.options.selector);
 
   this.searchbarButton = new Button({
     selector: '.searchbar-button',

@@ -5,9 +5,15 @@ const shell = require('shelljs');
 const sass = require('node-sass');
 const importer = require('node-sass-tilde-importer');
 
-
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const importMap = {};
+
+function shorten(str) {
+  let result = str.replace(/\.\.\//g, '');
+  result = result.replace(/\//g, path.sep);
+  return result;
+}
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -34,9 +40,18 @@ async function build(module) {
 
       if (buildSourceMap) {
         fs.writeFileSync(path.join(targetDir, `${file.name}.css.map`), result.map);
+
+        const obj = JSON.parse(result.map.toString());
+        const sourceFile = shorten(obj.sources[0]);
+        const sourceImports = obj.sources.slice(1);
+        if (sourceImports.length && !importMap[sourceFile]) {
+          importMap[sourceFile] = sourceImports.map(str => shorten(str));
+        }
       }
     }
   });
+
+  return importMap;
 }
 
 (async () => {
