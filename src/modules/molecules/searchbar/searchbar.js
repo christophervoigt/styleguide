@@ -1,37 +1,28 @@
 
-import Molecule from '../molecule';
-import Button from '../../atoms/button/button';
-import Input from '../../atoms/input/input';
+export default function Searchbar(selector, callbacks) {
+  if (!(this instanceof Searchbar)) {
+    throw new Error('Searchbar needs to be called with the "new" keyword');
+  }
 
-export default function Searchbar(options) {
-  Molecule.call(this, options);
+  this.selector = selector || '.searchbar';
+  this.element = document.querySelector(this.selector);
 
-  const defaults = {
-    selector: '.searchbar',
-    scope: document,
-  };
 
-  this.options = Object.assign({}, defaults, options);
-  console.log('selector', this.options.selector);
-
-  console.log('scope', this.options.scope);
-
-  this.childScope = document.querySelector(this.options.selector);
-
-  this.searchbarButton = new Button({
-    selector: '.searchbar-button',
-    scope: this.childScope,
+  // ermöglicht das Erweitern der Funktionalität
+  this.callbacks = callbacks || {};
+  const keys = Object.keys(this.callbacks);
+  keys.forEach((key) => {
+    this.element.addEventListener(key, this.callbacks[key]);
   });
-  this.searchbarButton.subscribe('click', this);
 
-  this.searchbarInput = new Input({
-    selector: '.searchbar-input',
-    scope: this.childScope,
-  });
-  this.searchbarInput.subscribe('change', this);
+
+  this.button = document.querySelector('.searchbar .button');
+  this.button.addEventListener('click', () => { console.log('.searchbar .button', 'clicked'); });
+
+  this.input = document.querySelector('.searchbar input');
+  this.input.addEventListener('change', () => { console.log('.searchbar input', 'changed'); });
+
+
+  // Atome können ebenfalls als Objekt initialisiert werden, wenn
+  // interne Logik vorhanden ist (bspw. video-player)
 }
-
-Searchbar.prototype = Object.create(Molecule.prototype);
-Searchbar.prototype.constructor = Searchbar;
-
-// TODO: implement custom notify function

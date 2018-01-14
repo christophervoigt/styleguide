@@ -1,29 +1,25 @@
 
-import Organism from '../organism';
 import Searchbar from '../../molecules/searchbar/searchbar';
 
-export default function Header(options) {
-  Organism.call(this, options);
+export default function Header(selector) {
+  if (!(this instanceof Header)) {
+    throw new Error('Header needs to be called with the "new" keyword');
+  }
 
-  const defaults = {
-    selector: '.header',
-    scope: document,
-  };
+  this.selector = selector || 'header';
+  this.element = document.querySelector(this.selector);
 
-  this.options = Object.assign({}, defaults, options);
-  console.log('selector', this.options.selector);
-  console.log('scope', this.options.scope);
 
-  this.childScope = document.querySelector(this.options.selector);
-
-  this.headerSearchbar = new Searchbar({
-    selector: '.header-searchbar',
-    scope: this.childScope,
+  this.searchbar = new Searchbar('header .searchbar', {
+    mouseover: () => {
+      console.log('header .searchbar', 'hovered');
+    },
   });
-  this.headerSearchbar.subscribe('search', this);
+
+  // alternativ:
+  // new Searchbar();
+  // new Searchbar('header .searchbar');
+
+  // -> Logik der Searchbar selbst wird immer ausgeführt
+  // -> Callbacks ermöglichen das Erweitern der Funktionalität
 }
-
-Header.prototype = Object.create(Organism.prototype);
-Header.prototype.constructor = Header;
-
-// TODO: implement custom notify function
