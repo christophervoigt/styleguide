@@ -2,11 +2,20 @@ const path = require('path');
 const fs = require('fs');
 const Cattleman = require('cattleman');
 const shell = require('shelljs');
+const appRootPath = require('app-root-path');
 const pug = require('pug');
-
+const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
+const dependence = dependency('src/**/*.pug');
+const importMap = {};
+
+function shorten(str) {
+  let result = str.replace(appRootPath.toString(), '');
+  result = result.substring(1);
+  return result;
+}
 
 function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -25,6 +34,15 @@ function build(module) {
   if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
   fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const sourceImports = dependence.find_dependencies(module);
+    if (sourceImports.length && !importMap[module]) {
+      importMap[module] = sourceImports.map(str => shorten(str));
+    }
+  }
+
+  return importMap;
 }
 
 (() => {

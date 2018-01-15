@@ -21,6 +21,15 @@ browserSync({
   open: 'local',
 });
 
+watch(srcPath, {
+  recursive: true,
+  filter: /\.jpg$|\.png$|\.ico$/,
+}, (event, name) => {
+  console.log('IMG: rebuilding', chalk.green(name));
+  buildIMG(name);
+  browserSync.reload();
+});
+
 
 watch(srcPath, {
   recursive: true,
@@ -50,20 +59,25 @@ watch(srcPath, {
   recursive: true,
   filter: /\.pug$/,
 }, (event, name) => {
-  console.log(`Html: rebuilding ${name}`);
-  // TODO: check if file is worth to be rebuild (no-mixins)
-  buildHTML(name);
+  // TODO:
+  // check if `name` should be build
+  console.log('HTML: rebuilding', chalk.green(name));
+  htmlMap = buildHTML(name);
+  // end TODO
+
+  const files = Object.keys(htmlMap);
+  files.forEach((file) => {
+    const sources = htmlMap[file];
+
+    if (sources.includes(name)) {
+      console.log('HTML: rebuilding', chalk.green(file));
+      buildHTML(file);
+    }
+  });
+
   browserSync.reload();
 });
 
-watch(srcPath, {
-  recursive: true,
-  filter: /\.jpg$|\.png$|\.ico$/,
-}, (event, name) => {
-  console.log(`Image: rebuilding ${name}`);
-  buildIMG(name);
-  browserSync.reload();
-});
 
 watch(srcPath, {
   recursive: true,
