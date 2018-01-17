@@ -1,4 +1,7 @@
+/* eslint no-console: ["off", { allow: ["warn"] }] */
+
 const path = require('path');
+const chalk = require('chalk');
 const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
@@ -60,8 +63,21 @@ async function build(module) {
       importMap[sourceFile] = sourceImports.map(str => shorten(str));
     }
   }
+}
 
-  return importMap;
+async function rebuild(module) {
+  console.log('JS: build', chalk.green(module));
+  build(module);
+
+  const files = Object.keys(importMap);
+  files.forEach((file) => {
+    const sources = importMap[file];
+
+    if (sources.includes(module)) {
+      console.log('JS: rebuild', chalk.green(file));
+      build(file);
+    }
+  });
 }
 
 (async () => {
@@ -80,4 +96,4 @@ async function build(module) {
   }));
 })();
 
-exports.build = build;
+exports.rebuild = rebuild;

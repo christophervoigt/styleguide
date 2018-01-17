@@ -1,7 +1,9 @@
+/* eslint no-console: ["off", { allow: ["warn"] }] */
+
 const path = require('path');
+const chalk = require('chalk');
 const Cattleman = require('cattleman');
 const imagemin = require('imagemin');
-
 
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -18,6 +20,11 @@ async function build(module) {
   await imagemin([module], targetDir);
 }
 
+async function rebuild(module) {
+  console.log('IMG: build', chalk.green(module));
+  build(module);
+}
+
 (async () => {
   const cattleman = new Cattleman(srcPath);
   const modules = cattleman.gatherFiles(['.jpg', '.png', '.ico']);
@@ -27,4 +34,4 @@ async function build(module) {
   }));
 })();
 
-exports.build = build;
+exports.rebuild = rebuild;

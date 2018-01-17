@@ -1,5 +1,8 @@
+/* eslint no-console: ["off", { allow: ["warn"] }] */
+
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 const Cattleman = require('cattleman');
 const shell = require('shelljs');
 const appRootPath = require('app-root-path');
@@ -45,6 +48,21 @@ function build(module) {
   return importMap;
 }
 
+async function rebuild(module) {
+  console.log('HTML: build', chalk.green(module));
+  build(module);
+
+  const files = Object.keys(importMap);
+  files.forEach((file) => {
+    const sources = importMap[file];
+
+    if (sources.includes(module)) {
+      console.log('HTML: rebuild', chalk.green(file));
+      build(file);
+    }
+  });
+}
+
 (() => {
   const cattleman = new Cattleman({
     directory: srcPath,
@@ -58,4 +76,4 @@ function build(module) {
   });
 })();
 
-exports.build = build;
+exports.rebuild = rebuild;
