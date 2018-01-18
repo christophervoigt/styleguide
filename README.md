@@ -12,12 +12,12 @@ This sample project serves as a starting point for styleguides and module librar
 
 ## Project structure
 
-| Path   | Description                                  |
-| ------ | -------------------------------------------- |
-| `task` | contains build and watch scripts             |
-| `src`  | contains sourcecode, media and static assets |
-| `app`  | contains the styleguide *(in .gitignore)*    |
-| `dist` | contains compiled and reusable modules       |
+| Path    | Description                                  |
+| ------- | -------------------------------------------- |
+| `app`   | contains the styleguide *(in .gitignore)*    |
+| `dist`  | contains compiled and reusable modules       |
+| `src`   | contains sourcecode, media and static assets |
+| `tasks` | contains build and watch scripts             |
 
 
 ## NPM script overview
