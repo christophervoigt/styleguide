@@ -12,6 +12,7 @@ const { minify } = require('uglify-es');
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 const importMap = {};
+let builtModules = [];
 
 function shorten(str) {
   let result = str.replace(/\.\.\//g, '');
@@ -66,8 +67,10 @@ async function build(module) {
 }
 
 async function rebuild(module) {
-  console.log('JS: build', chalk.green(module));
-  build(module);
+  if (builtModules.includes(module)) {
+    console.log('JS: build', chalk.green(module));
+    build(module);
+  }
 
   const files = Object.keys(importMap);
   files.forEach((file) => {
@@ -90,6 +93,8 @@ async function rebuild(module) {
   const base = path.join('src', 'base', 'base.js');
   const styleguide = path.join('src', 'styleguide', 'styleguide.js');
   modules.push(base, styleguide);
+
+  builtModules = modules;
 
   await Promise.all(modules.map(async (module) => {
     await build(module);

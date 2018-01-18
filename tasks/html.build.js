@@ -13,6 +13,7 @@ const srcPath = 'src';
 const distPath = 'app';
 const dependence = dependency('src/**/*.pug');
 const importMap = {};
+let builtModules = [];
 
 function shorten(str) {
   let result = str.replace(appRootPath.toString(), '');
@@ -49,8 +50,10 @@ function build(module) {
 }
 
 async function rebuild(module) {
-  console.log('HTML: build', chalk.green(module));
-  build(module);
+  if (builtModules.includes(module)) {
+    console.log('HTML: build', chalk.green(module));
+    build(module);
+  }
 
   const files = Object.keys(importMap);
   files.forEach((file) => {
@@ -69,7 +72,8 @@ async function rebuild(module) {
     excludes: ['base', 'styleguide', 'mixin'],
   });
   const modules = cattleman.gatherFiles('.pug');
-  // const data = cattleman.gatherFiles('.json');
+
+  builtModules = modules;
 
   modules.forEach((module) => {
     build(module);
