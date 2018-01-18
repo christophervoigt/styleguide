@@ -8,7 +8,7 @@
     "Anke Häslich <a.haeslich@queo-group.com>"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=7.6"
   },
   "scripts": {
     "prestart": "rm -rf app/",

@@ -1,29 +1,30 @@
-# styleguide project
+# Styleguide
 
-sample project that may serve as module library and styleguide
+This sample project serves as a starting point for styleguides and module libraries.
 
-## project structure
-
-| path | description                              |
-| ---- | ---------------------------------------- |
-| src  | contains sourcecode of modules           |
-| dist | contains compiled and reusable modules   |
-| app  | contains the styleguide                  |
-
-## build process
-
-**TL;DR:**
-```bash
- npm run build
-```
+## Setup
+1.  make sure your system runs Node 7.6 or higher (`node -v`)
+2.  clone this repository
+3.  rename project and edit git remote
+4.  start development :smile:
 
 
-**ToDo:**
-*   Generate app folder.
-*   Use /dist as symlink in /app. If not possible, copy /dist into /app.
-*   Include fonts and media (images/ videos) if needed.
-*   Generate changelog file
-*   Include code copy button and highlightjs into styleguide
----
-*   Idea: Add README.md into subfolder in "modules" for documentation.
-*   Idea: code diff view of refactorings. Problem: have to save 2 code states (old + new)
+## Project structure
+
+| Path   | Description                                  |
+| ------ | -------------------------------------------- |
+| `src`  | contains sourcecode, media and static assets |
+| `app`  | contains the styleguide *(in .gitignore)*    |
+| `dist` | contains compiled and reusable modules       |
+
+
+## NPM script overview
+
+| Script       | Description                                  |
+| ------------ | -------------------------------------------- |
+| `start`      | runs build and watch task (for development)  |
+| `build`      | builds `app` directory (for styleguide)      |
+| `test`       | runs linting tests                           |
+| `dist-patch` | builds `dist` directory and increments 0.0.x |
+| `dist-minor` | builds `dist` directory and increments 0.x.0 |
+| `dist-major` | builds `dist` directory and increments x.0.0 |
