@@ -6,13 +6,15 @@ This sample project serves as a starting point for styleguides and module librar
 1.  make sure your system runs Node 7.6 or higher (`node -v`)
 2.  clone this repository
 3.  rename project and edit git remote
-4.  start development :smile:
+4.  run `npm install` in project root
+5.  start development :smile:
 
 
 ## Project structure
 
 | Path   | Description                                  |
 | ------ | -------------------------------------------- |
+| `task` | contains build and watch scripts             |
 | `src`  | contains sourcecode, media and static assets |
 | `app`  | contains the styleguide *(in .gitignore)*    |
 | `dist` | contains compiled and reusable modules       |
