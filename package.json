@@ -12,7 +12,7 @@
   },
   "scripts": {
     "prestart": "rm -rf app/",
-    "start": "npm run build && node tasks/watch.js",
+    "start": "node tasks/watch.js",
     "build": "npm run build:css && npm run build:html && npm run build:img && npm run build:js",
     "build:css": "node tasks/css.build.js",
     "build:html": "node tasks/html.build.js",
