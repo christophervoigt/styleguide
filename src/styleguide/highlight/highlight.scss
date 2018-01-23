@@ -1,5 +1,5 @@
 
-@import "~highlightjs/styles/github";
+@import '~highlightjs/styles/github';
 
 .sg-highlight {
   margin-top: 20px;
@@ -17,7 +17,7 @@
     float: none;
     padding: 0;
     border: 1px solid #108eb4;
-    border-top: none;
+    border-top: 0;
     border-radius: 0 0 6px 6px;
     position: relative;
     top: 0;

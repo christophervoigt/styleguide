@@ -25,4 +25,6 @@ export default function Searchbar(selector, callbacks) {
 
   // Atome können ebenfalls als Objekt initialisiert werden, wenn
   // interne Logik vorhanden ist (bspw. video-player)
+
+  return this;
 }
