@@ -2,7 +2,9 @@
 
 This sample project serves as a starting point for styleguides and module libraries.
 
+
 ## Setup
+
 1.  make sure your system runs Node 7.6 or higher (`node -v`)
 2.  clone this repository
 3.  rename project and edit git remote
@@ -30,3 +32,13 @@ This sample project serves as a starting point for styleguides and module librar
 | `dist-patch` | builds `dist` directory and increments 0.0.x |
 | `dist-minor` | builds `dist` directory and increments 0.x.0 |
 | `dist-major` | builds `dist` directory and increments x.0.0 |
+
+
+## Other
+
+Currently this setup only works on Windows (I haven't tested OS X yet) because there is an issue in `node-watch` on Linux systems, where recursives changes are not recognized and rebuilds aren't triggered.
+
+
+## Licence
+
+[MIT](https://github.com/queoGmbH/ds-example/blob/master/LICENSE)
