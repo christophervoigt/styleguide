@@ -36,7 +36,7 @@ This sample project serves as a starting point for styleguides and module librar
 
 ## Other
 
-Currently this setup only works on Windows (I haven't tested OS X yet) because there is an issue in `node-watch` on Linux systems, where recursives changes are not recognized and rebuilds aren't triggered.
+Currently this setup only works on Windows (I haven't tested OS X yet) because there is an issue in `node-watch` on Linux systems, where recursive changes are not recognized and rebuilds aren't triggered.
 
 
 ## Licence
