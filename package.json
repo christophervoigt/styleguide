@@ -13,11 +13,12 @@
   "scripts": {
     "prestart": "rm -rf app/",
     "start": "node tasks/watch.js",
-    "build": "npm run build:css && npm run build:html && npm run build:img && npm run build:js",
+    "build": "npm run build:css && npm run build:html && npm run build:img && npm run build:js && npm run build:static",
     "build:css": "node tasks/css.build.js",
     "build:html": "node tasks/html.build.js",
     "build:img": "node tasks/image.build.js",
     "build:js": "node tasks/javascript.build.js",
+    "build:static": "node tasks/static.build.js",
     "test": "npm run test:css && npm run test:js && npm run test:markdown",
     "test:css": "stylelint -q ./src/**/*.scss",
     "test:js": "eslint --quiet ./src/**/*.js ./tasks/**/*.build.js",

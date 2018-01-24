@@ -7,6 +7,7 @@ const rebuildCSS = require('./css.build').rebuild;
 const rebuildHTML = require('./html.build').rebuild;
 const rebuildIMG = require('./image.build').rebuild;
 const rebuildJS = require('./javascript.build').rebuild;
+const rebuildSTATIC = require('./static.build').rebuild;
 
 const srcPath = 'src';
 
@@ -47,5 +48,13 @@ watch(srcPath, {
   filter: /\.js$/,
 }, async (event, name) => {
   await rebuildJS(name);
+  browserSync.reload();
+});
+
+watch(srcPath, {
+  recursive: true,
+  filter: /\.woff$|\.woff2$|\.ttf$|\.json$/,
+}, async (event, name) => {
+  await rebuildSTATIC(name);
   browserSync.reload();
 });
