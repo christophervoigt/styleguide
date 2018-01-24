@@ -1,27 +1,17 @@
 
-@import '~highlightjs/styles/github';
+@import '~highlight.js/styles/atom-one-dark';
 
 .sg-highlight {
-  margin-top: 20px;
-  margin-bottom: 40px;
 
   > a {
     display: block;
-  }
-
-  &.open > a {
-    border-radius: 6px 6px 0 0;
+    text-align: center;
   }
 
   .toggle-container {
     float: none;
     padding: 0;
-    border: 1px solid #108eb4;
-    border-top: 0;
-    border-radius: 0 0 6px 6px;
     position: relative;
-    top: 0;
-    left: 0;
   }
 
   pre {

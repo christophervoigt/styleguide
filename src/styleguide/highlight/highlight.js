@@ -1,5 +1,5 @@
 
-import hljs from 'highlightjs';
+import hljs from 'highlight.js';
 
 export default ($target) => {
   function indentation(level) {
@@ -33,7 +33,7 @@ export default ($target) => {
         result += `${parts[0].trim()}>\n`;
 
         if (parts[1].trim() !== '') { result += `${indentation(indentLevel) + parts[1].trim().replace(/\s+/g, ' ')}\n`; }
-        if (parts[0].match(/^(img|hr|br)/)) { indentLevel -= 1; }
+        if (parts[0].match(/^(img|hr|br|input)/)) { indentLevel -= 1; }
       } else {
         result += `${indentation(indentLevel) + parts[0]}\n`;
       }
@@ -54,9 +54,7 @@ export default ($target) => {
 
   function highlight() {
     const codeBlocks = document.querySelectorAll($target);
-    // codeBlocks is type of NodeList
-    // IE11 doesn't understand forEach on NodeList
-    // alternative is Array.prototype.forEach
+
     Array.prototype.forEach.call(codeBlocks, (codeBlock) => {
       const block = codeBlock;
       let html = block.innerHTML;
@@ -64,7 +62,7 @@ export default ($target) => {
       html = format(html);
       html = html.replace(/^\r?\n/g, '');
 
-      block.innerHTML = html;
+      block.textContent = html;
 
       hljs.highlightBlock(block);
 

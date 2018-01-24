@@ -1,11 +1,9 @@
 
 mixin sg-highlight()
   .sg-highlight.open
-    a.btn.btn-info(data-toggle="toggle")= "HTML-Code "
-      span.caret
-      small.pull-xs-right (dblclick to copy)
+    a(data-toggle='toggle').toggle-button HTML-Code (dblclick to copy)
 
-    .toggle-container
+    div(data-toggle-target='toggle').toggle-target
       pre
         code.html
           block
