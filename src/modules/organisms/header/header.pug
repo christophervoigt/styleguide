@@ -3,16 +3,12 @@ extends ../../../styleguide/styleguide.layout.pug
 include ../../molecules/searchbar/searchbar.mixin.pug
 
 block extraStylesheets
-  link(rel='stylesheet', href='/styleguide/styleguide.css')
   link(rel='stylesheet', href='/modules/organisms/header/header.css')
 
 block extraJavascripts
   script(src="/modules/organisms/header/header.js", defer)
 
-block header
-  header
-    +searchbar()
-
+block main
   +sg-highlight()
     header
       +searchbar()
