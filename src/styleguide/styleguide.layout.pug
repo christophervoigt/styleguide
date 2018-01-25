@@ -1,6 +1,7 @@
 extends ../base/base.layout.pug
 
 include highlight/highlight.pug
+include menu/menu.pug
 
 
 block stylesheets
@@ -15,5 +16,8 @@ block javascripts
 
 
 block page
+  aside
+    +sg-menu()
+
   main
     block main

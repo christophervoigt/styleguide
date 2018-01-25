@@ -27,7 +27,10 @@ async function rebuild(module) {
 }
 
 (async () => {
-  const cattleman = new Cattleman(srcPath);
+  const cattleman = new Cattleman({
+    directory: srcPath,
+    excludes: ['styleguide'],
+  });
   const modules = cattleman.gatherFiles([
     '.woff',
     '.woff2',

@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Atoms",
+    "subMenu": [
+      { "title": "Input" },
+      { "title": "Button" }
+    ]
+  },
+  {
+    "title": "Molecules",
+    "subMenu": [
+      { "title": "Searchbar" }
+    ]
+  },
+  {
+    "title": "Organisms",
+    "subMenu": [
+      { "title": "Header" }
+    ]
+  }
+]
