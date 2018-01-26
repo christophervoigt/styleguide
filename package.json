@@ -42,7 +42,7 @@
     "jstransformer-markdown-it": "2.0.0",
     "node-sass": "4.7.2",
     "node-sass-tilde-importer": "^1.0.1",
-    "node-watch": "0.5.5",
+    "node-watch": "^0.5.6",
     "pug": "2.0.0-rc.4",
     "pug-dependency": "^1.0.1",
     "remark-cli": "^4.0.0",
