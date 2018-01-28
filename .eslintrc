@@ -1,12 +1,14 @@
 {
   "extends": "airbnb-base",
   "rules": {
+    "no-use-before-define": [
+      "error", {
+        "functions": false
+      }
+    ],
     "import/no-extraneous-dependencies": [
       "error", {
-        "devDependencies": [
-          "**/*.build.js",
-          "**/watch.js"
-        ]
+        "devDependencies": [ "**/*.build.js", "**/watch.js" ]
       }
     ],
     "linebreak-style": 0
