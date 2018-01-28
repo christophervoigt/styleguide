@@ -1,5 +1,6 @@
 
 include _mixins/_all
+include cookieConsent/cookieConsent.pug
 
 doctype html
 html(lang='de')
@@ -27,4 +28,5 @@ html(lang='de')
       block extraJavascripts
 
   body
+    +cookieConsent()
     block page

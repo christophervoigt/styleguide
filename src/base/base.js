@@ -1,10 +1,6 @@
 
-import cookieconsent from './cookieconsent/cookieconsent';
+import cookieConsent from './cookieConsent/cookieConsent';
 
 export default function base() {
-  function init() {
-    cookieconsent('#cookieconsent');
-  }
-
-  init();
+  cookieConsent();
 }
