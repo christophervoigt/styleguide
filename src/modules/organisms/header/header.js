@@ -1,9 +1,7 @@
 
 import Searchbar from '../../molecules/searchbar/searchbar';
 
-export default function Header(selector = 'header') {
-  const element = document.querySelector(selector);
-
+export default function Header() {
   Searchbar('header .searchbar', {
     mouseover: () => {
       console.log('header:', 'you hovered over my searchbar');
