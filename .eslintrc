@@ -8,7 +8,7 @@
     ],
     "import/no-extraneous-dependencies": [
       "error", {
-        "devDependencies": [ "**/*.build.js", "**/watch.js" ]
+        "devDependencies": [ "**/*.build.js", "**/version.js", "**/watch.js"]
       }
     ],
     "linebreak-style": 0
