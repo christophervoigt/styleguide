@@ -24,7 +24,7 @@
     "test:js": "eslint --quiet ./src/**/*.js ./tasks/**/*.build.js",
     "test:markdown": "remark -q . ./src/**/*.md",
     "preversion": "npm test && rm -rf dist/",
-    "version": "cross-env NODE_ENV=production npm run build && git add dist/*",
+    "version": "cross-env NODE_ENV=production npm run build && git add -A dist",
     "dist-patch": "npm version patch -m \"Upgrade assets to %s\"",
     "dist-minor": "npm version minor -m \"Upgrade assets to %s\"",
     "dist-major": "npm version major -m \"Upgrade assets to %s\""
