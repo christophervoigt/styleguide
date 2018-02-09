@@ -25,9 +25,12 @@
     "test:markdown": "remark -q . ./src/**/*.md",
     "preversion": "npm test && rm -rf dist/",
     "version": "cross-env NODE_ENV=production npm run build && git add -A dist",
-    "dist-patch": "node tasks/version.js patch && npm version patch -m \"Upgrade assets to %s\"",
-    "dist-minor": "node tasks/version.js minor && npm version minor -m \"Upgrade assets to %s\"",
-    "dist-major": "node tasks/version.js major && npm version major -m \"Upgrade assets to %s\""
+    "version:patch": "node tasks/version.js patch && git add -u",
+    "version:minor": "node tasks/version.js minor && git add -u",
+    "version:major": "node tasks/version.js major && git add -u",
+    "dist-patch": "npm run version:patch | npm version patch -m \"Upgrade assets to %s\"",
+    "dist-minor": "npm run version:minor | npm version minor -m \"Upgrade assets to %s\"",
+    "dist-major": "npm run version:major | npm version major -m \"Upgrade assets to %s\""
   },
   "devDependencies": {
     "app-root-path": "^2.0.1",
