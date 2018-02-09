@@ -15,7 +15,7 @@
   {
     "title": "Organisms",
     "subMenu": [
-      { "title": "Header" }
+      { "title": "Header", "url": "/modules/organisms/header/header.html" }
     ]
   }
 ]

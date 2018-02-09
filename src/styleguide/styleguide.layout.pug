@@ -1,7 +1,9 @@
 extends ../base/base.layout.pug
 
 include highlight/highlight.pug
+include logo/logo.pug
 include menu/menu.pug
+include version/version.pug
 
 
 block stylesheets
@@ -17,7 +19,9 @@ block javascripts
 
 block page
   aside
+    +sg-logo()
     +sg-menu()
+    +sg-version()
 
   main
     block main
