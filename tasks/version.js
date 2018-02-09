@@ -5,10 +5,9 @@ const appRootPath = require('app-root-path');
 const semver = require('semver');
 
 async function build(type) {
+  // additional versioning files go here:
   const files = [
-    'package.json',
-    'package-lock.json',
-    // 'composer.json',
+    'composer.json',
     // 'bower.json',
   ];
 
