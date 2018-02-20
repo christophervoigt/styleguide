@@ -9,7 +9,14 @@ block extraJavascripts
   script(src="/modules/organisms/header/header.js", defer)
 
 block main
-  h1 Header
+  +sg-header({ title: 'Header' })
+  +sg-tabs({
+    linkList: [
+      { title: 'Documentation', url: '/modules/organisms/header/documentation.html' },
+      { title: 'Code', url: '/modules/organisms/header/code.html', active: true },
+      { title: 'Example', url: '/modules/organisms/header/example.html' }
+    ],
+  })
 
   +sg-highlight()
     header
