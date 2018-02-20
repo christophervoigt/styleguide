@@ -1,21 +1,23 @@
 [
   {
-    "title": "Atoms",
+    "title": "Basics",
     "subMenu": [
-      { "title": "Input" },
-      { "title": "Button" }
+      { "title": "Icons" },
+      { "title": "Typography" },
+      { "title": "Forms" }
     ]
   },
   {
-    "title": "Molecules",
+    "title": "Modules",
     "subMenu": [
-      { "title": "Searchbar" }
+      { "title": "Header", "url": "/modules/organisms/header/documentation.html" }
     ]
-  },
+  },  
   {
-    "title": "Organisms",
+    "title": "Guidelines",
     "subMenu": [
-      { "title": "Header", "url": "/modules/organisms/header/header.html" }
+      { "title": "HowTo" },
+      { "title": "Technologies" }
     ]
   }
 ]
