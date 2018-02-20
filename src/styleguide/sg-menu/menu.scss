@@ -15,7 +15,7 @@
   span {
     display: flex;
 
-    @include make-icon-after('\e901');
+    @include make-sg-icon-after('\e901');
     @include device(mobile) {
       &:after {
         pointer-events: none !important;

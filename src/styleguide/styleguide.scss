@@ -1,11 +1,11 @@
 
 @import '_sg-variables/all';
 @import '_sg-mixins/all';
-@import 'icons/icons';
-@import 'highlight/highlight';
-@import 'logo/logo';
-@import 'menu/menu';
-@import 'version/version';
+@import 'sg-fonts/icomoon';
+@import 'sg-highlight/highlight';
+@import 'sg-logo/logo';
+@import 'sg-menu/menu';
+@import 'sg-version/version';
 
 body {
   display: flex;
