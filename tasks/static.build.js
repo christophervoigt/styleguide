@@ -27,7 +27,10 @@ async function rebuild(module) {
 }
 
 (async () => {
-  const cattleman = new Cattleman(srcPath);
+  const cattleman = new Cattleman({
+    directory: srcPath,
+    excludes: ['menu.json'],
+  });
   const modules = cattleman.gatherFiles([
     '.eot',
     '.woff',
