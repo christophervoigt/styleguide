@@ -2,14 +2,17 @@
 @import '_sg-variables/all';
 @import '_sg-mixins/all';
 @import 'sg-fonts/icomoon';
+@import 'sg-header/header';
 @import 'sg-highlight/highlight';
 @import 'sg-logo/logo';
 @import 'sg-menu/menu';
+@import 'sg-tabs/tabs';
 @import 'sg-version/version';
 
 body {
   display: flex;
   flex-direction: row;
+  color: $sg-black;
 }
 
 body > aside {
@@ -24,5 +27,4 @@ body > main {
   flex: 0 1 100%;
   overflow: auto;
   height: 100vh;
-  padding: 0 20px;
 }
