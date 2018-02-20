@@ -24,7 +24,7 @@
     "declaration-property-value-blacklist": { "/^border/": ["none"] },
     "at-rule-empty-line-before": [
       "always",
-      { "ignore": ["after-comment"], "except": ["inside-block", "after-same-name"] },
+      { "ignore": ["after-comment"], "except": ["after-same-name", "first-nested"] },
     ],
     "max-nesting-depth": 3,
     "scss/dollar-variable-pattern": "^_?[a-z]+[\\w-]*$",
