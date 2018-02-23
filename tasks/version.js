@@ -5,10 +5,10 @@ const appRootPath = require('app-root-path');
 const semver = require('semver');
 
 async function build(type) {
-  // additional versioning files go here:
   const files = [
     'composer.json',
     // 'bower.json',
+    // 'lerna.json',
   ];
 
   await Promise.all(files.map(async (file) => {
