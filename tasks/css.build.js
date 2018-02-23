@@ -37,7 +37,9 @@ async function build(module) {
     outputStyle,
     sourceMap: buildSourceMap,
   }, (error, result) => {
-    if (!error) {
+    if (error) {
+      console.log(chalk.hex('#F00')(error));
+    } else {
       if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
       fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
