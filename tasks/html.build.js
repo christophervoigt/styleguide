@@ -30,7 +30,7 @@ function build(module) {
   const targetPath = path.normalize(targetDirs.join(path.sep));
   const targetDir = path.join(distPath, targetPath);
 
-  const fn = pug.compileFile(module, { self: true, pretty: true });
+  const fn = pug.compileFile(module, { self: true });
   const html = fn({ require });
 
   if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
