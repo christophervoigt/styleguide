@@ -7,6 +7,7 @@ const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
 const { minify } = require('uglify-es');
 
 const srcPath = 'src';
@@ -38,6 +39,9 @@ async function build(module) {
         namedExports: {
           'node_modules/jquery/dist/jquery.min.js': ['jquery'],
         },
+      }),
+      babel({
+        exclude: 'node_modules/**',
       }),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
