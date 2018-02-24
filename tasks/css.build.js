@@ -36,6 +36,7 @@ async function build(module) {
     outFile: path.join(targetDir, `${file.name}.css`),
     outputStyle,
     sourceMap: buildSourceMap,
+    includePaths: ['node_modules'],
   }, (error, result) => {
     if (error) {
       console.log(chalk.hex('#F00')(error));
