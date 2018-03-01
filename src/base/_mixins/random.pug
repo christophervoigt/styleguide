@@ -15,16 +15,13 @@
 
 
 -
-  function randomIdentifier () {
-    var tmp = lipsum(rnd(2, 3), 'words').trim();
-    tmp = tmp.replace(/ä/g, 'ae');
-    tmp = tmp.replace(/ö/g, 'oe');
-    tmp = tmp.replace(/ü/g, 'ue');
-    tmp = tmp.replace(/Ä/g, 'Ae');
-    tmp = tmp.replace(/Ö/g, 'Oe');
-    tmp = tmp.replace(/Ü/g, 'Ue');
-    tmp = tmp.replace(/ß/g, 'ss');
-    tmp = tmp.replace(/\s/g, '-');
-    tmp = tmp.replace(/[^0-9a-zA-Z\-]/g, '');
-    return tmp.toLowerCase();
+  function randomId(prefix) {
+
+    function getRndChar(charset) {
+      return charset[Math.floor(Math.random() * charset.length)]
+    }
+
+    prefix = prefix || 'random-id-'
+    const charset = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    return prefix + getRndChar(charset) + getRndChar(charset) + getRndChar(charset) + getRndChar(charset);
   }
