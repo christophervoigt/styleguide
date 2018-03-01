@@ -1,7 +1,7 @@
 
 # Header Documentation
 
-This is some awesome Markdown text with http://links.com, 
+This is some awesome Markdown text with [http://links.com](http://links.com), 
 
 ```js
 var codeBlocks;
@@ -11,8 +11,8 @@ var codeBlocks;
 2.  sorted listitem B
 
 
-*  unsorted listitem A
-*  unsorted listitem B
+*   unsorted listitem A
+*   unsorted listitem B
 
 
 | Column 1 | Column 2 |

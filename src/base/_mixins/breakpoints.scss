@@ -1,5 +1,6 @@
 
-@mixin media-breakpoint-up($breakpoint) {
+// min-width breakpoints
+@mixin min-breakpoint($breakpoint) {
   @if $breakpoint == xs {
     @media (min-width: $breakpoint-xs) {
       @content;
@@ -32,7 +33,8 @@
   }
 }
 
-@mixin media-breakpoint-down($breakpoint) {
+// max-width breakpoints
+@mixin max-breakpoint($breakpoint) {
   @if $breakpoint == sm {
     @media (max-width: ($breakpoint-sm - 1)) {
       @content;
