@@ -31,7 +31,12 @@ function build(module) {
   const targetDir = path.join(distPath, targetPath);
 
   const fn = pug.compileFile(module, { self: true });
-  const html = fn({ require });
+  const html = fn({
+    require,
+    usedModules: dependence.find_dependencies(module)
+      .filter(filename => filename.includes('modules'))
+      .map(str => shorten(str)),
+  });
 
   if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
