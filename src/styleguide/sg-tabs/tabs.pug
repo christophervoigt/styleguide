@@ -7,4 +7,4 @@ mixin sg-tabs(data)
     ul
       each link in data.linkList
         li(class=link.active ? 'active' : '')
-          a(href=link.url)= link.title
+          a(href=link.url, target= link.newTab ? '_blank' : '_self')= link.title
