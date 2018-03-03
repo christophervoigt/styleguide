@@ -1,6 +1,5 @@
 extends ../../../styleguide/styleguide.layout.pug
 
-include ../../molecules/searchbar/searchbar.mixin.pug
 
 
 block main
@@ -12,11 +11,5 @@ block main
       { title: 'Example', url: '/modules/organisms/header/example.html', newTab: true }
     ],
   })
-
-  -
-    var usedModules = self.usedModules || [];
-
-  each module in usedModules
-    p= module
 
   +sg-markdown('src/modules/organisms/header/README.md')

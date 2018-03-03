@@ -8,4 +8,4 @@ mixin sg-markdown(filepath)
     var readme = fs.readFileSync(filepath);
 
   .sg-markdown
-    article.markdown-body!= markdown(readme.toString())
+    .markdown-body!= markdown(readme.toString())
