@@ -46,6 +46,7 @@
     "eslint-plugin-import": "2.8.0",
     "imagemin": "5.3.1",
     "marked": "0.3.16",
+    "node-notifier": "5.2.1",
     "node-sass": "4.7.2",
     "node-sass-tilde-importer": "1.0.1",
     "node-watch": "0.5.6",
