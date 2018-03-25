@@ -2,6 +2,7 @@
 
 const path = require('path');
 const chalk = require('chalk');
+const notifier = require('node-notifier');
 const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
@@ -45,6 +46,12 @@ async function build(module) {
       }),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
+  }).catch((error) => {
+    console.log(chalk.hex('#F00')(error.message));
+    notifier.notify({
+      title: 'JS: build failed',
+      message: error.message,
+    });
   });
 
   const outputOptions = {
@@ -55,9 +62,11 @@ async function build(module) {
     intro: `window.addEventListener('load',function(){new ${file.name}()});`,
   };
 
-  await bundle.write(outputOptions);
+  if (bundle) {
+    await bundle.write(outputOptions);
+  }
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (bundle && process.env.NODE_ENV !== 'production') {
     const { map } = await bundle.generate(outputOptions);
 
     const obj = JSON.parse(map.toString());

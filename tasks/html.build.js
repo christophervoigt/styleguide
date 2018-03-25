@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
+const notifier = require('node-notifier');
 const Cattleman = require('cattleman');
 const shell = require('shelljs');
 const appRootPath = require('app-root-path');
@@ -31,22 +32,31 @@ function build(module) {
   const targetDir = path.join(distPath, targetPath);
 
   const fn = pug.compileFile(module, { self: true });
-  const html = fn({
-    require,
-    usedModules: dependence.find_dependencies(module)
-      .filter(filename => filename.includes('modules'))
-      .map(str => shorten(str)),
-  });
 
-  if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
+  try {
+    const html = fn({
+      require,
+      usedModules: dependence.find_dependencies(module)
+        .filter(filename => filename.includes('modules'))
+        .map(str => shorten(str)),
+    });
 
-  fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
+    if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 
-  if (process.env.NODE_ENV !== 'production') {
-    const sourceImports = dependence.find_dependencies(module);
-    if (sourceImports.length && !importMap[module]) {
-      importMap[module] = sourceImports.map(str => shorten(str));
+    fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
+
+    if (process.env.NODE_ENV !== 'production') {
+      const sourceImports = dependence.find_dependencies(module);
+      if (sourceImports.length && !importMap[module]) {
+        importMap[module] = sourceImports.map(str => shorten(str));
+      }
     }
+  } catch (error) {
+    console.log(chalk.hex('#F00')(error.message));
+    notifier.notify({
+      title: 'HTML: build failed',
+      message: error.message,
+    });
   }
 
   return importMap;
