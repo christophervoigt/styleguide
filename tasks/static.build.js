@@ -28,10 +28,17 @@ async function rebuild(module) {
 }
 
 (async () => {
+  const excludes = ['menu.json'];
+
+  if (process.env.NODE_ENV === 'production') {
+    excludes.push('styleguide');
+  }
+
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['menu.json'],
+    excludes,
   });
+
   const modules = cattleman.gatherFiles([
     '.eot',
     '.woff',

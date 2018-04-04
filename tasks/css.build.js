@@ -86,8 +86,12 @@ async function rebuild(module) {
   const modules = cattleman.gatherFiles('.scss');
 
   const base = path.join('src', 'base', 'base.scss');
-  const styleguide = path.join('src', 'styleguide', 'styleguide.scss');
-  modules.push(base, styleguide);
+  modules.push(base);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const styleguide = path.join('src', 'styleguide', 'styleguide.scss');
+    modules.push(styleguide);
+  }
 
   builtModules = modules;
 

@@ -101,8 +101,12 @@ async function rebuild(module) {
   const modules = cattleman.gatherFiles('.js');
 
   const base = path.join('src', 'base', 'base.js');
-  const styleguide = path.join('src', 'styleguide', 'styleguide.js');
-  modules.push(base, styleguide);
+  modules.push(base);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const styleguide = path.join('src', 'styleguide', 'styleguide.js');
+    modules.push(styleguide);
+  }
 
   builtModules = modules;
 

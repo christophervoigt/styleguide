@@ -27,7 +27,15 @@ async function rebuild(module) {
 }
 
 (async () => {
-  const cattleman = new Cattleman(srcPath);
+  let cattleman = new Cattleman(srcPath);
+
+  if (process.env.NODE_ENV === 'production') {
+    cattleman = new Cattleman({
+      directory: srcPath,
+      excludes: ['styleguide'],
+    });
+  }
+
   const modules = cattleman.gatherFiles(['.jpg', '.png', '.ico']);
 
   await Promise.all(modules.map(async (module) => {
