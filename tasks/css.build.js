@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
-const notifier = require('node-notifier');
+const showError = require('./utils/error');
 const Cattleman = require('cattleman');
 const shell = require('shelljs');
 const sass = require('node-sass');
@@ -40,11 +40,7 @@ async function build(module) {
     includePaths: ['node_modules'],
   }, (error, result) => {
     if (error) {
-      console.log(chalk.hex('#F00')(error.formatted));
-      notifier.notify({
-        title: 'CSS: build failed',
-        message: error.formatted,
-      });
+      showError(error, 'CSS: build failed');
     } else {
       if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
 

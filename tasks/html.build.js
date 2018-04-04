@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
-const notifier = require('node-notifier');
+const showError = require('./utils/error');
 const Cattleman = require('cattleman');
 const shell = require('shelljs');
 const appRootPath = require('app-root-path');
@@ -52,11 +52,7 @@ function build(module) {
       }
     }
   } catch (error) {
-    console.log(chalk.hex('#F00')(error.message));
-    notifier.notify({
-      title: 'HTML: build failed',
-      message: error.message,
-    });
+    showError(error, 'HTML: build failed');
   }
 
   return importMap;

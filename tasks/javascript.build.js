@@ -2,7 +2,7 @@
 
 const path = require('path');
 const chalk = require('chalk');
-const notifier = require('node-notifier');
+const showError = require('./utils/error');
 const Cattleman = require('cattleman');
 const rollup = require('rollup');
 const uglify = require('rollup-plugin-uglify');
@@ -47,11 +47,7 @@ async function build(module) {
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
   }).catch((error) => {
-    console.log(chalk.hex('#F00')(error.message));
-    notifier.notify({
-      title: 'JS: build failed',
-      message: error.message,
-    });
+    showError(error, 'JS: build failed');
   });
 
   const outputOptions = {
