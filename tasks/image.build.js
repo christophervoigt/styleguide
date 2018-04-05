@@ -36,7 +36,7 @@ async function rebuild(module) {
     });
   }
 
-  const modules = cattleman.gatherFiles(['.jpg', '.png', '.ico']);
+  const modules = cattleman.gatherFiles(['.jpg', '.png', '.svg', '.ico']);
 
   await Promise.all(modules.map(async (module) => {
     await build(module);
