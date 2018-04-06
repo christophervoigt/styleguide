@@ -12,13 +12,7 @@ block main
     ],
   })
 
-  //- todo
-  //- create module sg-sources
-  - var usedModules = self.usedModules || [];
-
-  each module in usedModules
-    div= module
-
+  +sg-usedModules()
 
   +sg-highlight()
     header
