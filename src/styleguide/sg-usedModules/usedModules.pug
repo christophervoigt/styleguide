@@ -2,10 +2,10 @@
 mixin sg-usedModules()
   -
     var usedModules = self.usedModules
-    
+
   if (usedModules.length)
     .sg-usedModules
       | Used modules:
       ul
-        each module in usedModule
+        each module in usedModules
           li=module
