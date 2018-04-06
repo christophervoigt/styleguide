@@ -1,10 +1,13 @@
 
 mixin sg-usedModules()
   -
-    var data = self.usedModules;
+    if (self.usedModules.length>0)
+      var usedModule = self.usedModules
+    else
+      return
 
   .sg-usedModules
-    | Benutzte Module:
+    | Used modules:
     ul
-      each module in data
-        li=module
+     each module in usedModule
+       li=module
