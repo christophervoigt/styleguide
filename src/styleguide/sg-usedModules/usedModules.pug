@@ -1,0 +1,10 @@
+
+mixin sg-usedModules()
+  -
+    var data = self.usedModules;
+
+  .sg-usedModules
+    | Benutzte Module:
+    ul
+      each module in data
+        li=module
