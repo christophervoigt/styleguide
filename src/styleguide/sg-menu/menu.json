@@ -10,7 +10,8 @@
   {
     "title": "Modules",
     "subMenu": [
-      { "title": "Header", "url": "/modules/organisms/header/documentation.html" }
+      { "title": "Header", "url": "/modules/organisms/header/documentation.html" },
+      { "title": "Footer", "url": "/modules/organisms/footer/documentation.html" }
     ]
   },  
   {
