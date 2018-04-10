@@ -4,10 +4,12 @@ footer {
   background-color: red;
   min-height: 50px;
   text-align: right;
-  padding: 20px 20px 0px 0px;
-  vertical-align: middle;
+  padding: 20px 2% 0px 0px;
   position: fixed;
   bottom: 0px;
-  width: 100vw;
-}
+  width: 98%;
 
+  a + a {
+    margin-left: 20px;
+  }
+}

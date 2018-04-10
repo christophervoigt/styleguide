@@ -1,8 +1,7 @@
 extends ../../../styleguide/styleguide.layout.pug
 
 include ../../atoms/link/link.mixin.pug
-
-
+  
 block main
   +sg-header({ title: 'Footer' })
   +sg-tabs({
@@ -12,13 +11,8 @@ block main
       { title: 'Example', url: '/modules/organisms/footer/example.html', newTab: true }
     ],
   })
-  //- todo
-  //- create module sg-sources
-  - var usedModules = self.usedModules || [];
 
-  each module in usedModules
-    div= module
-
+  +sg-usedModules()
 
   +sg-highlight()
     footer

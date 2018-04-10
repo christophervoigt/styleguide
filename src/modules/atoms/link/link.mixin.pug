@@ -1,4 +1,6 @@
-
 mixin link(text, destination)
+  -
+    destination = destination || '#';
+    text = text || 'Click me!';
 
-  a(href=destination)= text
+  a(href=destination class="link")&attributes(attributes)= text
