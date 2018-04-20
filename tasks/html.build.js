@@ -13,9 +13,12 @@ const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
+const excludeWords = ['base', 'styleguide', 'mixin'];
 const dependence = dependency('src/**/*.pug');
 const importMap = {};
 let builtModules = [];
+let notKeep;
+
 
 function shorten(str) {
   let result = str.replace(appRootPath.toString(), '');
@@ -25,7 +28,6 @@ function shorten(str) {
 
 function build(module) {
   const srcPathDirs = srcPath.split('/');
-
   const file = path.parse(module);
   const moduleDirs = file.dir.split(path.sep);
   const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
@@ -42,7 +44,9 @@ function build(module) {
         .map(str => shorten(str)),
     });
 
-    if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
+    if (!fs.existsSync(targetDir)) {
+      shell.mkdir('-p', targetDir);
+    }
 
     fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
 
@@ -55,34 +59,49 @@ function build(module) {
   } catch (error) {
     showError(error, 'HTML: build failed');
   }
-
   return importMap;
 }
 
-async function rebuild(module) {
-  if (builtModules.includes(module)) {
+async function rebuild(event, module) {
+  console.log(importMap);
+  console.log(`event: ${event} module: ${module} included:${builtModules.includes(module)}`);
+  if (builtModules.includes(module) && event !== 'remove') {
+    // rebuild  If includes(module) && !remove --> build(module); rebuild all dependencies
     console.log('HTML: build', chalk.green(module));
     build(module);
-  }
-
-  const files = Object.keys(importMap);
-  files.forEach((file) => {
-    const sources = importMap[file];
-
-    if (sources.includes(module)) {
-      console.log('HTML: rebuild', chalk.green(file));
-      build(file);
+    const files = Object.keys(importMap);
+    files.forEach((file) => {
+      const sources = importMap[file];
+      if (sources.includes(module)) {
+        console.log('HTML: rebuild', chalk.green(file));
+        build(file);
+      }
+    });
+  } else if (!builtModules.includes(module) && event !== 'remove') {
+    console.log('HTML: rebuild', chalk.red('// todo build and sync importMap'));
+    // add      If !includes(module) && !remove --> build(module); write dependencies into importMap
+    notKeep = 0;
+    excludeWords.forEach((word) => {
+      notKeep += module.includes(word);
+    });
+    if (!notKeep) {
+      console.log('HTML: build', chalk.green(module));
+      build(module);
     }
-  });
+  } else if (event === 'remove') {
+    console.log('HTML: rebuild', chalk.red('// todo remove file and sync importMap'));
+    // remove   If remove --> build(module); find dependencies and delete??
+    // output that dependencies missing?
+  }
 }
 
 (() => {
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['base', 'styleguide', 'mixin'],
+    excludes: excludeWords,
   });
   const modules = cattleman.gatherFiles('.pug');
-
+  // console.log('cattleman-respond:' + modules);
   builtModules = modules;
 
   modules.forEach((module) => {
