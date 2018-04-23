@@ -18,6 +18,7 @@ const dependence = dependency('src/**/*.pug');
 const importMap = {};
 let builtModules = [];
 let notKeep;
+let removeFile;
 
 
 function shorten(str) {
@@ -63,11 +64,9 @@ function build(module) {
 }
 
 async function rebuild(event, module) {
-  console.log(importMap);
-  console.log(`event: ${event} module: ${module} included:${builtModules.includes(module)}`);
+  // Update
   if (builtModules.includes(module) && event !== 'remove') {
-    // rebuild  If includes(module) && !remove --> build(module); rebuild all dependencies
-    console.log('HTML: build', chalk.green(module));
+    console.log('HTML: update', chalk.green(module));
     build(module);
     const files = Object.keys(importMap);
     files.forEach((file) => {
@@ -77,21 +76,42 @@ async function rebuild(event, module) {
         build(file);
       }
     });
+    // Build
   } else if (!builtModules.includes(module) && event !== 'remove') {
-    console.log('HTML: rebuild', chalk.red('// todo build and sync importMap'));
-    // add      If !includes(module) && !remove --> build(module); write dependencies into importMap
+    console.log('HTML: build', chalk.green(module));
     notKeep = 0;
     excludeWords.forEach((word) => {
       notKeep += module.includes(word);
     });
     if (!notKeep) {
-      console.log('HTML: build', chalk.green(module));
       build(module);
+      builtModules.push(module);
     }
+    // Remove
   } else if (event === 'remove') {
-    console.log('HTML: rebuild', chalk.red('// todo remove file and sync importMap'));
-    // remove   If remove --> build(module); find dependencies and delete??
-    // output that dependencies missing?
+    console.log('HTML: remove', chalk.green(module));
+    const files = Object.keys(importMap);
+    files.forEach((file) => {
+      if (file === module) {
+        delete importMap[file];
+      } else {
+        const sources = importMap[file];
+        for (let i = 0; i < sources.length; i += 1) {
+          if (sources[i] === module) {
+            sources.splice(i, 1);
+          }
+        }
+      }
+    });
+    for (let j = 0; j < builtModules.length; j += 1) {
+      if (builtModules[j] === module) {
+        builtModules.splice(j, 1);
+      }
+    }
+    removeFile = `app${module.slice(3, (module.length - 3))}html`;
+    fs.unlink(removeFile, (error) => {
+      if (error) showError(error, 'HTML: remove failed');
+    });
   }
 }
 
@@ -103,7 +123,6 @@ async function rebuild(event, module) {
   const modules = cattleman.gatherFiles('.pug');
   // console.log('cattleman-respond:' + modules);
   builtModules = modules;
-
   modules.forEach((module) => {
     build(module);
   });
