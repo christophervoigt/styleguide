@@ -17,8 +17,6 @@ const excludeWords = ['base', 'styleguide', 'mixin'];
 const dependence = dependency('src/**/*.pug');
 const importMap = {};
 let builtModules = [];
-let notKeep;
-let removeFile;
 
 
 function shorten(str) {
@@ -64,31 +62,8 @@ function build(module) {
 }
 
 async function rebuild(event, module) {
-  // Update
-  if (builtModules.includes(module) && event !== 'remove') {
-    console.log('HTML: update', chalk.green(module));
-    build(module);
-    const files = Object.keys(importMap);
-    files.forEach((file) => {
-      const sources = importMap[file];
-      if (sources.includes(module)) {
-        console.log('HTML: rebuild', chalk.green(file));
-        build(file);
-      }
-    });
-    // Build
-  } else if (!builtModules.includes(module) && event !== 'remove') {
-    console.log('HTML: build', chalk.green(module));
-    notKeep = 0;
-    excludeWords.forEach((word) => {
-      notKeep += module.includes(word);
-    });
-    if (!notKeep) {
-      build(module);
-      builtModules.push(module);
-    }
-    // Remove
-  } else if (event === 'remove') {
+  // Remove
+  if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
     const files = Object.keys(importMap);
     files.forEach((file) => {
@@ -109,10 +84,31 @@ async function rebuild(event, module) {
         builtModules.splice(j, 1);
       }
     }
-    removeFile = `app${module.slice(3, (module.length - 3))}html`;
-    fs.unlink(removeFile, (error) => {
-      if (error) showError(error, 'HTML: remove failed');
+  // Update
+  } else if (builtModules.includes(module)) {
+    console.log('HTML: update', chalk.green(module));
+    build(module);
+    const files = Object.keys(importMap);
+    files.forEach((file) => {
+      const sources = importMap[file];
+      if (sources.includes(module)) {
+        console.log('HTML: rebuild', chalk.green(file));
+        build(file);
+      }
     });
+  // Build
+  } else if (!builtModules.includes(module)) {
+    let keepModule = true;
+    console.log('HTML: build', chalk.green(module));
+    excludeWords.forEach((word) => {
+      if (keepModule && module.includes(word)) {
+        keepModule = false;
+      }
+    });
+    if (keepModule) {
+      build(module);
+      builtModules.push(module);
+    }
   }
 }
 
