@@ -99,6 +99,7 @@ async function rebuild(event, module) {
         for (let i = 0; i < sources.length; i += 1) {
           if (sources[i] === module) {
             sources.splice(i, 1);
+            build(sources);
           }
         }
       }
@@ -121,7 +122,6 @@ async function rebuild(event, module) {
     excludes: excludeWords,
   });
   const modules = cattleman.gatherFiles('.pug');
-  // console.log('cattleman-respond:' + modules);
   builtModules = modules;
   modules.forEach((module) => {
     build(module);
