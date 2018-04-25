@@ -13,8 +13,8 @@ const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
+// ToDo: create regex instead of array
 const excludeWords = ['base', 'styleguide', 'mixin'];
-const dependence = dependency('src/**/*.pug');
 const importMap = {};
 let builtModules = [];
 
@@ -33,9 +33,10 @@ function build(module) {
   const targetPath = path.normalize(targetDirs.join(path.sep));
   const targetDir = path.join(distPath, targetPath);
 
-  const fn = pug.compileFile(module, { self: true });
+  const dependence = dependency('src/**/*.pug');
 
   try {
+    const fn = pug.compileFile(module, { self: true });
     const html = fn({
       require,
       usedModules: dependence.find_dependencies(module)
@@ -46,25 +47,22 @@ function build(module) {
     if (!fs.existsSync(targetDir)) {
       shell.mkdir('-p', targetDir);
     }
-
     fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
 
     if (process.env.NODE_ENV !== 'production') {
       const sourceImports = dependence.find_dependencies(module);
-      console.log('source imports', sourceImports);
-      if (sourceImports.length && !importMap[module]) {
-        console.log('add to importMap', module);
+      if (sourceImports.length) {
         importMap[module] = sourceImports.map(str => shorten(str));
       }
     }
   } catch (error) {
     showError(error, 'HTML: build failed');
   }
+
   return importMap;
 }
 
 async function rebuild(event, module) {
-  // Remove
   if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
     delete importMap[module];
@@ -72,32 +70,11 @@ async function rebuild(event, module) {
     if (index >= 0) {
       builtModules.splice(index, 1);
     }
-
-    const files = Object.keys(importMap);
-    files.forEach((file) => {
-      const sources = importMap[file];
-      const i = sources.indexOf(module);
-      if (i >= 0) {
-        sources.splice(i, 1);
-        console.log('HTML: rebuild', chalk.green(file));
-        build(file);
-      }
-    });
-
-  // Update
   } else if (builtModules.includes(module)) {
     console.log('HTML: update', chalk.green(module));
     build(module);
-    const files = Object.keys(importMap);
-    files.forEach((file) => {
-      const sources = importMap[file];
-      if (sources.includes(module)) {
-        console.log('HTML: rebuild', chalk.green(file));
-        build(file);
-      }
-    });
-  // Build
   } else {
+    // ToDo: check with regex instead of array
     let keepModule = true;
     excludeWords.forEach((word) => {
       if (keepModule && module.includes(word)) {
@@ -110,9 +87,19 @@ async function rebuild(event, module) {
       builtModules.push(module);
     }
   }
+
+  const files = Object.keys(importMap);
+  files.forEach((file) => {
+    const sources = importMap[file];
+    if (sources.includes(module)) {
+      console.log('HTML: rebuild', chalk.green(file));
+      build(file);
+    }
+  });
 }
 
 (() => {
+  // ToDo: use regex for exclution
   const cattleman = new Cattleman({
     directory: srcPath,
     excludes: excludeWords,
