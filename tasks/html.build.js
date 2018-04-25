@@ -51,7 +51,9 @@ function build(module) {
 
     if (process.env.NODE_ENV !== 'production') {
       const sourceImports = dependence.find_dependencies(module);
+      console.log('source imports', sourceImports);
       if (sourceImports.length && !importMap[module]) {
+        console.log('add to importMap', module);
         importMap[module] = sourceImports.map(str => shorten(str));
       }
     }
@@ -65,25 +67,23 @@ async function rebuild(event, module) {
   // Remove
   if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
+    delete importMap[module];
+    const index = builtModules.indexOf(module);
+    if (index >= 0) {
+      builtModules.splice(index, 1);
+    }
+
     const files = Object.keys(importMap);
     files.forEach((file) => {
-      if (file === module) {
-        delete importMap[file];
-      } else {
-        const sources = importMap[file];
-        for (let i = 0; i < sources.length; i += 1) {
-          if (sources[i] === module) {
-            sources.splice(i, 1);
-            build(sources);
-          }
-        }
+      const sources = importMap[file];
+      const i = sources.indexOf(module);
+      if (i >= 0) {
+        sources.splice(i, 1);
+        console.log('HTML: rebuild', chalk.green(file));
+        build(file);
       }
     });
-    for (let j = 0; j < builtModules.length; j += 1) {
-      if (builtModules[j] === module) {
-        builtModules.splice(j, 1);
-      }
-    }
+
   // Update
   } else if (builtModules.includes(module)) {
     console.log('HTML: update', chalk.green(module));
@@ -97,15 +97,15 @@ async function rebuild(event, module) {
       }
     });
   // Build
-  } else if (!builtModules.includes(module)) {
+  } else {
     let keepModule = true;
-    console.log('HTML: build', chalk.green(module));
     excludeWords.forEach((word) => {
       if (keepModule && module.includes(word)) {
         keepModule = false;
       }
     });
     if (keepModule) {
+      console.log('HTML: build', chalk.green(module));
       build(module);
       builtModules.push(module);
     }
