@@ -13,9 +13,11 @@ const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
+const excludeWords = ['base', 'styleguide', 'mixin'];
 const dependence = dependency('src/**/*.pug');
 const importMap = {};
 let builtModules = [];
+
 
 function shorten(str) {
   let result = str.replace(appRootPath.toString(), '');
@@ -25,7 +27,6 @@ function shorten(str) {
 
 function build(module) {
   const srcPathDirs = srcPath.split('/');
-
   const file = path.parse(module);
   const moduleDirs = file.dir.split(path.sep);
   const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
@@ -42,49 +43,82 @@ function build(module) {
         .map(str => shorten(str)),
     });
 
-    if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
+    if (!fs.existsSync(targetDir)) {
+      shell.mkdir('-p', targetDir);
+    }
 
     fs.writeFileSync(path.join(targetDir, `${file.name}.html`), html);
 
     if (process.env.NODE_ENV !== 'production') {
       const sourceImports = dependence.find_dependencies(module);
+      console.log('source imports', sourceImports);
       if (sourceImports.length && !importMap[module]) {
+        console.log('add to importMap', module);
         importMap[module] = sourceImports.map(str => shorten(str));
       }
     }
   } catch (error) {
     showError(error, 'HTML: build failed');
   }
-
   return importMap;
 }
 
-async function rebuild(module) {
-  if (builtModules.includes(module)) {
-    console.log('HTML: build', chalk.green(module));
-    build(module);
-  }
-
-  const files = Object.keys(importMap);
-  files.forEach((file) => {
-    const sources = importMap[file];
-
-    if (sources.includes(module)) {
-      console.log('HTML: rebuild', chalk.green(file));
-      build(file);
+async function rebuild(event, module) {
+  // Remove
+  if (event === 'remove') {
+    console.log('HTML: remove', chalk.green(module));
+    delete importMap[module];
+    const index = builtModules.indexOf(module);
+    if (index >= 0) {
+      builtModules.splice(index, 1);
     }
-  });
+
+    const files = Object.keys(importMap);
+    files.forEach((file) => {
+      const sources = importMap[file];
+      const i = sources.indexOf(module);
+      if (i >= 0) {
+        sources.splice(i, 1);
+        console.log('HTML: rebuild', chalk.green(file));
+        build(file);
+      }
+    });
+
+  // Update
+  } else if (builtModules.includes(module)) {
+    console.log('HTML: update', chalk.green(module));
+    build(module);
+    const files = Object.keys(importMap);
+    files.forEach((file) => {
+      const sources = importMap[file];
+      if (sources.includes(module)) {
+        console.log('HTML: rebuild', chalk.green(file));
+        build(file);
+      }
+    });
+  // Build
+  } else {
+    let keepModule = true;
+    excludeWords.forEach((word) => {
+      if (keepModule && module.includes(word)) {
+        keepModule = false;
+      }
+    });
+    if (keepModule) {
+      console.log('HTML: build', chalk.green(module));
+      build(module);
+      builtModules.push(module);
+    }
+  }
 }
 
 (() => {
   const cattleman = new Cattleman({
     directory: srcPath,
-    excludes: ['base', 'styleguide', 'mixin'],
+    excludes: excludeWords,
   });
   const modules = cattleman.gatherFiles('.pug');
-
   builtModules = modules;
-
   modules.forEach((module) => {
     build(module);
   });

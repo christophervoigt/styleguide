@@ -32,7 +32,7 @@ watch(srcPath, {
   recursive: true,
   filter: /\.pug$/,
 }, async (event, name) => {
-  await rebuildHTML(name);
+  await rebuildHTML(event, name);
   browserSync.reload();
 });
 
