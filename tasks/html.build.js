@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const showError = require('./utils/error');
-const Cattleman = require('cattleman');
+const glob = require('glob');
 const shell = require('shelljs');
 const appRootPath = require('app-root-path');
 const pug = require('pug');
@@ -13,11 +13,9 @@ const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
-// ToDo: create regex instead of array
-const excludeWords = ['base', 'styleguide', 'mixin'];
+const excludeRegExp = RegExp('(base|styleguide|mixin)');
 const importMap = {};
-let builtModules = [];
-
+const builtModules = [];
 
 function shorten(str) {
   let result = str.replace(appRootPath.toString(), '');
@@ -32,7 +30,6 @@ function build(module) {
   const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
   const targetPath = path.normalize(targetDirs.join(path.sep));
   const targetDir = path.join(distPath, targetPath);
-
   const dependence = dependency('src/**/*.pug');
 
   try {
@@ -73,19 +70,10 @@ async function rebuild(event, module) {
   } else if (builtModules.includes(module)) {
     console.log('HTML: update', chalk.green(module));
     build(module);
-  } else {
-    // ToDo: check with regex instead of array
-    let keepModule = true;
-    excludeWords.forEach((word) => {
-      if (keepModule && module.includes(word)) {
-        keepModule = false;
-      }
-    });
-    if (keepModule) {
-      console.log('HTML: add', chalk.green(module));
-      build(module);
-      builtModules.push(module);
-    }
+  } else if (!excludeRegExp.test(module)) {
+    console.log('HTML: add', chalk.green(module));
+    build(module);
+    builtModules.push(module);
   }
 
   const files = Object.keys(importMap);
@@ -99,15 +87,15 @@ async function rebuild(event, module) {
 }
 
 (() => {
-  // ToDo: use regex for exclution
-  const cattleman = new Cattleman({
-    directory: srcPath,
-    excludes: excludeWords,
-  });
-  const modules = cattleman.gatherFiles('.pug');
-  builtModules = modules;
-  modules.forEach((module) => {
-    build(module);
+  glob('src/**/*.pug', (error, files) => {
+    if (error) showError(error, 'HTML: could not load files');
+
+    const modules = files.filter(file => !excludeRegExp.test(file));
+    modules.forEach((module) => {
+      build(module);
+    });
+
+    Array.prototype.push.apply(builtModules, modules);
   });
 })();
 
