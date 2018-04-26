@@ -82,7 +82,7 @@ async function rebuild(event, module) {
       }
     });
     if (keepModule) {
-      console.log('HTML: build', chalk.green(module));
+      console.log('HTML: add', chalk.green(module));
       build(module);
       builtModules.push(module);
     }
@@ -92,7 +92,7 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('HTML: rebuild', chalk.green(file));
+      console.log('HTML: update', chalk.green(file));
       build(file);
     }
   });
