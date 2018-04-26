@@ -13,7 +13,7 @@ const dependency = require('pug-dependency');
 
 const srcPath = 'src';
 const distPath = 'app';
-const excludeRegExp = RegExp('(base|styleguide|mixin)');
+const excludePattern = /(base|styleguide|mixin)/;
 const importMap = {};
 const builtModules = [];
 
@@ -70,7 +70,7 @@ async function rebuild(event, module) {
   } else if (builtModules.includes(module)) {
     console.log('HTML: update', chalk.green(module));
     build(module);
-  } else if (!excludeRegExp.test(module)) {
+  } else if (!excludePattern.test(module)) {
     console.log('HTML: add', chalk.green(module));
     build(module);
     builtModules.push(module);
@@ -90,7 +90,7 @@ async function rebuild(event, module) {
   glob('src/**/*.pug', (error, files) => {
     if (error) showError(error, 'HTML: could not load files');
 
-    const modules = files.filter(file => !excludeRegExp.test(file));
+    const modules = files.filter(file => !excludePattern.test(file));
     modules.forEach((module) => {
       build(module);
     });
