@@ -3,11 +3,14 @@
 
 const path = require('path');
 const chalk = require('chalk');
-const Cattleman = require('cattleman');
+const glob = require('glob');
 const shell = require('shelljs');
+const showError = require('./utils/error');
 
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const excludePattern = process.env.NODE_ENV === 'production' ? /(menu.json|styleguide)/ : /(menu.json)/;
+const builtModules = [];
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -22,34 +25,33 @@ async function build(module) {
   await shell.cp(module, targetDir);
 }
 
-async function rebuild(module) {
-  console.log('STATIC: move', chalk.green(module));
-  build(module);
+async function rebuild(event, module) {
+  if (event === 'remove') {
+    console.log('STATIC: remove', chalk.green(module));
+    const index = builtModules.indexOf(module);
+    if (index >= 0) {
+      builtModules.splice(index, 1);
+    }
+  } else {
+    console.log('STATIC: copy', chalk.green(module));
+    build(module);
+  }
 }
 
 (async () => {
-  const excludes = ['menu.json'];
+  glob('src/**/*{.eot,.woff,.woff2,.ttf,.json}', async (error, files) => {
+    if (error) {
+      showError(error, 'STATIC: could not load files');
+    } else {
+      const modules = files.filter(file => !excludePattern.test(file));
 
-  if (process.env.NODE_ENV === 'production') {
-    excludes.push('styleguide');
-  }
+      await Promise.all(modules.map(async (module) => {
+        await build(module);
+      }));
 
-  const cattleman = new Cattleman({
-    directory: srcPath,
-    excludes,
+      Array.prototype.push.apply(builtModules, modules);
+    }
   });
-
-  const modules = cattleman.gatherFiles([
-    '.eot',
-    '.woff',
-    '.woff2',
-    '.ttf',
-    '.json',
-  ]);
-
-  await Promise.all(modules.map(async (module) => {
-    await build(module);
-  }));
 })();
 
 exports.rebuild = rebuild;

@@ -38,7 +38,7 @@ watch(srcPath, {
 
 watch(srcPath, {
   recursive: true,
-  filter: /\.jpg$|\.png$|\.ico$/,
+  filter: /\.jpg$|\.png$|\.svg$|\.ico$/,
 }, async (event, name) => {
   await rebuildIMG(event, name);
   browserSync.reload();
@@ -54,8 +54,8 @@ watch(srcPath, {
 
 watch(srcPath, {
   recursive: true,
-  filter: /\.woff$|\.woff2$|\.ttf$|\.json$/,
+  filter: /\.eot$|\.woff$|\.woff2$|\.ttf$|\.json$/,
 }, async (event, name) => {
-  await rebuildSTATIC(name);
+  await rebuildSTATIC(event, name);
   browserSync.reload();
 });
