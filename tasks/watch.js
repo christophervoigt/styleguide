@@ -48,7 +48,7 @@ watch(srcPath, {
   recursive: true,
   filter: /\.js$/,
 }, async (event, name) => {
-  await rebuildJS(name);
+  await rebuildJS(event, name);
   browserSync.reload();
 });
 

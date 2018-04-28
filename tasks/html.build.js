@@ -4,12 +4,12 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
-const showError = require('./utils/error');
 const glob = require('glob');
 const shell = require('shelljs');
-const appRootPath = require('app-root-path');
 const pug = require('pug');
 const dependency = require('pug-dependency');
+const appRootPath = require('app-root-path');
+const showError = require('./utils/error');
 
 const srcPath = 'src';
 const distPath = 'app';
