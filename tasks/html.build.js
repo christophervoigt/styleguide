@@ -15,7 +15,6 @@ const srcPath = 'src';
 const distPath = 'app';
 const excludePattern = /(base|styleguide|mixin)/;
 const importMap = {};
-const builtModules = [];
 
 function shorten(str) {
   let result = str.replace(appRootPath.toString(), '');
@@ -63,17 +62,9 @@ async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
     delete importMap[module];
-    const index = builtModules.indexOf(module);
-    if (index >= 0) {
-      builtModules.splice(index, 1);
-    }
-  } else if (builtModules.includes(module)) {
-    console.log('HTML: update', chalk.green(module));
-    build(module);
   } else if (!excludePattern.test(module)) {
-    console.log('HTML: add', chalk.green(module));
+    console.log('HTML: build', chalk.green(module));
     build(module);
-    builtModules.push(module);
   }
 
   const files = Object.keys(importMap);
@@ -95,8 +86,6 @@ async function rebuild(event, module) {
       modules.forEach((module) => {
         build(module);
       });
-
-      Array.prototype.push.apply(builtModules, modules);
     }
   });
 })();

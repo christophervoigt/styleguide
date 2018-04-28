@@ -10,7 +10,6 @@ const showError = require('./utils/error');
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 const excludePattern = process.env.NODE_ENV === 'production' ? /(fonts|styleguide)/ : /(fonts)/;
-const builtModules = [];
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -27,10 +26,6 @@ async function build(module) {
 async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('IMG: remove', chalk.green(module));
-    const index = builtModules.indexOf(module);
-    if (index >= 0) {
-      builtModules.splice(index, 1);
-    }
   } else {
     console.log('IMG: build', chalk.green(module));
     build(module);
@@ -47,8 +42,6 @@ async function rebuild(event, module) {
       await Promise.all(modules.map(async (module) => {
         await build(module);
       }));
-
-      Array.prototype.push.apply(builtModules, modules);
     }
   });
 })();
