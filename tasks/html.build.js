@@ -88,14 +88,16 @@ async function rebuild(event, module) {
 
 (() => {
   glob('src/**/*.pug', (error, files) => {
-    if (error) showError(error, 'HTML: could not load files');
+    if (error) {
+      showError(error, 'HTML: could not load files');
+    } else {
+      const modules = files.filter(file => !excludePattern.test(file));
+      modules.forEach((module) => {
+        build(module);
+      });
 
-    const modules = files.filter(file => !excludePattern.test(file));
-    modules.forEach((module) => {
-      build(module);
-    });
-
-    Array.prototype.push.apply(builtModules, modules);
+      Array.prototype.push.apply(builtModules, modules);
+    }
   });
 })();
 

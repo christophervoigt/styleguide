@@ -97,25 +97,27 @@ async function rebuild(event, module) {
 
 (async () => {
   glob('src/**/*.js', async (error, files) => {
-    if (error) showError(error, 'JS: could not load files');
+    if (error) {
+      showError(error, 'JS: could not load files');
+    } else {
+      const modules = files.filter(file => !excludePattern.test(file));
 
-    const modules = files.filter(file => !excludePattern.test(file));
+      // add only base.js
+      const base = path.join('src', 'base', 'base.js');
+      modules.push(base);
 
-    // add only base.js
-    const base = path.join('src', 'base', 'base.js');
-    modules.push(base);
+      if (process.env.NODE_ENV !== 'production') {
+        // add styleguide.js too
+        const styleguide = path.join('src', 'styleguide', 'styleguide.js');
+        modules.push(styleguide);
+      }
 
-    if (process.env.NODE_ENV !== 'production') {
-      // add styleguide.js too
-      const styleguide = path.join('src', 'styleguide', 'styleguide.js');
-      modules.push(styleguide);
+      await Promise.all(modules.map(async (module) => {
+        await build(module);
+      }));
+
+      Array.prototype.push.apply(builtModules, modules);
     }
-
-    await Promise.all(modules.map(async (module) => {
-      await build(module);
-    }));
-
-    Array.prototype.push.apply(builtModules, modules);
   });
 })();
 

@@ -24,9 +24,6 @@ function shorten(str) {
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
-  const outputStyle = process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded';
-  const buildSourceMap = process.env.NODE_ENV !== 'production';
-
   const file = path.parse(module);
   const moduleDirs = file.dir.split(path.sep);
   const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
@@ -35,22 +32,20 @@ async function build(module) {
 
   await sass.render({
     file: module,
-    importer,
+    importer: [tildeImporter],
     outFile: path.join(targetDir, `${file.name}.css`),
-    outputStyle,
-    sourceMap: buildSourceMap,
+    outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
+    sourceMap: process.env.NODE_ENV !== 'production',
     includePaths: ['node_modules'],
   }, (error, result) => {
     if (error) {
       showError(error, 'CSS: build failed');
     } else {
       if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
-
       fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
 
-      if (buildSourceMap) {
+      if (process.env.NODE_ENV !== 'production') {
         fs.writeFileSync(path.join(targetDir, `${file.name}.css.map`), result.map);
-
         const obj = JSON.parse(result.map.toString());
         const sourceFile = shorten(obj.sources[0]);
         const sourceImports = obj.sources.slice(1);

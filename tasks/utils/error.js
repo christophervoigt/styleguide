@@ -7,6 +7,7 @@ const notifier = require('node-notifier');
 module.exports = function showError(error = {}, title = '') {
   const message = error.formatted || error.message || 'no error message';
 
+  console.log(chalk.hex('#F00')(title));
   console.log(chalk.hex('#F00')(message));
   notifier.notify({
     title,
