@@ -40,7 +40,7 @@ watch(srcPath, {
   recursive: true,
   filter: /\.jpg$|\.png$|\.ico$/,
 }, async (event, name) => {
-  await rebuildIMG(name);
+  await rebuildIMG(event, name);
   browserSync.reload();
 });
 

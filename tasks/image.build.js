@@ -3,11 +3,14 @@
 
 const path = require('path');
 const chalk = require('chalk');
-const Cattleman = require('cattleman');
+const glob = require('glob');
 const imagemin = require('imagemin');
+const showError = require('./utils/error');
 
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const excludePattern = process.env.NODE_ENV === 'production' ? /(fonts|styleguide)/ : /(fonts)/;
+const builtModules = [];
 
 async function build(module) {
   const srcPathDirs = srcPath.split('/');
@@ -21,26 +24,33 @@ async function build(module) {
   await imagemin([module], targetDir);
 }
 
-async function rebuild(module) {
-  console.log('IMG: build', chalk.green(module));
-  build(module);
+async function rebuild(event, module) {
+  if (event === 'remove') {
+    console.log('IMG: remove', chalk.green(module));
+    const index = builtModules.indexOf(module);
+    if (index >= 0) {
+      builtModules.splice(index, 1);
+    }
+  } else {
+    console.log('IMG: build', chalk.green(module));
+    build(module);
+  }
 }
 
 (async () => {
-  let cattleman = new Cattleman(srcPath);
+  glob('src/**/*{.jpg,.png,.svg,.ico}', async (error, files) => {
+    if (error) {
+      showError(error, 'IMG: could not load files');
+    } else {
+      const modules = files.filter(file => !excludePattern.test(file));
 
-  if (process.env.NODE_ENV === 'production') {
-    cattleman = new Cattleman({
-      directory: srcPath,
-      excludes: ['styleguide'],
-    });
-  }
+      await Promise.all(modules.map(async (module) => {
+        await build(module);
+      }));
 
-  const modules = cattleman.gatherFiles(['.jpg', '.png', '.svg', '.ico']);
-
-  await Promise.all(modules.map(async (module) => {
-    await build(module);
-  }));
+      Array.prototype.push.apply(builtModules, modules);
+    }
+  });
 })();
 
 exports.rebuild = rebuild;
