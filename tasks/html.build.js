@@ -11,8 +11,8 @@ const dependency = require('pug-dependency');
 const appRootPath = require('app-root-path');
 const showError = require('./utils/error');
 
-const srcPath = 'src';
-const distPath = 'app';
+const srcFolder = 'src';
+const distFolder = 'app';
 const excludePattern = /(base|styleguide|mixin)/;
 const importMap = {};
 
@@ -23,13 +23,9 @@ function shorten(str) {
 }
 
 function build(module) {
-  const srcPathDirs = srcPath.split('/');
   const file = path.parse(module);
-  const moduleDirs = file.dir.split(path.sep);
-  const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
-  const targetPath = path.normalize(targetDirs.join(path.sep));
-  const targetDir = path.join(distPath, targetPath);
-  const dependence = dependency('src/**/*.pug');
+  const targetDir = file.dir.replace(srcFolder, distFolder);
+  const dependence = dependency(`${srcFolder}/**/*.pug`);
 
   try {
     const fn = pug.compileFile(module, { self: true });
@@ -62,7 +58,12 @@ async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
     delete importMap[module];
-    // @ToDo: remove module from target directory
+
+    const targetPath = module.replace(srcFolder, distFolder).replace('.pug', '.html');
+    if (fs.existsSync(targetPath)) {
+      console.log('HTML: remove', chalk.green(targetPath));
+      fs.unlinkSync(targetPath);
+    }
   } else if (!excludePattern.test(module)) {
     console.log('HTML: build', chalk.green(module));
     build(module);
@@ -79,7 +80,7 @@ async function rebuild(event, module) {
 }
 
 (() => {
-  glob('src/**/*.pug', (error, files) => {
+  glob(`${srcFolder}/**/*.pug`, (error, files) => {
     if (error) {
       showError(error, 'HTML: could not load files');
     } else {

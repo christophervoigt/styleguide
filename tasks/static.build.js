@@ -2,23 +2,19 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
+const fs = require('fs');
 const chalk = require('chalk');
 const glob = require('glob');
 const shell = require('shelljs');
 const showError = require('./utils/error');
 
-const srcPath = 'src';
-const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const srcFolder = 'src';
+const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 const excludePattern = process.env.NODE_ENV === 'production' ? /(menu.json|styleguide)/ : /(menu.json)/;
 
 async function build(module) {
-  const srcPathDirs = srcPath.split('/');
-
   const file = path.parse(module);
-  const moduleDirs = file.dir.split(path.sep);
-  const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
-  const targetPath = path.normalize(targetDirs.join(path.sep));
-  const targetDir = path.join(distPath, targetPath);
+  const targetDir = file.dir.replace(srcFolder, distFolder);
 
   await shell.mkdir('-p', targetDir);
   await shell.cp(module, targetDir);
@@ -27,7 +23,12 @@ async function build(module) {
 async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('STATIC: remove', chalk.green(module));
-    // @ToDo: remove module from target directory
+
+    const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
+    if (fs.existsSync(targetPath)) {
+      console.log('STATIC: remove', chalk.green(targetPath));
+      fs.unlinkSync(targetPath);
+    }
   } else if (!excludePattern.test(module)) {
     console.log('STATIC: copy', chalk.green(module));
     build(module);
@@ -35,7 +36,7 @@ async function rebuild(event, module) {
 }
 
 (async () => {
-  glob('src/**/*{.eot,.woff,.woff2,.ttf,.json}', async (error, files) => {
+  glob(`${srcFolder}/**/*{.eot,.woff,.woff2,.ttf,.json}`, async (error, files) => {
     if (error) {
       showError(error, 'STATIC: could not load files');
     } else {

@@ -2,6 +2,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
+const fs = require('fs');
 const chalk = require('chalk');
 const glob = require('glob');
 const rollup = require('rollup');
@@ -12,8 +13,8 @@ const uglify = require('rollup-plugin-uglify');
 const { minify } = require('uglify-es');
 const showError = require('./utils/error');
 
-const srcPath = 'src';
-const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const srcFolder = 'src';
+const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
 const excludePattern = /(base|styleguide)/;
 const importMap = {};
 
@@ -24,11 +25,8 @@ function shorten(str) {
 }
 
 async function build(module) {
-  const srcPathDirs = srcPath.split('/');
   const file = path.parse(module);
-  const moduleDirs = file.dir.split(path.sep);
-  const targetDirs = moduleDirs.splice(srcPathDirs.length, moduleDirs.length);
-  const targetPath = path.normalize(targetDirs.join(path.sep));
+  const targetDir = file.dir.replace(srcFolder, distFolder);
 
   const bundle = await rollup.rollup({
     input: module,
@@ -45,9 +43,9 @@ async function build(module) {
   const outputOptions = {
     name: file.name,
     format: 'iife',
-    file: path.join(distPath, targetPath, `${file.name}.js`),
+    file: path.join(targetDir, `${file.name}.js`),
     sourcemap: process.env.NODE_ENV !== 'production',
-    intro: `window.addEventListener('load',function(){new ${file.name}()});`,
+    intro: `document.addEventListener('DOMContentLoaded',function(){${file.name}()});`,
   };
 
   if (bundle) {
@@ -71,7 +69,12 @@ async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('JS: remove', chalk.green(module));
     delete importMap[module];
-    // @ToDo: remove module from target directory
+
+    const targetPath = module.replace(srcFolder, distFolder);
+    if (fs.existsSync(targetPath)) {
+      console.log('JS: remove', chalk.green(targetPath));
+      fs.unlinkSync(targetPath);
+    }
   } else if (!excludePattern.test(module)) {
     console.log('JS: build', chalk.green(module));
     build(module);
@@ -88,19 +91,19 @@ async function rebuild(event, module) {
 }
 
 (async () => {
-  glob('src/**/*.js', async (error, files) => {
+  glob(`${srcFolder}/**/*.js`, async (error, files) => {
     if (error) {
       showError(error, 'JS: could not load files');
     } else {
       const modules = files.filter(file => !excludePattern.test(file));
 
       // add only base.js
-      const base = path.join('src', 'base', 'base.js');
+      const base = path.join(srcFolder, 'base', 'base.js');
       modules.push(base);
 
       if (process.env.NODE_ENV !== 'production') {
         // add styleguide.js too
-        const styleguide = path.join('src', 'styleguide', 'styleguide.js');
+        const styleguide = path.join(srcFolder, 'styleguide', 'styleguide.js');
         modules.push(styleguide);
       }
 
