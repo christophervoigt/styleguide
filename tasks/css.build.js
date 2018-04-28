@@ -4,16 +4,17 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
-const showError = require('./utils/error');
-const Cattleman = require('cattleman');
+const glob = require('glob');
 const shell = require('shelljs');
 const sass = require('node-sass');
-const importer = require('node-sass-tilde-importer');
+const tildeImporter = require('node-sass-tilde-importer');
+const showError = require('./utils/error');
 
 const srcPath = 'src';
 const distPath = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
+const excludePattern = /(base|styleguide)/;
 const importMap = {};
-let builtModules = [];
+const builtModules = [];
 
 function shorten(str) {
   let result = str.replace(/\.\.\//g, '');
@@ -53,7 +54,7 @@ async function build(module) {
         const obj = JSON.parse(result.map.toString());
         const sourceFile = shorten(obj.sources[0]);
         const sourceImports = obj.sources.slice(1);
-        if (sourceImports.length && !importMap[sourceFile]) {
+        if (sourceImports.length) {
           importMap[sourceFile] = sourceImports.map(str => shorten(str));
         }
       }
@@ -61,43 +62,57 @@ async function build(module) {
   });
 }
 
-async function rebuild(module) {
-  if (builtModules.includes(module)) {
-    console.log('CSS: build', chalk.green(module));
+async function rebuild(event, module) {
+  if (event === 'remove') {
+    console.log('CSS: remove', chalk.green(module));
+    delete importMap[module];
+    const index = builtModules.indexOf(module);
+    if (index >= 0) {
+      builtModules.splice(index, 1);
+    }
+  } else if (builtModules.includes(module)) {
+    console.log('CSS: update', chalk.green(module));
     build(module);
+  } else if (!excludePattern.test(module)) {
+    console.log('CSS: add', chalk.green(module));
+    build(module);
+    builtModules.push(module);
   }
 
   const files = Object.keys(importMap);
   files.forEach((file) => {
     const sources = importMap[file];
-
     if (sources.includes(module)) {
-      console.log('CSS: rebuild', chalk.green(file));
+      console.log('CSS: update', chalk.green(file));
       build(file);
     }
   });
 }
 
 (async () => {
-  const cattleman = new Cattleman({
-    directory: srcPath,
-    excludes: ['base', 'styleguide'],
+  glob('src/**/*.scss', async (error, files) => {
+    if (error) {
+      showError(error, 'CSS: could not load files');
+    } else {
+      const modules = files.filter(file => !excludePattern.test(file));
+
+      // add only base.scss
+      const base = path.join('src', 'base', 'base.scss');
+      modules.push(base);
+
+      if (process.env.NODE_ENV !== 'production') {
+        // add styleguide.scss too
+        const styleguide = path.join('src', 'styleguide', 'styleguide.scss');
+        modules.push(styleguide);
+      }
+
+      await Promise.all(modules.map(async (module) => {
+        await build(module);
+      }));
+
+      Array.prototype.push.apply(builtModules, modules);
+    }
   });
-  const modules = cattleman.gatherFiles('.scss');
-
-  const base = path.join('src', 'base', 'base.scss');
-  modules.push(base);
-
-  if (process.env.NODE_ENV !== 'production') {
-    const styleguide = path.join('src', 'styleguide', 'styleguide.scss');
-    modules.push(styleguide);
-  }
-
-  builtModules = modules;
-
-  await Promise.all(modules.map(async (module) => {
-    await build(module);
-  }));
 })();
 
 exports.rebuild = rebuild;

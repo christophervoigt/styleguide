@@ -24,7 +24,7 @@ watch(srcPath, {
   recursive: true,
   filter: /\.scss$/,
 }, async (event, name) => {
-  await rebuildCSS(name);
+  await rebuildCSS(event, name);
   browserSync.reload();
 });
 
