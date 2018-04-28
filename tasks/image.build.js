@@ -26,7 +26,8 @@ async function build(module) {
 async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('IMG: remove', chalk.green(module));
-  } else {
+    // @ToDo: remove module from target directory
+  } else if (!excludePattern.test(module)) {
     console.log('IMG: build', chalk.green(module));
     build(module);
   }

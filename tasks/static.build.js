@@ -27,7 +27,8 @@ async function build(module) {
 async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('STATIC: remove', chalk.green(module));
-  } else {
+    // @ToDo: remove module from target directory
+  } else if (!excludePattern.test(module)) {
     console.log('STATIC: copy', chalk.green(module));
     build(module);
   }

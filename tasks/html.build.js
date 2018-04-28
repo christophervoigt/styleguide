@@ -62,6 +62,7 @@ async function rebuild(event, module) {
   if (event === 'remove') {
     console.log('HTML: remove', chalk.green(module));
     delete importMap[module];
+    // @ToDo: remove module from target directory
   } else if (!excludePattern.test(module)) {
     console.log('HTML: build', chalk.green(module));
     build(module);
