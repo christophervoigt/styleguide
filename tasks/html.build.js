@@ -50,8 +50,6 @@ function build(module) {
   } catch (error) {
     showError(error, 'HTML: build failed');
   }
-
-  return importMap;
 }
 
 async function rebuild(event, module) {
