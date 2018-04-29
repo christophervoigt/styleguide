@@ -38,4 +38,4 @@ This sample project serves as a starting point for styleguides and module librar
 
 ## Licence
 
-[MIT](https://github.com/queoGmbH/ds-example/blob/master/LICENSE)
+[MIT](https://github.com/chlorophyllkid/styleguide/blob/master/LICENSE)
