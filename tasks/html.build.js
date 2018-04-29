@@ -52,18 +52,18 @@ function build(module) {
   }
 }
 
-async function rebuild(event, module) {
+function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('HTML: remove', chalk.green(module));
+    console.log('HTML: remove', chalk.blue(module));
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.pug', '.html');
     if (fs.existsSync(targetPath)) {
-      console.log('HTML: remove', chalk.green(targetPath));
+      console.log('HTML: remove', chalk.blue(targetPath));
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('HTML: build', chalk.green(module));
+    console.log('HTML: build', chalk.blue(module));
     build(module);
   }
 
@@ -71,23 +71,39 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('HTML: update', chalk.green(file));
+      console.log('HTML: update', chalk.blue(file));
       build(file);
     }
   });
 }
 
-(() => {
-  glob(`${srcFolder}/**/*.pug`, (error, files) => {
-    if (error) {
-      showError(error, 'HTML: could not load files');
-    } else {
-      const modules = files.filter(file => !excludePattern.test(file));
-      modules.forEach((module) => {
-        build(module);
-      });
-    }
+async function run() {
+  const startTime = new Date().getTime();
+  console.log(
+    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+    'Starting HTML...',
+  );
+
+  await new Promise((htmlResolve) => {
+    glob(`${srcFolder}/**/*.pug`, async (error, files) => {
+      if (error) {
+        showError(error, 'HTML: could not load files');
+      } else {
+        const modules = files.filter(file => !excludePattern.test(file));
+        await Promise.all(modules.map(module => build(module)));
+
+        console.log(
+          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+          `Finished HTML after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
+        );
+
+        htmlResolve();
+      }
+    });
   });
-})();
+}
+
+if (require.main === module) run();
 
 exports.rebuild = rebuild;
+exports.run = run;

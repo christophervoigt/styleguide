@@ -21,11 +21,11 @@ function shorten(str) {
   return result;
 }
 
-async function build(module) {
+function build(module) {
   const file = path.parse(module);
   const targetDir = file.dir.replace(srcFolder, distFolder);
 
-  await sass.render({
+  sass.render({
     file: module,
     importer: [tildeImporter],
     outFile: path.join(targetDir, `${file.name}.css`),
@@ -52,18 +52,18 @@ async function build(module) {
   });
 }
 
-async function rebuild(event, module) {
+function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('CSS: remove', chalk.green(module));
+    console.log('CSS: remove', chalk.blue(module));
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
     if (fs.existsSync(targetPath)) {
-      console.log('CSS: remove', chalk.green(targetPath));
+      console.log('CSS: remove', chalk.blue(targetPath));
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('CSS: build', chalk.green(module));
+    console.log('CSS: build', chalk.blue(module));
     build(module);
   }
 
@@ -71,34 +71,50 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('CSS: update', chalk.green(file));
+      console.log('CSS: update', chalk.blue(file));
       build(file);
     }
   });
 }
 
-(async () => {
-  glob(`${srcFolder}/**/*.scss`, async (error, files) => {
-    if (error) {
-      showError(error, 'CSS: could not load files');
-    } else {
-      const modules = files.filter(file => !excludePattern.test(file));
+async function run() {
+  const startTime = new Date().getTime();
+  console.log(
+    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+    'Starting CSS...',
+  );
 
-      // add only base.scss
-      const base = path.join(srcFolder, 'base', 'base.scss');
-      modules.push(base);
+  await new Promise((cssResolve) => {
+    glob(`${srcFolder}/**/*.scss`, async (error, files) => {
+      if (error) {
+        showError(error, 'CSS: could not load files');
+      } else {
+        const modules = files.filter(file => !excludePattern.test(file));
 
-      if (process.env.NODE_ENV !== 'production') {
-        // add styleguide.scss too
-        const styleguide = path.join(srcFolder, 'styleguide', 'styleguide.scss');
-        modules.push(styleguide);
+        // add only base.scss
+        const base = path.join(srcFolder, 'base', 'base.scss');
+        modules.push(base);
+
+        if (process.env.NODE_ENV !== 'production') {
+          // add styleguide.scss too
+          const styleguide = path.join(srcFolder, 'styleguide', 'styleguide.scss');
+          modules.push(styleguide);
+        }
+
+        await Promise.all(modules.map(module => build(module)));
+
+        console.log(
+          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+          `Finished CSS after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
+        );
+
+        cssResolve();
       }
-
-      await Promise.all(modules.map(async (module) => {
-        await build(module);
-      }));
-    }
+    });
   });
-})();
+}
+
+if (require.main === module) run();
 
 exports.rebuild = rebuild;
+exports.run = run;

@@ -67,16 +67,16 @@ async function build(module) {
 
 async function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('JS: remove', chalk.green(module));
+    console.log('JS: remove', chalk.blue(module));
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      console.log('JS: remove', chalk.green(targetPath));
+      console.log('JS: remove', chalk.blue(targetPath));
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('JS: build', chalk.green(module));
+    console.log('JS: build', chalk.blue(module));
     build(module);
   }
 
@@ -84,34 +84,52 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('JS: update', chalk.green(file));
+      console.log('JS: update', chalk.blue(file));
       build(file);
     }
   });
 }
 
-(async () => {
-  glob(`${srcFolder}/**/*.js`, async (error, files) => {
-    if (error) {
-      showError(error, 'JS: could not load files');
-    } else {
-      const modules = files.filter(file => !excludePattern.test(file));
+async function run() {
+  const startTime = new Date().getTime();
+  console.log(
+    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+    'Starting JS...',
+  );
 
-      // add only base.js
-      const base = path.join(srcFolder, 'base', 'base.js');
-      modules.push(base);
+  await new Promise((jsResolve) => {
+    glob(`${srcFolder}/**/*.js`, async (error, files) => {
+      if (error) {
+        showError(error, 'JS: could not load files');
+      } else {
+        const modules = files.filter(file => !excludePattern.test(file));
 
-      if (process.env.NODE_ENV !== 'production') {
-        // add styleguide.js too
-        const styleguide = path.join(srcFolder, 'styleguide', 'styleguide.js');
-        modules.push(styleguide);
+        // add only base.js
+        const base = path.join(srcFolder, 'base', 'base.js');
+        modules.push(base);
+
+        if (process.env.NODE_ENV !== 'production') {
+          // add styleguide.js too
+          const styleguide = path.join(srcFolder, 'styleguide', 'styleguide.js');
+          modules.push(styleguide);
+        }
+
+        await Promise.all(modules.map(async (module) => {
+          await build(module);
+        }));
+
+        console.log(
+          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+          `Finished JS after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
+        );
+
+        jsResolve();
       }
-
-      await Promise.all(modules.map(async (module) => {
-        await build(module);
-      }));
-    }
+    });
   });
-})();
+}
+
+if (require.main === module) run();
 
 exports.rebuild = rebuild;
+exports.run = run;

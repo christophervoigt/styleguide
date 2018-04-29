@@ -19,33 +19,51 @@ async function build(module) {
   await imagemin([module], targetDir);
 }
 
-async function rebuild(event, module) {
+function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('IMG: remove', chalk.green(module));
+    console.log('IMG: remove', chalk.blue(module));
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
     if (fs.existsSync(targetPath)) {
-      console.log('IMG: remove', chalk.green(targetPath));
+      console.log('IMG: remove', chalk.blue(targetPath));
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('IMG: build', chalk.green(module));
+    console.log('IMG: build', chalk.blue(module));
     build(module);
   }
 }
 
-(async () => {
-  glob(`${srcFolder}/**/*{.jpg,.png,.svg,.ico}`, async (error, files) => {
-    if (error) {
-      showError(error, 'IMG: could not load files');
-    } else {
-      const modules = files.filter(file => !excludePattern.test(file));
+async function run() {
+  const startTime = new Date().getTime();
+  console.log(
+    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+    'Starting IMG...',
+  );
 
-      await Promise.all(modules.map(async (module) => {
-        await build(module);
-      }));
-    }
+  await new Promise((imgResolve) => {
+    glob(`${srcFolder}/**/*{.jpg,.png,.svg,.ico}`, async (error, files) => {
+      if (error) {
+        showError(error, 'IMG: could not load files');
+      } else {
+        const modules = files.filter(file => !excludePattern.test(file));
+
+        await Promise.all(modules.map(async (module) => {
+          await build(module);
+        }));
+
+        console.log(
+          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+          `Finished IMG after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
+        );
+
+        imgResolve();
+      }
+    });
   });
-})();
+}
+
+if (require.main === module) run();
 
 exports.rebuild = rebuild;
+exports.run = run;
