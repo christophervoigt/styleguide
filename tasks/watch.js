@@ -44,19 +44,42 @@ function startBrowserSync() {
 function startWatchTask() {
   // @ToDo: find a more generic approach
 
-  watch(srcFolder, {
-    recursive: true,
-    filter: /\.scss$/,
-  }, async (event, name) => {
-    await rebuildCSS(event, name);
+  // watch(srcFolder, {
+  //   recursive: true,
+  //   filter: /\.scss$/,
+  // }, async (event, name) => {
+  //   await rebuildCSS(event, name);
+  //   browserSync.reload();
+  // });
+
+  browserSync.watch('src/**/*.scss', async (event, file) => {
+    await rebuildCSS(event, file);
     browserSync.reload();
   });
 
-  watch(srcFolder, {
-    recursive: true,
-    filter: /\.pug$/,
-  }, async (event, name) => {
-    await rebuildHTML(event, name);
+  // watch(srcFolder, {
+  //   recursive: true,
+  //   filter: /\.pug$/,
+  // }, async (event, name) => {
+  //   await rebuildHTML(event, name);
+  //   browserSync.reload();
+  // });
+
+  browserSync.watch('src/**/*.pug', async (event, file) => {
+    await rebuildHTML(event, file);
+    browserSync.reload();
+  });
+
+  // watch(srcFolder, {
+  //   recursive: true,
+  //   filter: /\.js$/,
+  // }, async (event, name) => {
+  //   await rebuildJS(event, name);
+  //   browserSync.reload();
+  // });
+
+  browserSync.watch('src/**/*.js', async (event, file) => {
+    await rebuildJS(event, file);
     browserSync.reload();
   });
 
@@ -65,14 +88,6 @@ function startWatchTask() {
     filter: /\.jpg$|\.png$|\.svg$|\.ico$/,
   }, async (event, name) => {
     await rebuildIMG(event, name);
-    browserSync.reload();
-  });
-
-  watch(srcFolder, {
-    recursive: true,
-    filter: /\.js$/,
-  }, async (event, name) => {
-    await rebuildJS(event, name);
     browserSync.reload();
   });
 
