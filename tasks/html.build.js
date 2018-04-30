@@ -78,12 +78,6 @@ function rebuild(event, module) {
 }
 
 async function run() {
-  const startTime = new Date().getTime();
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting HTML...',
-  );
-
   await new Promise((htmlResolve) => {
     glob(`${srcFolder}/**/*.pug`, async (error, files) => {
       if (error) {
@@ -91,11 +85,6 @@ async function run() {
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
         await Promise.all(modules.map(module => build(module)));
-
-        console.log(
-          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-          `Finished HTML after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-        );
 
         htmlResolve();
       }

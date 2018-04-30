@@ -78,12 +78,6 @@ function rebuild(event, module) {
 }
 
 async function run() {
-  const startTime = new Date().getTime();
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting CSS...',
-  );
-
   await new Promise((cssResolve) => {
     glob(`${srcFolder}/**/*.scss`, async (error, files) => {
       if (error) {
@@ -102,11 +96,6 @@ async function run() {
         }
 
         await Promise.all(modules.map(module => build(module)));
-
-        console.log(
-          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-          `Finished CSS after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-        );
 
         cssResolve();
       }

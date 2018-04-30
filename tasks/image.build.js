@@ -35,12 +35,6 @@ function rebuild(event, module) {
 }
 
 async function run() {
-  const startTime = new Date().getTime();
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting IMG...',
-  );
-
   await new Promise((imgResolve) => {
     glob(`${srcFolder}/**/*{.jpg,.png,.svg,.ico}`, async (error, files) => {
       if (error) {
@@ -51,11 +45,6 @@ async function run() {
         await Promise.all(modules.map(async (module) => {
           await build(module);
         }));
-
-        console.log(
-          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-          `Finished IMG after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-        );
 
         imgResolve();
       }

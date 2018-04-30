@@ -36,12 +36,6 @@ function rebuild(event, module) {
 }
 
 async function run() {
-  const startTime = new Date().getTime();
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting STATIC...',
-  );
-
   await new Promise((staticResolve) => {
     glob(`${srcFolder}/**/*{.eot,.woff,.woff2,.ttf,.json}`, async (error, files) => {
       if (error) {
@@ -52,11 +46,6 @@ async function run() {
         await Promise.all(modules.map(async (module) => {
           await build(module);
         }));
-
-        console.log(
-          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-          `Finished STATIC after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-        );
 
         staticResolve();
       }

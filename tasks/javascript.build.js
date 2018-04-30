@@ -91,12 +91,6 @@ async function rebuild(event, module) {
 }
 
 async function run() {
-  const startTime = new Date().getTime();
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting JS...',
-  );
-
   await new Promise((jsResolve) => {
     glob(`${srcFolder}/**/*.js`, async (error, files) => {
       if (error) {
@@ -117,11 +111,6 @@ async function run() {
         await Promise.all(modules.map(async (module) => {
           await build(module);
         }));
-
-        console.log(
-          `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-          `Finished JS after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-        );
 
         jsResolve();
       }
