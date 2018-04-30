@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 
-// tasks
+// @ToDo: find a more generic approach
 const rebuildHTML = require('./html.build').rebuild;
 const rebuildCSS = require('./css.build').rebuild;
 const rebuildJS = require('./javascript.build').rebuild;
@@ -16,38 +16,33 @@ const rebuildSTATIC = require('./static.build').rebuild;
 
 const srcFolder = 'src';
 const distFolder = 'app';
-
 const tasks = ['html', 'css', 'javascript', 'image', 'static'];
 
-(async () => {
-  await Promise.all(tasks.map(async (task) => {
-    const startTime = new Date().getTime();
-    console.log(
-      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-      `Starting ${task}...`,
-    );
+function formatTime(time = 0) {
+  let timeString = `${time}ms`;
 
-    const { run } = require(`./${task}.build`);
-    await run();
+  if (time > 1000) {
+    timeString = `${Number((time / 1000).toFixed(3))}s`;
+  } else if (time > (1000 * 60)) {
+    timeString = `${Number((time / (1000 * 60)).toFixed(2))}m`;
+  }
 
-    console.log(
-      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-      `Finished ${task} after ${chalk.blue(`${new Date().getTime() - startTime}ms`)}`,
-    );
-  }));
+  return timeString;
+}
 
+function startBrowserSync() {
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
     'Starting Browsersync...\n',
   );
-
   browserSync.init({
     server: { baseDir: distFolder },
     open: 'local',
   });
+}
 
-
-  // @ToDo: move watch tasks
+function startWatchTask() {
+  // @ToDo: find a more generic approach
 
   watch(srcFolder, {
     recursive: true,
@@ -88,4 +83,25 @@ const tasks = ['html', 'css', 'javascript', 'image', 'static'];
     await rebuildSTATIC(event, name);
     browserSync.reload();
   });
+}
+
+(async () => {
+  await Promise.all(tasks.map(async (task) => {
+    const startTime = new Date().getTime();
+    console.log(
+      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+      `Starting ${task}...`,
+    );
+
+    const { run } = require(`./${task}.build`);
+    await run();
+
+    console.log(
+      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+      `Finished ${task} after ${chalk.blue(formatTime(new Date().getTime() - startTime))}`,
+    );
+  }));
+
+  startBrowserSync();
+  startWatchTask();
 })();
