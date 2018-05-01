@@ -11,7 +11,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
 const { minify } = require('uglify-es');
-const showError = require('./utils/error');
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -38,7 +38,7 @@ async function build(module) {
       }),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
-  }).catch(error => showError(error, 'JS: build failed'));
+  }).catch(error => logger.error('javascript', error));
 
   const outputOptions = {
     name: file.name,
@@ -94,7 +94,7 @@ async function run() {
   await new Promise((jsResolve) => {
     glob(`${srcFolder}/**/*.js`, async (error, files) => {
       if (error) {
-        showError(error, 'JS: could not load files');
+        logger.error('javascript', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

@@ -1,9 +1,7 @@
-/* eslint no-console: ["off", { allow: ["warn"] }] */
 /* eslint global-require: ["off", { allow: ["warn"] }] */
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint import/no-dynamic-require: ["off", { allow: ["warn"] }] */
 
-const chalk = require('chalk');
 const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 
@@ -13,28 +11,15 @@ const rebuildCSS = require('./css.build').rebuild;
 const rebuildJS = require('./javascript.build').rebuild;
 const rebuildIMG = require('./image.build').rebuild;
 const rebuildSTATIC = require('./static.build').rebuild;
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = 'app';
 const tasks = ['html', 'css', 'javascript', 'image', 'static'];
 
-function formatTime(time = 0) {
-  let timeString = `${time}ms`;
-
-  if (time > 1000) {
-    timeString = `${Number((time / 1000).toFixed(3))}s`;
-  } else if (time > (1000 * 60)) {
-    timeString = `${Number((time / (1000 * 60)).toFixed(2))}m`;
-  }
-
-  return timeString;
-}
-
 function startBrowserSync() {
-  console.log(
-    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    'Starting Browsersync...\n',
-  );
+  logger.start('Browsersync');
+
   browserSync.init({
     server: { baseDir: distFolder },
     open: 'local',
@@ -103,18 +88,13 @@ function startWatchTask() {
 (async () => {
   await Promise.all(tasks.map(async (task) => {
     const startTime = new Date().getTime();
-    console.log(
-      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-      `Starting ${task}...`,
-    );
+    logger.start(task);
 
     const { run } = require(`./${task}.build`);
     await run();
 
-    console.log(
-      `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-      `Finished ${task} after ${chalk.blue(formatTime(new Date().getTime() - startTime))}`,
-    );
+    const time = new Date().getTime() - startTime;
+    logger.finish(task, time);
   }));
 
   startBrowserSync();

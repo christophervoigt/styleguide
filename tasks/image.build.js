@@ -6,7 +6,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const glob = require('glob');
 const imagemin = require('imagemin');
-const showError = require('./utils/error');
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -38,7 +38,7 @@ async function run() {
   await new Promise((imgResolve) => {
     glob(`${srcFolder}/**/*{.jpg,.png,.svg,.ico}`, async (error, files) => {
       if (error) {
-        showError(error, 'IMG: could not load files');
+        logger.error('javascript', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

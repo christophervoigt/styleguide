@@ -6,7 +6,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const glob = require('glob');
 const shell = require('shelljs');
-const showError = require('./utils/error');
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -39,7 +39,7 @@ async function run() {
   await new Promise((staticResolve) => {
     glob(`${srcFolder}/**/*{.eot,.woff,.woff2,.ttf,.json}`, async (error, files) => {
       if (error) {
-        showError(error, 'STATIC: could not load files');
+        logger.error('javascript', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

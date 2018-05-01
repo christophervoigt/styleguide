@@ -8,7 +8,7 @@ const glob = require('glob');
 const shell = require('shelljs');
 const sass = require('node-sass');
 const tildeImporter = require('node-sass-tilde-importer');
-const showError = require('./utils/error');
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -34,7 +34,7 @@ function build(module) {
     includePaths: ['node_modules'],
   }, (error, result) => {
     if (error) {
-      showError(error, 'CSS: build failed');
+      logger.error('css', error);
     } else {
       if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
       fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
@@ -81,7 +81,7 @@ async function run() {
   await new Promise((cssResolve) => {
     glob(`${srcFolder}/**/*.scss`, async (error, files) => {
       if (error) {
-        showError(error, 'CSS: could not load files');
+        logger.error('css', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

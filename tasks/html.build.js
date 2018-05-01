@@ -9,7 +9,7 @@ const shell = require('shelljs');
 const pug = require('pug');
 const dependency = require('pug-dependency');
 const appRootPath = require('app-root-path');
-const showError = require('./utils/error');
+const logger = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = 'app';
@@ -48,7 +48,7 @@ function build(module) {
       }
     }
   } catch (error) {
-    showError(error, 'HTML: build failed');
+    logger.error('html', error);
   }
 }
 
@@ -81,7 +81,7 @@ async function run() {
   await new Promise((htmlResolve) => {
     glob(`${srcFolder}/**/*.pug`, async (error, files) => {
       if (error) {
-        showError(error, 'HTML: could not load files');
+        logger.error('html', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
         await Promise.all(modules.map(module => build(module)));
