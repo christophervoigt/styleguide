@@ -4,13 +4,6 @@
 
 const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
-
-// @ToDo: find a more generic approach
-const rebuildHTML = require('./html.build').rebuild;
-const rebuildCSS = require('./css.build').rebuild;
-const rebuildJS = require('./javascript.build').rebuild;
-const rebuildIMG = require('./image.build').rebuild;
-const rebuildSTATIC = require('./static.build').rebuild;
 const logger = require('./utils/logger');
 
 const srcFolder = 'src';
@@ -27,60 +20,25 @@ function startBrowserSync() {
 }
 
 function startWatchTask() {
-  // @ToDo: find a more generic approach
+  const rebuildHTML = require('./html.build').rebuild;
+  const rebuildCSS = require('./css.build').rebuild;
+  const rebuildJS = require('./javascript.build').rebuild;
+  const rebuildIMG = require('./image.build').rebuild;
+  const rebuildSTATIC = require('./static.build').rebuild;
 
-  // watch(srcFolder, {
-  //   recursive: true,
-  //   filter: /\.scss$/,
-  // }, async (event, name) => {
-  //   await rebuildCSS(event, name);
-  //   browserSync.reload();
-  // });
+  watch(srcFolder, { recursive: true }, async (event, name) => {
+    if (/\.pug$/.test(name)) {
+      await rebuildHTML(event, name);
+    } else if (/\.scss$/.test(name)) {
+      await rebuildCSS(event, name);
+    } else if (/\.js$/.test(name)) {
+      await rebuildJS(event, name);
+    } else if (/\.jpg$|\.png$|\.svg$|\.ico$/.test(name)) {
+      await rebuildIMG(event, name);
+    } else if (/\.eot$|\.woff$|\.woff2$|\.ttf$|\.json$/.test(name)) {
+      await rebuildSTATIC(event, name);
+    }
 
-  browserSync.watch('src/**/*.scss', async (event, file) => {
-    await rebuildCSS(event, file);
-    browserSync.reload();
-  });
-
-  // watch(srcFolder, {
-  //   recursive: true,
-  //   filter: /\.pug$/,
-  // }, async (event, name) => {
-  //   await rebuildHTML(event, name);
-  //   browserSync.reload();
-  // });
-
-  browserSync.watch('src/**/*.pug', async (event, file) => {
-    await rebuildHTML(event, file);
-    browserSync.reload();
-  });
-
-  // watch(srcFolder, {
-  //   recursive: true,
-  //   filter: /\.js$/,
-  // }, async (event, name) => {
-  //   await rebuildJS(event, name);
-  //   browserSync.reload();
-  // });
-
-  browserSync.watch('src/**/*.js', async (event, file) => {
-    await rebuildJS(event, file);
-    browserSync.reload();
-  });
-
-  watch(srcFolder, {
-    recursive: true,
-    filter: /\.jpg$|\.png$|\.svg$|\.ico$/,
-  }, async (event, name) => {
-    await rebuildIMG(event, name);
-    browserSync.reload();
-  });
-
-  watch(srcFolder, {
-    recursive: true,
-    filter: /\.eot$|\.woff$|\.woff2$|\.ttf$|\.json$/,
-  }, async (event, name) => {
-    await rebuildSTATIC(event, name);
     browserSync.reload();
   });
 }
