@@ -10,16 +10,16 @@ function format(time = 0) {
 
   if (time >= 1000 && time < 60000) {
     const seconds = Math.floor(time / 1000);
-    const rest = time - (seconds * 1000);
 
-    timeString = `${seconds}s ${format(rest)}`;
+    timeString = `${seconds}s`;
   }
 
   if (time >= 60000) {
     const minutes = Math.floor(time / 60000);
     const rest = time - (minutes * 60000);
+    const seconds = Math.floor(rest / 1000);
 
-    timeString = `${minutes}m ${format(rest)}`;
+    timeString = `${minutes}m ${seconds}s`;
   }
 
   return timeString;
@@ -59,3 +59,13 @@ function error(task = 'task', err = {}) {
   });
 }
 module.exports.error = error;
+
+
+function fileChange(task = 'task', change = 'update', file = '.') {
+  console.log(
+    `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
+    `${task}: ${change}`,
+    chalk.blue(file),
+  );
+}
+module.exports.fileChange = fileChange;

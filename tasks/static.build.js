@@ -1,12 +1,10 @@
-/* eslint no-console: ["off", { allow: ["warn"] }] */
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
 const fs = require('fs');
-const chalk = require('chalk');
 const glob = require('glob');
 const shell = require('shelljs');
-const logger = require('./utils/logger');
+const log = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -22,15 +20,15 @@ async function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('STATIC: remove', chalk.blue(module));
+    log.fileChange('STATIC', 'remove', module);
 
-    const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
+    const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      console.log('STATIC: remove', chalk.blue(targetPath));
+      log.fileChange('STATIC', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('STATIC: copy', chalk.blue(module));
+    log.fileChange('STATIC', 'copy', module);
     build(module);
   }
 }
@@ -39,7 +37,7 @@ async function run() {
   await new Promise((staticResolve) => {
     glob(`${srcFolder}/**/*{.eot,.woff,.woff2,.ttf,.json}`, async (error, files) => {
       if (error) {
-        logger.error('javascript', error);
+        log.error('javascript', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

@@ -1,15 +1,13 @@
-/* eslint no-console: ["off", { allow: ["warn"] }] */
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
 const fs = require('fs');
-const chalk = require('chalk');
 const glob = require('glob');
 const shell = require('shelljs');
 const pug = require('pug');
 const dependency = require('pug-dependency');
 const appRootPath = require('app-root-path');
-const logger = require('./utils/logger');
+const log = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = 'app';
@@ -48,22 +46,22 @@ function build(module) {
       }
     }
   } catch (error) {
-    logger.error('html', error);
+    log.error('html', error);
   }
 }
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('HTML: remove', chalk.blue(module));
+    log.fileChange('HTML', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.pug', '.html');
     if (fs.existsSync(targetPath)) {
-      console.log('HTML: remove', chalk.blue(targetPath));
+      log.fileChange('HTML', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('HTML: build', chalk.blue(module));
+    log.fileChange('HTML', 'build', module);
     build(module);
   }
 
@@ -71,7 +69,7 @@ function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('HTML: update', chalk.blue(file));
+      log.fileChange('HTML', 'update', file);
       build(file);
     }
   });
@@ -81,7 +79,7 @@ async function run() {
   await new Promise((htmlResolve) => {
     glob(`${srcFolder}/**/*.pug`, async (error, files) => {
       if (error) {
-        logger.error('html', error);
+        log.error('html', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
         await Promise.all(modules.map(module => build(module)));

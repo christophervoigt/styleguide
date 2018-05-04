@@ -1,9 +1,7 @@
-/* eslint no-console: ["off", { allow: ["warn"] }] */
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
 const fs = require('fs');
-const chalk = require('chalk');
 const glob = require('glob');
 const rollup = require('rollup');
 const babel = require('rollup-plugin-babel');
@@ -11,7 +9,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
 const { minify } = require('uglify-es');
-const logger = require('./utils/logger');
+const log = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -38,7 +36,7 @@ async function build(module) {
       }),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
-  }).catch(error => logger.error('javascript', error));
+  }).catch(error => log.error('javascript', error));
 
   const outputOptions = {
     name: file.name,
@@ -67,16 +65,16 @@ async function build(module) {
 
 async function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('JS: remove', chalk.blue(module));
+    log.fileChange('JS', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      console.log('JS: remove', chalk.blue(targetPath));
+      log.fileChange('JS', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('JS: build', chalk.blue(module));
+    log.fileChange('JS', 'build', module);
     build(module);
   }
 
@@ -84,7 +82,7 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('JS: update', chalk.blue(file));
+      log.fileChange('JS', 'update', file);
       build(file);
     }
   });
@@ -94,7 +92,7 @@ async function run() {
   await new Promise((jsResolve) => {
     glob(`${srcFolder}/**/*.js`, async (error, files) => {
       if (error) {
-        logger.error('javascript', error);
+        log.error('javascript', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 

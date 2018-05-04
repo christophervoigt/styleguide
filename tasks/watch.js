@@ -6,6 +6,12 @@ const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 const logger = require('./utils/logger');
 
+const rebuildHTML = require('./html.build').rebuild;
+const rebuildCSS = require('./css.build').rebuild;
+const rebuildJS = require('./javascript.build').rebuild;
+const rebuildIMG = require('./image.build').rebuild;
+const rebuildSTATIC = require('./static.build').rebuild;
+
 const srcFolder = 'src';
 const distFolder = 'app';
 const tasks = ['html', 'css', 'javascript', 'image', 'static'];
@@ -20,12 +26,6 @@ function startBrowserSync() {
 }
 
 function startWatchTask() {
-  const rebuildHTML = require('./html.build').rebuild;
-  const rebuildCSS = require('./css.build').rebuild;
-  const rebuildJS = require('./javascript.build').rebuild;
-  const rebuildIMG = require('./image.build').rebuild;
-  const rebuildSTATIC = require('./static.build').rebuild;
-
   watch(srcFolder, { recursive: true }, async (event, name) => {
     if (/\.pug$/.test(name)) {
       await rebuildHTML(event, name);

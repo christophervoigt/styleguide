@@ -1,14 +1,12 @@
-/* eslint no-console: ["off", { allow: ["warn"] }] */
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const path = require('path');
 const fs = require('fs');
-const chalk = require('chalk');
 const glob = require('glob');
 const shell = require('shelljs');
 const sass = require('node-sass');
 const tildeImporter = require('node-sass-tilde-importer');
-const logger = require('./utils/logger');
+const log = require('./utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
@@ -34,7 +32,7 @@ function build(module) {
     includePaths: ['node_modules'],
   }, (error, result) => {
     if (error) {
-      logger.error('css', error);
+      log.error('css', error);
     } else {
       if (!fs.existsSync(targetDir)) { shell.mkdir('-p', targetDir); }
       fs.writeFileSync(path.join(targetDir, `${file.name}.css`), result.css);
@@ -54,16 +52,16 @@ function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    console.log('CSS: remove', chalk.blue(module));
+    log.fileChange('CSS', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
     if (fs.existsSync(targetPath)) {
-      console.log('CSS: remove', chalk.blue(targetPath));
+      log.fileChange('CSS', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    console.log('CSS: build', chalk.blue(module));
+    log.fileChange('CSS', 'build', module);
     build(module);
   }
 
@@ -71,7 +69,7 @@ function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      console.log('CSS: update', chalk.blue(file));
+      log.fileChange('CSS', 'update', file);
       build(file);
     }
   });
@@ -81,7 +79,7 @@ async function run() {
   await new Promise((cssResolve) => {
     glob(`${srcFolder}/**/*.scss`, async (error, files) => {
       if (error) {
-        logger.error('css', error);
+        log.error('css', error);
       } else {
         const modules = files.filter(file => !excludePattern.test(file));
 
