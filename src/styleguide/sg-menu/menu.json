@@ -15,10 +15,9 @@
     ]
   },  
   {
-    "title": "Guidelines",
+    "title": "Guides",
     "subMenu": [
-      { "title": "HowTo" },
-      { "title": "Technologies" }
+      { "title": "Dependencies", "url": "/guides/dependencies.html" }
     ]
   }
 ]
