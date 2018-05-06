@@ -9,7 +9,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
 const { minify } = require('uglify-es');
-const log = require('./utils/logger');
+const log = require('../utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';

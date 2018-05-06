@@ -6,11 +6,11 @@ const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 const logger = require('./utils/logger');
 
-const rebuildHTML = require('./html.build').rebuild;
-const rebuildCSS = require('./css.build').rebuild;
-const rebuildJS = require('./javascript.build').rebuild;
-const rebuildIMG = require('./image.build').rebuild;
-const rebuildSTATIC = require('./static.build').rebuild;
+const rebuildHTML = require('./build/html').rebuild;
+const rebuildCSS = require('./build/css').rebuild;
+const rebuildJS = require('./build/javascript').rebuild;
+const rebuildIMG = require('./build/image').rebuild;
+const rebuildSTATIC = require('./build/static').rebuild;
 
 const srcFolder = 'src';
 const distFolder = 'app';
@@ -48,7 +48,7 @@ function startWatchTask() {
     const startTime = new Date().getTime();
     logger.start(task);
 
-    const { run } = require(`./${task}.build`);
+    const { run } = require(`./build/${task}`);
     await run();
 
     const time = new Date().getTime() - startTime;
