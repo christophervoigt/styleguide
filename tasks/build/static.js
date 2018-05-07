@@ -20,15 +20,15 @@ async function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    log.fileChange('STATIC', 'remove', module);
+    log.fileChange('static', 'remove', module);
 
     const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      log.fileChange('STATIC', 'remove', targetPath);
+      log.fileChange('static', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    log.fileChange('STATIC', 'copy', module);
+    log.fileChange('static', 'copy', module);
     build(module);
   }
 }

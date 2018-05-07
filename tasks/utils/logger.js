@@ -29,7 +29,7 @@ function format(time = 0) {
 function start(task = 'task') {
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    `Starting ${task}...`,
+    `Starting ${chalk.magenta(task)} ...`,
   );
 }
 module.exports.start = start;
@@ -38,7 +38,7 @@ module.exports.start = start;
 function finish(task = 'task', time = 0) {
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    `Finished ${task} after ${chalk.blue(format(time))}`,
+    `Finished ${chalk.magenta(task)} after ${chalk.blue(format(time))}`,
   );
 }
 module.exports.finish = finish;
@@ -49,7 +49,7 @@ function error(task = 'task', err = {}) {
 
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    `Catched ${task} error:`,
+    `Catched ${chalk.magenta(task)} error:`,
   );
   console.log(chalk.red(message));
 
@@ -64,7 +64,7 @@ module.exports.error = error;
 function fileChange(task = 'task', change = 'update', file = '.') {
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,
-    `${task}: ${change}`,
+    `${chalk.magenta(task)} ${change}`,
     chalk.blue(file),
   );
 }

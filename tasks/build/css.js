@@ -52,16 +52,16 @@ function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    log.fileChange('CSS', 'remove', module);
+    log.fileChange('css', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.scss', '.css');
     if (fs.existsSync(targetPath)) {
-      log.fileChange('CSS', 'remove', targetPath);
+      log.fileChange('css', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    log.fileChange('CSS', 'build', module);
+    log.fileChange('css', 'build', module);
     build(module);
   }
 
@@ -69,7 +69,7 @@ function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      log.fileChange('CSS', 'update', file);
+      log.fileChange('css', 'update', file);
       build(file);
     }
   });

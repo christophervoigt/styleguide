@@ -65,16 +65,16 @@ async function build(module) {
 
 async function rebuild(event, module) {
   if (event === 'remove') {
-    log.fileChange('JS', 'remove', module);
+    log.fileChange('javascript', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      log.fileChange('JS', 'remove', targetPath);
+      log.fileChange('javascript', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    log.fileChange('JS', 'build', module);
+    log.fileChange('javascript', 'build', module);
     build(module);
   }
 
@@ -82,7 +82,7 @@ async function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      log.fileChange('JS', 'update', file);
+      log.fileChange('javascript', 'update', file);
       build(file);
     }
   });

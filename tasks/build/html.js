@@ -52,16 +52,16 @@ function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    log.fileChange('HTML', 'remove', module);
+    log.fileChange('html', 'remove', module);
     delete importMap[module];
 
     const targetPath = module.replace(srcFolder, distFolder).replace('.pug', '.html');
     if (fs.existsSync(targetPath)) {
-      log.fileChange('HTML', 'remove', targetPath);
+      log.fileChange('html', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    log.fileChange('HTML', 'build', module);
+    log.fileChange('html', 'build', module);
     build(module);
   }
 
@@ -69,7 +69,7 @@ function rebuild(event, module) {
   files.forEach((file) => {
     const sources = importMap[file];
     if (sources.includes(module)) {
-      log.fileChange('HTML', 'update', file);
+      log.fileChange('html', 'update', file);
       build(file);
     }
   });

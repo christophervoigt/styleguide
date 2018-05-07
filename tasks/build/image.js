@@ -19,15 +19,15 @@ async function build(module) {
 
 function rebuild(event, module) {
   if (event === 'remove') {
-    log.fileChange('IMG', 'remove', module);
+    log.fileChange('image', 'remove', module);
 
     const targetPath = module.replace(srcFolder, distFolder);
     if (fs.existsSync(targetPath)) {
-      log.fileChange('IMG', 'remove', targetPath);
+      log.fileChange('image', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
   } else if (!excludePattern.test(module)) {
-    log.fileChange('IMG', 'build', module);
+    log.fileChange('image', 'build', module);
     build(module);
   }
 }
