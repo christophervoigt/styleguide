@@ -28,7 +28,12 @@ body {
 
     height: 100%;
     width: 6vw;
-    transition: width .1s ease-in, box-shadow .2s ease-out;
+    transition: width .125s ease-in, box-shadow .25s ease-out;
+
+    // 992px
+    @media(min-width: 62rem) {
+      width: 15vw;
+    }
   }
 
   > main {
@@ -36,12 +41,24 @@ body {
 
     width: 94vw;
     margin-left: 6vw;
+
+    // 992px
+    @media(min-width: 62rem) {
+      width: 85vw;
+      margin-left: 15vw;
+    }
   }
 
   &.-openSidebar {
     > aside {
       width: 94vw;
       box-shadow: 0 0 50vw 100vw transparentize($sg-text-grey, .5);
+
+      // 992px
+      @media(min-width: 62rem) {
+        width: 15vw;
+        box-shadow: none;
+      }
     }
   }
 }

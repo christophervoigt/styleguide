@@ -1,10 +1,9 @@
 
 mixin sg-sidebar()
 
-  aside.sg-sidebar(draggable="true")
+  aside.sg-sidebar
     .sg-sidebar_handle
 
-    +sg-menu()
-
     //- +sg-logo()
-    //- +sg-version()
+    +sg-menu()
+    +sg-version()

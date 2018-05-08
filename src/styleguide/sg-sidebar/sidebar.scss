@@ -11,10 +11,14 @@
     position: absolute;
     right: 0;
     top: 50%;
-
     transform: translateY(-50%) rotate(90deg);
 
     @include make-sg-icon-before('\e900');
+
+    // 992px
+    @media(min-width: 62rem) {
+      display: none;
+    }
 
     &:before {
       color: $sg-white;
