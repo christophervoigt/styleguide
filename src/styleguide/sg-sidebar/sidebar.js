@@ -4,7 +4,7 @@ export default function sidebar(selector = '.sg-sidebar') {
   const body = document.querySelector('body');
   const sidebarElement = document.querySelector(selector);
 
-  sidebarElement.addEventListener('touchstart', handleTouchStart, false);
+  document.addEventListener('touchstart', handleTouchStart, false);
   sidebarElement.addEventListener('touchmove', handleTouchMove, false);
 
   let xDown = null;

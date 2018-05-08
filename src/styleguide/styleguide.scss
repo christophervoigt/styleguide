@@ -16,7 +16,8 @@ body {
   color: $sg-text-grey;
   font-family: Ubuntu, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-  overflow-x: hidden;
+  height: 100%;
+  position: relative;
 
   > aside {
     position: fixed;
@@ -26,21 +27,21 @@ body {
     overflow: hidden;
 
     height: 100%;
-    width: 15vw;
-    transition: width .25s ease-in, box-shadow .5s ease-out;
+    width: 6vw;
+    transition: width .1s ease-in, box-shadow .2s ease-out;
   }
 
   > main {
     overflow: hidden;
 
-    width: 85vw;
-    margin-left: 15vw;
+    width: 94vw;
+    margin-left: 6vw;
   }
 
   &.-openSidebar {
     > aside {
-      width: 85vw;
-      box-shadow: 0 0 50vw 100vw transparentize($sg-text-grey, .25);
+      width: 94vw;
+      box-shadow: 0 0 50vw 100vw transparentize($sg-text-grey, .5);
     }
   }
 }
