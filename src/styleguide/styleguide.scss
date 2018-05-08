@@ -10,23 +10,37 @@
 @import 'sg-tabs/tabs';
 @import 'sg-version/version';
 @import 'sg-usedModules/usedModules';
+@import 'sg-sidebar/sidebar';
 
 body {
-  display: flex;
-  flex-direction: row;
-}
   color: $sg-text-grey;
   font-family: Ubuntu, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-body > aside {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  overflow-x: hidden;
 
-body > main {
-  flex: 0 1 100%;
-  overflow: auto;
-  height: 100vh;
+  > aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    overflow: hidden;
+
+    height: 100%;
+    width: 15vw;
+    transition: width .25s ease-in, box-shadow .5s ease-out;
+  }
+
+  > main {
+    overflow: hidden;
+
+    width: 85vw;
+    margin-left: 15vw;
+  }
+
+  &.-openSidebar {
+    > aside {
+      width: 85vw;
+      box-shadow: 0 0 50vw 100vw transparentize($sg-text-grey, .25);
+    }
+  }
 }

@@ -8,6 +8,7 @@ include sg-menu/menu.pug
 include sg-tabs/tabs.pug
 include sg-version/version.pug
 include sg-usedModules/usedModules.pug
+include sg-sidebar/sidebar.pug
 
 
 block stylesheets
@@ -22,10 +23,7 @@ block javascripts
 
 
 block page
-  aside
-    +sg-logo()
-    +sg-menu()
-    +sg-version()
+  +sg-sidebar()
 
   main
     block main
