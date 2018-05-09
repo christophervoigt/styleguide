@@ -8,7 +8,7 @@ const log = require('../utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
-const excludePattern = process.env.NODE_ENV === 'production' ? /(menu.json|styleguide)/ : /(menu.json)/;
+const excludePattern = process.env.NODE_ENV === 'production' ? /(menu.json|.font.json|styleguide)/ : /(menu.json|.font.json)/;
 
 async function build(module) {
   const file = path.parse(module);

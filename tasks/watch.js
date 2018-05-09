@@ -14,7 +14,7 @@ const rebuildSTATIC = require('./build/static').rebuild;
 
 const srcFolder = 'src';
 const distFolder = 'app';
-const tasks = ['html', 'css', 'javascript', 'image', 'static'];
+const tasks = ['font', 'html', 'css', 'javascript', 'image', 'static'];
 
 function startBrowserSync() {
   logger.start('Browsersync');
