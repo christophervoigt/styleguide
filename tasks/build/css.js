@@ -60,7 +60,7 @@ function rebuild(event, module) {
       log.fileChange('css', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
-  } else if (!excludePattern.test(module)) {
+  } else if (!excludePattern.test(module) || /(base.scss$|styleguide.scss$)/.test(module)) {
     log.fileChange('css', 'build', module);
     build(module);
   }

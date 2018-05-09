@@ -73,7 +73,7 @@ async function rebuild(event, module) {
       log.fileChange('javascript', 'remove', targetPath);
       fs.unlinkSync(targetPath);
     }
-  } else if (!excludePattern.test(module)) {
+  } else if (!excludePattern.test(module) || /(base.js$|styleguide.js$)/.test(module)) {
     log.fileChange('javascript', 'build', module);
     build(module);
   }
