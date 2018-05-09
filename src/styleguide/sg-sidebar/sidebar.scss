@@ -11,9 +11,9 @@
     position: absolute;
     right: 0;
     top: 50%;
-    transform: translateY(-50%) rotate(90deg);
+    transform: translateY(-50%);
 
-    @include make-sg-icon-before('\e900');
+    @include sg-icon-before($sg-icon-arrow_right);
 
     @include media('>md') {
       display: none;
@@ -27,5 +27,5 @@
 }
 
 body.-openSidebar .sg-sidebar_handle {
-  transform: translateY(-50%) rotate(-90deg);
+  transform: translateY(-50%) rotate(-180deg);
 }
