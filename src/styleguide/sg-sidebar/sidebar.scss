@@ -15,8 +15,7 @@
 
     @include make-sg-icon-before('\e900');
 
-    // 992px
-    @media(min-width: 62rem) {
+    @include media('>md') {
       display: none;
     }
 

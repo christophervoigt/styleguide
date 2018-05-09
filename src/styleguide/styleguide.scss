@@ -1,4 +1,5 @@
 
+@import '../base/base';
 @import '_sg-variables/all';
 @import '_sg-mixins/all';
 @import 'sg-fonts/icomoon';
@@ -30,8 +31,7 @@ body {
     width: 6vw;
     transition: width .125s ease-in, box-shadow .25s ease-out;
 
-    // 992px
-    @media(min-width: 62rem) {
+    @include media('>md') {
       width: 15vw;
     }
   }
@@ -42,8 +42,7 @@ body {
     width: 94vw;
     margin-left: 6vw;
 
-    // 992px
-    @media(min-width: 62rem) {
+    @include media('>md') {
       width: 85vw;
       margin-left: 15vw;
     }
@@ -54,8 +53,7 @@ body {
       width: 94vw;
       box-shadow: 0 0 50vw 100vw transparentize($sg-text-grey, .5);
 
-      // 992px
-      @media(min-width: 62rem) {
+      @include media('>md') {
         width: 15vw;
         box-shadow: none;
       }

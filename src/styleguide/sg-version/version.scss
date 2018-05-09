@@ -5,8 +5,7 @@
   transition: opacity .125s ease-in, visibility .125s ease-in;
   padding: 1em;
 
-  // 992px
-  @media(min-width: 62rem) {
+  @include media('>md') {
     opacity: 1;
     visibility: visible;
   }
