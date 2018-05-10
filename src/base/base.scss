@@ -8,3 +8,9 @@
 @import 'breakpoints/breakpoints';
 @import 'collapsable/collapsable';
 @import 'cookieConsent/cookieConsent';
+
+body {
+  * {
+    box-sizing: border-box;
+  }
+}

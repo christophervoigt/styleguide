@@ -2,9 +2,7 @@
   {
     "title": "Basics",
     "subMenu": [
-      { "title": "Icons" },
-      { "title": "Typography" },
-      { "title": "Forms" }
+      { "title": "Icons", "url": "/modules/atoms/icons/icons.html" }
     ]
   },
   {
