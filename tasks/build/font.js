@@ -59,8 +59,24 @@ function build(module) {
   }
 }
 
-async function rebuild(event, font) {
-  console.log('font', font);
+function rebuild(event, module) {
+  if (event === 'remove') {
+    log.fileChange('font', 'remove', module);
+
+    const pugFile = module.replace('.font.json', '_generated.pug');
+    if (fs.existsSync(pugFile)) {
+      log.fileChange('font', 'remove', pugFile);
+      fs.unlinkSync(pugFile);
+    }
+    const scssFile = module.replace('.font.json', '_generated.scss');
+    if (fs.existsSync(scssFile)) {
+      log.fileChange('font', 'remove', scssFile);
+      fs.unlinkSync(scssFile);
+    }
+  } else {
+    log.fileChange('font', 'build', module);
+    build(module);
+  }
 }
 
 async function run() {

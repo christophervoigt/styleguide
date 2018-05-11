@@ -6,6 +6,7 @@ const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 const logger = require('./utils/logger');
 
+const rebuildFONT = require('./build/font').rebuild;
 const rebuildHTML = require('./build/html').rebuild;
 const rebuildCSS = require('./build/css').rebuild;
 const rebuildJS = require('./build/javascript').rebuild;
@@ -27,7 +28,9 @@ function startBrowserSync() {
 
 function startWatchTask() {
   watch(srcFolder, { recursive: true }, async (event, name) => {
-    if (/\.pug$/.test(name)) {
+    if (/\.font.json$/.test(name)) {
+      await rebuildFONT(event, name);
+    } else if (/\.pug$/.test(name)) {
       await rebuildHTML(event, name);
     } else if (/\.scss$/.test(name)) {
       await rebuildCSS(event, name);
