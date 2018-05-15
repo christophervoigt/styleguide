@@ -1,6 +1,6 @@
 extends ../../../base/base.layout.pug
 
-include ../../molecules/searchbar/searchbar.mixin.pug
+include ./header.mixin.pug
 
 block extraStylesheets
   link(rel='stylesheet', href='/modules/organisms/header/header.css')
@@ -9,5 +9,4 @@ block extraJavascripts
   script(src="/modules/organisms/header/header.js", defer)
 
 block page
-  header
-    +searchbar()
+  +header()

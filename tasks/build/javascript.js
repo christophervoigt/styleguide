@@ -13,7 +13,7 @@ const log = require('../utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
-const excludePattern = /(base|styleguide)/;
+const excludePattern = /(test|base|styleguide)/;
 const importMap = {};
 
 function shorten(str) {
