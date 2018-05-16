@@ -76,9 +76,9 @@
   },
   "dependencies": {
     "cookieconsent": "3.0.6",
+    "github-markdown-css": "2.10.0",
     "highlight.js": "9.12.0",
     "marked": "0.3.19",
-    "normalize.css": "8.0.0",
-    "primer-markdown": "3.7.5"
+    "normalize.css": "8.0.0"
   }
 }
