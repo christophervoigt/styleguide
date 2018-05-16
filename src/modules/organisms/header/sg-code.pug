@@ -1,6 +1,6 @@
 
 extends ../../../styleguide/styleguide.layout.pug
-include ../../molecules/searchbar/searchbar.mixin.pug
+include ./header.mixin.pug
 
 block main
   +sg-header({
@@ -15,5 +15,4 @@ block main
   +sg-usedModules()
 
   +sg-highlight()
-    header
-      +searchbar()
+    +header()

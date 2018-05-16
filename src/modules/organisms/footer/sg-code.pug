@@ -1,6 +1,6 @@
 
 extends ../../../styleguide/styleguide.layout.pug
-include ../../atoms/link/link.mixin.pug
+include ./footer.mixin.pug
 
 block main
   +sg-header({
@@ -15,7 +15,4 @@ block main
   +sg-usedModules()
 
   +sg-highlight()
-    footer
-      +link('Impressum','#')
-      +link('Kontakt','#')
-      +link('Sitemap','#')
+    +footer()
