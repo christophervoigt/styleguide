@@ -5,12 +5,19 @@
 const path = require('path');
 const glob = require('glob');
 const tape = require('tape');
+const browserSync = require('browser-sync').create();
 const log = require('./utils/logger');
 
 const srcFolder = 'src';
+const distFolder = 'app';
 
 (async () => {
   const testFunctions = [];
+
+  browserSync.init({
+    server: { baseDir: distFolder },
+    open: false,
+  });
 
   await new Promise((testResolve) => {
     glob(`${srcFolder}/**/*.test.js`, async (error, files) => {
@@ -37,4 +44,6 @@ const srcFolder = 'src';
 
     assert.end();
   });
+
+  browserSync.exit();
 })();
