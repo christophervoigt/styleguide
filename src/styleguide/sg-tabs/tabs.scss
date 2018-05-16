@@ -10,12 +10,25 @@
   }
 
   li {
-    padding: 0 1em;
 
-    &:hover a,
+    @include media('hover') {
+      &:hover a {
+        color: $sg-text-grey;
+        border-bottom: 3px solid $sg-text-grey;
+      }
+    }
+
     &.active a {
       color: $sg-text-grey;
       border-bottom: 3px solid $sg-text-grey;
+    }
+
+    & + li {
+      margin-left: 1em;
+
+      @include media('>md') {
+        margin-left: 2em;
+      }
     }
   }
 

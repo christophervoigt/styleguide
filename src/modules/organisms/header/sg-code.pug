@@ -3,12 +3,12 @@ extends ../../../styleguide/styleguide.layout.pug
 include ../../molecules/searchbar/searchbar.mixin.pug
 
 block main
-  +sg-header({ title: 'Header' })
-  +sg-tabs({
+  +sg-header({
+    title: 'Header',
     linkList: [
       { title: 'Documentation', url: '/modules/organisms/header/sg-documentation.html' },
       { title: 'Code', url: '/modules/organisms/header/sg-code.html', active: true },
-      { title: 'Example', url: '/modules/organisms/header/sg-example.html' }
+      { title: 'Example', url: '/modules/organisms/header/sg-example.html' },
     ],
   })
 
