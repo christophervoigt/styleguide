@@ -31,9 +31,7 @@ async function build(module) {
     plugins: [
       babel({ exclude: 'node_modules/**' }),
       resolve({ jsnext: true, main: true }),
-      commonjs({
-        namedExports: { 'node_modules/jquery/dist/jquery.min.js': ['jquery'] },
-      }),
+      commonjs(),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
   }).catch(error => log.error('javascript', error));
