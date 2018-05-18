@@ -28,5 +28,10 @@ html(lang='de')
       block extraJavascripts
 
   body
+    a(href='#main') Skip to main content
+
     +cookieConsent()
     block page
+
+      main(id='main')
+        block main

@@ -11,6 +11,16 @@
 @import 'cookieConsent/cookieConsent';
 
 body {
+  > a:first-of-type {
+    position: absolute;
+    top: 0;
+    right: 100%;
+
+    &:focus {
+      right: 0;
+    }
+  }
+
   * {
     box-sizing: border-box;
   }
