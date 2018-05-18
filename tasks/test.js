@@ -18,7 +18,7 @@ const distFolder = 'app';
 
   const appPath = path.join(appRootPath.toString(), distFolder);
   if (!fs.existsSync(appPath)) {
-    log.error('test', { message: 'Make sure /app exists. Run `npm run build` if necessary.' });
+    log.error('test', { message: 'Make sure ./app exists. Run `npm run build` if necessary.' });
     tape.onFinish(() => process.exit(0));
   }
 
