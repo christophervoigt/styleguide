@@ -1,6 +1,27 @@
 
-@import 'cookieConsent.override.scss';
+@import '~cookieconsent/build/cookieconsent.min';
 
 .cookieConsent {
   display: none;
+}
+
+.cc-window {
+  background: grey;
+  color: white;
+  transition: none;
+
+  &.cc-banner {
+    padding: 1em;
+    align-items: flex-start;
+  }
+
+  .cc-message {
+    display: block;
+  }
+
+  .cc-compliance  a {
+    background: white;
+    color: grey;
+    border: 0;
+  }
 }

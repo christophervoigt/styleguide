@@ -8,14 +8,13 @@ export default function cookieConsent(selector = '#cookieConsent') {
 
   if (element) {
     const options = {
+      position: 'bottom',
       showLink: false,
-      elements: {
-        dismiss: '<a aria-label="dismiss cookie message" tabindex="0" class="cc-btn cc-dismiss">{{dismiss}}</a>',
-      },
       content: {
         message: message.innerHTML,
         dismiss: button.innerText,
       },
+      revokable: true,
     };
 
     element.remove();
