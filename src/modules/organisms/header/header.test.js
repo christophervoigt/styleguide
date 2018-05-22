@@ -1,94 +1,24 @@
 
+const path = require('path');
+const fs = require('fs');
 const puppeteer = require('puppeteer');
 const tape = require('tape');
 
-async function mobileTest(page) {
-  await page.setViewport({ width: 320, height: 568 });
+const comparisonFile = 'src/organisms/header/header.test.json';
+
+async function evaluate(page, width, height) {
+  await page.setViewport({ width, height });
 
   return page.evaluate(() => {
-    // check element rules
     const header = document.querySelector('.header');
-    const headerStyle = window.getComputedStyle(header, null);
-    const headerWidth = headerStyle.getPropertyValue('width');
-    const headerPadding = headerStyle.getPropertyValue('padding');
-    const headerBackgroundColor = headerStyle.getPropertyValue('background-color');
+    const headerStyleObject = window.getComputedStyle(header, null);
 
-    // check searchbar rules
-    const headerSearchbar = document.querySelector('.header > .header_searchbar');
-    const headerSearchbarStyle = window.getComputedStyle(headerSearchbar, null);
-    const headerSearchbarWidth = headerSearchbarStyle.getPropertyValue('width');
+    const searchbar = document.querySelector('.header > .header_searchbar');
+    const searchbarStyleObject = window.getComputedStyle(searchbar, null);
 
     const result = {
-      header: {
-        width: headerWidth,
-        padding: headerPadding,
-        'background-color': headerBackgroundColor,
-      },
-      header_searchbar: {
-        width: headerSearchbarWidth,
-      },
-    };
-
-    return result;
-  });
-}
-
-async function tabletTest(page) {
-  await page.setViewport({ width: 768, height: 1024 });
-
-  return page.evaluate(() => {
-    // check element rules
-    const header = document.querySelector('.header');
-    const headerStyle = window.getComputedStyle(header, null);
-    const headerWidth = headerStyle.getPropertyValue('width');
-    const headerPadding = headerStyle.getPropertyValue('padding');
-    const headerBackgroundColor = headerStyle.getPropertyValue('background-color');
-
-    // check searchbar rules
-    const headerSearchbar = document.querySelector('.header > .header_searchbar');
-    const headerSearchbarStyle = window.getComputedStyle(headerSearchbar, null);
-    const headerSearchbarWidth = headerSearchbarStyle.getPropertyValue('width');
-
-    const result = {
-      header: {
-        width: headerWidth,
-        padding: headerPadding,
-        'background-color': headerBackgroundColor,
-      },
-      header_searchbar: {
-        width: headerSearchbarWidth,
-      },
-    };
-
-    return result;
-  });
-}
-
-async function desktopTest(page) {
-  await page.setViewport({ width: 1440, height: 840 });
-
-  return page.evaluate(() => {
-    // check element rules
-    const header = document.querySelector('.header');
-    const headerStyle = window.getComputedStyle(header, null);
-    const headerWidth = headerStyle.getPropertyValue('width');
-    const headerPadding = headerStyle.getPropertyValue('padding');
-    const headerBackgroundColor = headerStyle.getPropertyValue('background-color');
-
-    // check searchbar rules
-    const headerSearchbar = document.querySelector('.header > .header_searchbar');
-    const headerSearchbarStyle = window.getComputedStyle(headerSearchbar, null);
-    const headerSearchbarWidth = headerSearchbarStyle.getPropertyValue('width');
-
-    const result = {
-      header: {
-        width: headerWidth,
-        padding: headerPadding,
-        'background-color': headerBackgroundColor,
-      },
-      header_searchbar: {
-        width: headerSearchbarWidth,
-      },
+      header: headerStyleObject,
+      header_searchbar: searchbarStyleObject,
     };
 
     return result;
@@ -100,35 +30,38 @@ async function test() {
   const page = await browser.newPage();
   await page.goto('http://localhost:3000/modules/organisms/header/header.html');
 
-  const headerPropertiesMobile = await mobileTest(page);
-  const headerPropertiesTablet = await tabletTest(page);
-  const headerPropertiesDesktop = await desktopTest(page);
-
+  const mobileProperties = await evaluate(page, 320, 568);
+  const tabletProperties = await evaluate(page, 768, 1024);
+  const desktopProperties = await evaluate(page, 1440, 840);
   await browser.close();
+
+  if (!fs.existsSync(comparisonFile)) {
+    console.error(`SKIP: ${path.basename(__filename)} | No comparison file found!\n`);
+    return () => {};
+  }
+
+  const comparison = JSON.parse(fs.readFileSync(comparisonFile));
+  const mobileComparisonObject = comparison.mobile;
+  const tabletComparisonObject = comparison.tablet;
+  const desktopComparisonObject = comparison.desktop;
 
   return () => {
     tape('header', (assert) => {
       assert.test('mobile tests:', (t) => {
-        t.equal(headerPropertiesMobile.header.width, '320px', 'header width is 100%');
-        t.equal(headerPropertiesMobile.header.padding, '16px', 'header padding is 1em (16px)');
-        t.equal(headerPropertiesMobile.header['background-color'], 'rgb(255, 0, 0)', 'header background is red');
-        t.equal(headerPropertiesMobile.header_searchbar.width, '288px', 'header_searchbar width is 100%');
+        t.deepEquals(mobileProperties.header, mobileComparisonObject.header);
+        t.deepEquals(mobileProperties.header_searchbar, mobileComparisonObject.header_searchbar);
         t.end();
       });
 
       assert.test('tablet tests:', (t) => {
-        t.equal(headerPropertiesTablet.header.width, '768px', 'header width is 100%');
-        t.equal(headerPropertiesTablet.header.padding, '16px', 'header padding is 1em (16px)');
-        t.equal(headerPropertiesTablet.header['background-color'], 'rgb(255, 0, 0)', 'header background is red');
-        t.equal(headerPropertiesTablet.header_searchbar.width, '736px', 'header_searchbar width is 100%');
+        t.deepEquals(tabletProperties.header, tabletComparisonObject.header);
+        t.deepEquals(tabletProperties.header_searchbar, tabletComparisonObject.header_searchbar);
         t.end();
       });
 
       assert.test('desktop tests:', (t) => {
-        t.equal(headerPropertiesDesktop.header.width, '1440px', 'header width is 100%');
-        t.equal(headerPropertiesDesktop.header.padding, '16px', 'header padding is 1em (16px)');
-        t.equal(headerPropertiesDesktop.header['background-color'], 'rgb(255, 0, 0)', 'header background is red');
-        t.equal(headerPropertiesDesktop.header_searchbar.width, '1408px', 'header_searchbar width is 100%');
+        t.deepEquals(desktopProperties.header, desktopComparisonObject.header);
+        t.deepEquals(desktopProperties.header_searchbar, desktopComparisonObject.header_searchbar);
         t.end();
       });
 
