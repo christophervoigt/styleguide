@@ -46,7 +46,7 @@ async function build(module) {
     format: 'iife',
     file: path.join(targetDir, `${file.name}.js`),
     sourcemap: process.env.NODE_ENV !== 'production',
-    intro: `document.addEventListener('DOMContentLoaded',function(){${file.name}()});`,
+    intro: `document.addEventListener('DOMContentLoaded',function(){${moduleName}()});`,
   };
 
   if (bundle) {
