@@ -22,9 +22,14 @@ function shorten(str) {
   return result;
 }
 
+function dashCaseToCamelCase(str) {
+  return str.replace(/(-\w)/g, m => m[1].toUpperCase());
+}
+
 async function build(module) {
   const file = path.parse(module);
   const targetDir = file.dir.replace(srcFolder, distFolder);
+  const moduleName = dashCaseToCamelCase(file.name);
 
   const bundle = await rollup.rollup({
     input: module,
@@ -37,11 +42,11 @@ async function build(module) {
   }).catch(error => log.error('javascript', error));
 
   const outputOptions = {
-    name: file.name,
+    name: moduleName,
     format: 'iife',
     file: path.join(targetDir, `${file.name}.js`),
     sourcemap: process.env.NODE_ENV !== 'production',
-    intro: `document.addEventListener('DOMContentLoaded',function(){${file.name}()});`,
+    intro: `document.addEventListener('DOMContentLoaded',function(){${moduleName}()});`,
   };
 
   if (bundle) {
