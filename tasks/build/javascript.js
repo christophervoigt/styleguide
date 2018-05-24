@@ -22,14 +22,14 @@ function shorten(str) {
   return result;
 }
 
-function snakeCaseToCamelCase(str) {
+function dashCaseToCamelCase(str) {
   return str.replace(/(-\w)/g, m => m[1].toUpperCase());
 }
 
 async function build(module) {
   const file = path.parse(module);
   const targetDir = file.dir.replace(srcFolder, distFolder);
-  const moduleName = snakeCaseToCamelCase(file.name);
+  const moduleName = dashCaseToCamelCase(file.name);
 
   const bundle = await rollup.rollup({
     input: module,
