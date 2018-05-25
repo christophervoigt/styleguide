@@ -1,10 +1,11 @@
 
 const path = require('path');
 const fs = require('fs');
+const shell = require('shelljs');
 const puppeteer = require('puppeteer');
 const tape = require('tape');
 
-const comparisonFile = 'src/organisms/header/header.test.json';
+const comparisonFile = 'src/modules/organisms/header/header.test.json';
 
 async function evaluate(page, width, height) {
   await page.setViewport({ width, height });
@@ -36,8 +37,24 @@ async function test() {
   await browser.close();
 
   if (!fs.existsSync(comparisonFile)) {
-    console.error(`SKIP: ${path.basename(__filename)} | No comparison file found!\n`);
-    return () => {};
+    console.log(`SKIP: ${path.basename(__filename)} | No comparison file found! Creating comparison file now.\n`);
+
+    return () => {
+      const comparison = {
+        mobile: mobileProperties,
+        tablet: tabletProperties,
+        desktop: desktopProperties,
+      };
+
+      shell.touch(comparisonFile);
+
+      fs.writeFile(
+        comparisonFile,
+        JSON.stringify(comparison, null, 2),
+        'utf8',
+        (err) => { console.log('error', err); },
+      );
+    };
   }
 
   const comparison = JSON.parse(fs.readFileSync(comparisonFile));
@@ -46,22 +63,22 @@ async function test() {
   const desktopComparisonObject = comparison.desktop;
 
   return () => {
-    tape('header', (assert) => {
-      assert.test('mobile tests:', (t) => {
-        t.deepEquals(mobileProperties.header, mobileComparisonObject.header);
-        t.deepEquals(mobileProperties.header_searchbar, mobileComparisonObject.header_searchbar);
+    tape('header tests', (assert) => {
+      assert.test('on mobile:', (t) => {
+        t.deepEquals(mobileProperties.header, mobileComparisonObject.header, 'header properties should be alright');
+        t.deepEquals(mobileProperties.header_searchbar, mobileComparisonObject.header_searchbar, 'header_searchbar properties should be alright');
         t.end();
       });
 
-      assert.test('tablet tests:', (t) => {
-        t.deepEquals(tabletProperties.header, tabletComparisonObject.header);
-        t.deepEquals(tabletProperties.header_searchbar, tabletComparisonObject.header_searchbar);
+      assert.test('on tablet:', (t) => {
+        t.deepEquals(tabletProperties.header, tabletComparisonObject.header, 'header properties should be alright');
+        t.deepEquals(tabletProperties.header_searchbar, tabletComparisonObject.header_searchbar, 'header_searchbar properties should be alright');
         t.end();
       });
 
-      assert.test('desktop tests:', (t) => {
-        t.deepEquals(desktopProperties.header, desktopComparisonObject.header);
-        t.deepEquals(desktopProperties.header_searchbar, desktopComparisonObject.header_searchbar);
+      assert.test('on desktop:', (t) => {
+        t.deepEquals(desktopProperties.header, desktopComparisonObject.header, 'header properties should be alright');
+        t.deepEquals(desktopProperties.header_searchbar, desktopComparisonObject.header_searchbar, 'header_searchbar properties should be alright');
         t.end();
       });
 
