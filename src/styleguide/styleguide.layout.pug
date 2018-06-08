@@ -15,11 +15,13 @@ include sg-fonts/sg-icons_generated.pug
 
 
 block stylesheets
-  link(rel='stylesheet', href='/styleguide/styleguide.css')
+  link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css' media='none' onload='if(media!="all")media="all"')
+  noscript
+    link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css')
   block extraStylesheets
 
 block javascripts
-  script(src="/styleguide/styleguide.js", defer)
+  script(src="/styleguide/styleguide.js", type='text/javascript', defer)
   block extraJavascripts
 
 
