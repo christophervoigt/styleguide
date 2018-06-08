@@ -1,11 +1,18 @@
 
 -
-  function rnd (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  function random(min, max, seed) {
+    var x;
+
+    if (seed) {
+      var sprout = parseFloat('0.' + seed);
+      x = Math.sin(sprout) * (max - min + 1) + min;
+    } else {
+      x = Math.random() * (max - min + 1) + min;
+    }
+
+    return Math.floor(x);
   };
 
-
--
   function randomDate () {
     var date = new Date();
     date.setDate(date.getDate() - rnd(0, 100))
@@ -13,8 +20,6 @@
     return ('0' + date.getDate()).slice(-2) + '.' + ('0' + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear()
   }
 
-
--
   function randomId(prefix) {
 
     function getRndChar(charset) {
