@@ -11,7 +11,11 @@
 @import 'cookieConsent/cookieConsent';
 
 body {
-  > a:first-of-type {
+  * {
+    box-sizing: border-box;
+  }
+
+  a[href='#main'] {
     position: absolute;
     top: 0;
     right: 100%;
@@ -19,9 +23,5 @@ body {
     &:focus {
       right: 0;
     }
-  }
-
-  * {
-    box-sizing: border-box;
   }
 }
