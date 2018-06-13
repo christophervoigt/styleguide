@@ -1,0 +1,15 @@
+.link {
+  color: pink;
+}
+
+.footer {
+  text-align: right;
+  background-color: red;
+  padding: 16px;
+}
+
+.footer a + a {
+  margin-left: 20px;
+}
+
+/*# sourceMappingURL=footer.css.map */
