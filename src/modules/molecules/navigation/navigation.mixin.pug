@@ -4,7 +4,7 @@ include ../../atoms/link/link.mixin.pug
 mixin navigation()
   nav.navigation&attributes(attributes)
     ul
-      - for (let i = 0; i < rnd(4, 8); i++)
+      - for (let i = 0; i < random(4, 8); i++)
         li
           if i === 3
             +link(lipsum(1, 'words'))(aria-describedby='current')
