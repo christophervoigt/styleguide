@@ -8,22 +8,27 @@ var searchbar = (function () {
     var callbacks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     var element = document.querySelector(selector);
-
-    // ermöglicht das Erweitern der Funktionalität
-    var keys = Object.keys(callbacks);
-    keys.forEach(function (key) {
-      element.addEventListener(key, callbacks[key]);
-    });
+    if (element) {
+      // ermöglicht das Erweitern der Funktionalität
+      var keys = Object.keys(callbacks);
+      keys.forEach(function (key) {
+        element.addEventListener(key, callbacks[key]);
+      });
+    }
 
     var button = document.querySelector('.searchbar .button');
-    button.addEventListener('click', function () {
-      console.log('searchbar:', 'you clicked my button');
-    });
+    if (button) {
+      button.addEventListener('click', function () {
+        console.log('searchbar:', 'you clicked my button');
+      });
+    }
 
     var input = document.querySelector('.searchbar input');
-    input.addEventListener('change', function () {
-      console.log('searchbar:', 'you changed my input');
-    });
+    if (input) {
+      input.addEventListener('change', function () {
+        console.log('searchbar:', 'you changed my input');
+      });
+    }
 
     // Atome können ebenfalls als Objekt initialisiert werden, wenn
     // interne Logik vorhanden ist (bspw. video-player)

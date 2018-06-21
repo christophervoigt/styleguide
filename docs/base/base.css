@@ -9149,4 +9149,8 @@ body a[href='#main']:focus {
   right: 0;
 }
 
+[hidden] {
+  display: none;
+}
+
 /*# sourceMappingURL=base.css.map */

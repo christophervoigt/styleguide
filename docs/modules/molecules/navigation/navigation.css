@@ -1,0 +1,38 @@
+.navigation {
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.navigation ul {
+  list-style: none;
+  margin: initial;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation .link {
+  display: block;
+  color: white;
+  padding: 1rem;
+  background: blue;
+  position: relative;
+}
+
+.navigation .link:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+.navigation .link[aria-describedby='current']:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid blue;
+}
+
+/*# sourceMappingURL=navigation.css.map */

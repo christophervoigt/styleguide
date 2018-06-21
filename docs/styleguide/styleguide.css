@@ -9149,6 +9149,10 @@ body a[href='#main']:focus {
   right: 0;
 }
 
+[hidden] {
+  display: none;
+}
+
 @font-face {
   font-family: 'sg-icons';
   src: url("sg-fonts/fonts/sg-icons.ttf") format("truetype"), url("sg-fonts/fonts/sg-icons.woff") format("woff"), url("sg-fonts/fonts/sg-icons.svg#sg-icons") format("svg");
