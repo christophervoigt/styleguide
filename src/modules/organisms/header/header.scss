@@ -1,10 +1,12 @@
 
 @import '../../molecules/searchbar/searchbar';
+@import '../../molecules/navigation/navigation';
 
 .header {
   display: flex;
-  background: red;
-  padding: 16px;
+  justify-content: space-between;
+  background: grey;
+  padding: 0 1rem;
 
   &_searchbar {
     width: 100%;

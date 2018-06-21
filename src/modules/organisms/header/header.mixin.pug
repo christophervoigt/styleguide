@@ -1,6 +1,8 @@
 
 include ../../molecules/searchbar/searchbar.mixin.pug
+include ../../molecules/navigation/navigation.mixin.pug
 
 mixin header()
   header.header&attributes(attributes)
     +searchbar().header_searchbar
+    +navigation().header_navigation
