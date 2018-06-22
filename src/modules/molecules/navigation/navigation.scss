@@ -24,7 +24,7 @@
       text-decoration: underline;
     }
 
-    &[aria-describedby='current'] {
+    &[href='#main'] {
       &:after {
         content: '';
 

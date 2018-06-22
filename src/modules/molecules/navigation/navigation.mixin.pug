@@ -7,7 +7,6 @@ mixin navigation()
       - for (let i = 0; i < random(4, 8); i++)
         li
           if i === 3
-            +link(lipsum(1, 'words'))(aria-describedby='current')
+            +link(lipsum(1, 'words'), '#main')
           else
             +link(lipsum(1, 'words'))
-    #current(hidden) You are here!
