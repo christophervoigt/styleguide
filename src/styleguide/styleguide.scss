@@ -40,11 +40,11 @@ body {
   > main {
     overflow: hidden;
 
-    width: 94vw;
+    width: calc(94vw - (100vw - 100%));
     margin-left: 6vw;
 
     @include media('>md') {
-      width: 85vw;
+      width: calc(85vw - (100vw - 100%));
       margin-left: 15vw;
     }
   }
