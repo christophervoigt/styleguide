@@ -4,17 +4,22 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
 const imagemin = require('imagemin');
+const imageminSvgo = require('imagemin-svgo');
 const log = require('../utils/logger');
 
 const srcFolder = 'src';
 const distFolder = process.env.NODE_ENV === 'production' ? 'dist' : 'app';
-const excludePattern = process.env.NODE_ENV === 'production' ? /(fonts|styleguide)/ : /(fonts)/;
+const excludePattern = process.env.NODE_ENV === 'production' ? /(font|styleguide)/ : /(font)/;
 
 async function build(module) {
   const file = path.parse(module);
   const targetDir = file.dir.replace(srcFolder, distFolder);
 
-  await imagemin([module], targetDir);
+  if (file.ext === '.svg') {
+    await imagemin([module], targetDir, { use: [imageminSvgo()] });
+  } else {
+    await imagemin([module], targetDir);
+  }
 }
 
 function rebuild(event, module) {
