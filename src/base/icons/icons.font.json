@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "sg-icons",
+    "name": "icons",
     "lastOpened": 0,
     "created": 1525869236164
   },
@@ -82,7 +82,7 @@
       ],
       "id": 4,
       "metadata": {
-        "name": "sg-icons",
+        "name": "icons",
         "license": "MIT"
       },
       "height": 1024,
@@ -212,9 +212,9 @@
     "showQuickUse2": true,
     "showSVGs": true,
     "fontPref": {
-      "prefix": "sg-icon-",
+      "prefix": "icon-",
       "metadata": {
-        "fontFamily": "sg-icons",
+        "fontFamily": "icons",
         "majorVersion": 1,
         "minorVersion": 1,
         "license": "MIT"
@@ -234,7 +234,7 @@
       "cssVars": true,
       "cssVarsFormat": "scss",
       "selector": "class",
-      "classSelector": ".sg-icon"
+      "classSelector": ".icon"
     },
     "imagePref": {
       "prefix": "icon-",

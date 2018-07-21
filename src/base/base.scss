@@ -2,6 +2,8 @@
 // node packages
 @import '~normalize.css/normalize';
 @import '~bootstrap/scss/bootstrap';
+@import '_variables/_all';
+@import '_mixins/_all';
 
 // local packages
 @import '_variables/all';
@@ -29,3 +31,5 @@ body {
 [hidden] {
   display: none;
 }
+// other stuff
+@import 'icons/_all';

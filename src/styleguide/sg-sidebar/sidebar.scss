@@ -13,7 +13,7 @@
     top: 50%;
     transform: translateY(-50%);
 
-    @include sg-icon-before($sg-icon-arrow_right);
+    @include create-icon-before($icon-arrow_right);
 
     @include media('>md') {
       display: none;

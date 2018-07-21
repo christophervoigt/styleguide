@@ -1,8 +1,13 @@
 
-@import '../base/base';
+@import '../base/_variables/_all';
+@import '../base/_mixins/_all';
+@import '../base/icons/icons';
+@import '../base/icons/icons_generated-variables';
+
+// styleguide stuff
 @import '_sg-variables/all';
 @import '_sg-mixins/all';
-@import 'sg-fonts/sg-icons';
+@import 'sg-iconOverview/iconOverview';
 @import 'sg-header/header';
 @import 'sg-highlight/highlight';
 @import 'sg-logo/logo';
@@ -13,6 +18,7 @@
 @import 'sg-usedModules/usedModules';
 @import 'sg-sidebar/sidebar';
 @import 'sg-example/example';
+
 
 body {
   color: $sg-text-grey;
