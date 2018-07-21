@@ -1,0 +1,16 @@
+{
+  "brand": {
+    "orange": "#E95420",
+    "aubergine": "#77216F",
+  },
+
+  "text": {
+    "color": "#111111",
+    "color-inverse": "#EEEEEE",
+  },
+
+  "gray": {
+    "warm": "#AEA79F",
+    "cold": "#333333",
+  }
+}

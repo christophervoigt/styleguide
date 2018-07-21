@@ -63,7 +63,7 @@ input::placeholder {
   text-decoration: underline;
 }
 
-.navigation .link[aria-describedby='current']:after {
+.navigation .link[href='#main']:after {
   content: '';
   position: absolute;
   top: 100%;
