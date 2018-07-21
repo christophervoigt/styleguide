@@ -1,0 +1,10 @@
+
+body > a[href='#main'] {
+  position: absolute;
+  top: 0;
+  right: 100%;
+
+  &:focus {
+    right: 0;
+  }
+}

@@ -22,7 +22,7 @@ const distFolder = 'app';
     tape.onFinish(() => process.exit(0));
   }
 
-  browserSync.init({
+  await browserSync.init({
     server: { baseDir: distFolder },
     open: false,
     logLevel: 'silent',

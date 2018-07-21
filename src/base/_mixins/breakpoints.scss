@@ -1,10 +1,4 @@
 
-$breakpoint-xs: 544px;
-$breakpoint-sm: 768px;
-$breakpoint-md: 992px;
-$breakpoint-lg: 1216px;
-$breakpoint-xl: 1440px;
-
 @function translate-media-condition($condition) {
   $conditionMap: (
     'print': 'only print',

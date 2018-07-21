@@ -12,9 +12,8 @@ include sg-sidebar/sidebar.pug
 include sg-example/example.pug
 
 block stylesheets
-  link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css' media='none' onload='if(media!="all")media="all"')
-  noscript
-    link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css')
+  link(rel='stylesheet', type='text/css', href='/base/base.css')
+  link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css')
   block extraStylesheets
 
 block javascripts

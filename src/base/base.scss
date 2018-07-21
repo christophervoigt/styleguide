@@ -1,35 +1,7 @@
 
-// node packages
-@import '~normalize.css/normalize';
-@import '~bootstrap/scss/bootstrap';
 @import '_variables/_all';
 @import '_mixins/_all';
 
-// local packages
-@import '_variables/all';
-@import '_mixins/all';
-@import 'breakpoints/breakpoints';
-@import 'collapsable/collapsable';
-@import 'cookieConsent/cookieConsent';
-
-body {
-  * {
-    box-sizing: border-box;
-  }
-
-  a[href='#main'] {
-    position: absolute;
-    top: 0;
-    right: 100%;
-
-    &:focus {
-      right: 0;
-    }
-  }
-}
-
-[hidden] {
-  display: none;
-}
 // other stuff
+@import 'scaffolding/_all';
 @import 'icons/_all';
