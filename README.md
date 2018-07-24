@@ -40,7 +40,7 @@ This sample project serves as a starting point for styleguides and module librar
 
 ## Contributing
 
-If you found a bug, want to add an awesome feature or simply want to get involved, please follow our [contribution guidlines](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CONTRIBUTING.md) and respect the [code of conduct](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CODE_OF_CONDUCT.md).
+If you found a bug, want to add an awesome feature or simply want to get involved, please follow our [contribution guidelines](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CONTRIBUTING.md) and respect the [code of conduct](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CODE_OF_CONDUCT.md).
 
 
 ## License
