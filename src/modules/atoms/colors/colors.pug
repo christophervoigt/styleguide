@@ -1,0 +1,9 @@
+
+extends ../../../styleguide/styleguide.layout.pug
+
+include ../../../base/colors/colors_generated-overview.pug
+
+block main
+  +sg-header({ title: 'Colors' })
+
+  +colorOverview()

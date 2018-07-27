@@ -99,7 +99,7 @@ function rebuild(event, module) {
 
 async function run() {
   await new Promise((fontResolve) => {
-    glob(`${srcFolder}/**/*.font.json`, async (error, files) => {
+    glob(`${srcFolder}/**/*font.json`, async (error, files) => {
       if (error) {
         log.error('font', error);
       } else {

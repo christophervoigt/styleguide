@@ -2,7 +2,8 @@
   {
     "title": "Basics",
     "subMenu": [
-      { "title": "Icons", "url": "/modules/atoms/icons/icons.html" }
+      { "title": "Icons", "url": "/modules/atoms/icons/icons.html" },
+      { "title": "Colors", "url": "/modules/atoms/colors/colors.html" }
     ]
   },
   {

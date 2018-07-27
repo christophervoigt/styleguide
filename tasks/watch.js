@@ -7,6 +7,7 @@ const watch = require('node-watch');
 const logger = require('./utils/logger');
 
 const rebuildICON = require('./build/icon').rebuild;
+const rebuildCOLOR = require('./build/color').rebuild;
 const rebuildHTML = require('./build/html').rebuild;
 const rebuildCSS = require('./build/css').rebuild;
 const rebuildJS = require('./build/javascript').rebuild;
@@ -15,7 +16,7 @@ const rebuildSTATIC = require('./build/static').rebuild;
 
 const srcFolder = 'src';
 const distFolder = 'app';
-const tasks = ['icon', 'html', 'css', 'javascript', 'image', 'static'];
+const tasks = ['icon', 'color', 'html', 'css', 'javascript', 'image', 'static'];
 
 function startBrowserSync() {
   logger.start('Browsersync');
@@ -28,8 +29,12 @@ function startBrowserSync() {
 
 function startWatchTask() {
   watch(srcFolder, { recursive: true }, async (event, name) => {
-    if (/\.font.json$/.test(name)) {
+    // ToDo: rebuild to switch statement?
+
+    if (/.font\.json$/.test(name)) {
       await rebuildICON(event, name);
+    } else if (/.colors\.json/.test(name)) {
+      await rebuildCOLOR(event, name);
     } else if (/\.pug$/.test(name)) {
       await rebuildHTML(event, name);
     } else if (/\.scss$/.test(name)) {
