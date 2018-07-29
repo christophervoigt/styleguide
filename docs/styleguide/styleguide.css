@@ -19,6 +19,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.sg-colorOverview {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(1, 1fr);
+  padding: 1em;
+}
+
+@media (min-width: 544px) and (max-width: 767px) {
+  .sg-colorOverview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .sg-colorOverview {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1215px) {
+  .sg-colorOverview {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1216px) {
+  .sg-colorOverview {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.sg-color_preview {
+  height: 100px;
+  border: 1px solid lightgrey;
+  border-bottom: 0;
+}
+
+.sg-color_description {
+  background: white;
+  border: 1px solid lightgrey;
+  padding: .5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sg-color_description small {
+  display: block;
+  font-size: .8rem;
+  font-weight: 200;
+}
+
+.sg-color_name, .sg-color_codes {
+  flex: 1 1 50%;
+}
+
+.sg-color_codes {
+  text-align: right;
+  color: grey;
+}
+
 .sg-iconOverview {
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +120,7 @@
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-  background: #fdf1ec;
+  background: white;
   padding: 0 1em;
   height: 20vh;
   min-height: 100px;
@@ -224,7 +284,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 .sg-logo a {
-  color: #FFFFFF;
+  color: white;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -977,21 +1037,17 @@ body.-openSidebar .sg-logo {
 
 .sg-menu span {
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: white;
 }
 
 .sg-menu a {
-  color: #E95420;
+  color: #e95420;
   text-decoration: none;
 }
 
 body.-openSidebar .sg-menu {
   opacity: 1;
   visibility: visible;
-}
-
-.sg-tabs {
-  background: #fdf1ec;
 }
 
 .sg-tabs ul {
@@ -1003,14 +1059,14 @@ body.-openSidebar .sg-menu {
 
 @media (hover: hover) {
   .sg-tabs li:hover a {
-    color: #111111;
-    border-bottom: 3px solid #111111;
+    color: #333333;
+    border-bottom: 3px solid #333333;
   }
 }
 
 .sg-tabs li.active a {
-  color: #111111;
-  border-bottom: 3px solid #111111;
+  color: #333333;
+  border-bottom: 3px solid #333333;
 }
 
 .sg-tabs li + li {
@@ -1045,7 +1101,7 @@ body.-openSidebar .sg-menu {
 }
 
 .sg-version span {
-  color: #FFFFFF;
+  color: white;
 }
 
 body.-openSidebar .sg-version {
@@ -1061,8 +1117,8 @@ body.-openSidebar .sg-version {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 3px solid #E95420;
-  background: #77216F;
+  border-right: 3px solid #e95420;
+  background: #77216f;
 }
 
 .sg-sidebar_handle {
@@ -1083,7 +1139,7 @@ body.-openSidebar .sg-version {
 }
 
 .sg-sidebar_handle:before {
-  color: #FFFFFF;
+  color: white;
   font-size: 1.5em;
 }
 
@@ -1101,7 +1157,7 @@ body.-openSidebar .sg-sidebar_handle {
 }
 
 .sg-example_external-link a {
-  color: #E95420;
+  color: #e95420;
   text-decoration: none;
 }
 
@@ -1116,7 +1172,7 @@ body.-openSidebar .sg-sidebar_handle {
 }
 
 body {
-  color: #111111;
+  color: #333333;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   height: 100%;
   position: relative;
@@ -1153,7 +1209,7 @@ body > main {
 
 body.-openSidebar > aside {
   width: 94vw;
-  box-shadow: 0 0 50vw 100vw rgba(17, 17, 17, 0.5);
+  box-shadow: 0 0 50vw 100vw rgba(51, 51, 51, 0.5);
 }
 
 @media (min-width: 992px) {
