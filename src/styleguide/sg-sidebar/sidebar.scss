@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: space-between;
 
-  border-right: 3px solid $sg-ubuntu-orange;
-  background: $sg-light-aubergine;
+  border-right: 3px solid $brand-orange;
+  background: $brand-aubergine;
 
   &_handle {
     position: absolute;
@@ -20,7 +20,7 @@
     }
 
     &:before {
-      color: $sg-white;
+      color: white;
       font-size: 1.5em;
     }
   }
