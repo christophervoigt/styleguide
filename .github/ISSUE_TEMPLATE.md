@@ -2,6 +2,8 @@
 <!--- This is the default Issue Template. Don't use it directly for a new issue. -->
 <!--- Please follow one of the links below to get to a more appropriate template -->
 
+<!--- Simply click the "Preview" button above to see the links -->
+
 You found a **bug**?
 Awesome, please use the [bug template](https://github.com/chlorophyllkid/styleguide/issues/new?template=bug.md) and tell us more about it.
 
