@@ -2,7 +2,7 @@
 
 This sample project serves as a starting point for styleguides and module libraries.
 
-_Go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide) for example._
+_For example, go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide)._
 
 
 ## Setup
@@ -13,7 +13,7 @@ _Go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/sty
 4.  run `npm install` in project root
 5.  start developing :smile:
 
-_An up-to-date option for other [create-styleguide](https://github.com/chlorophyllkid/create-styleguide) is comming soon._
+_An up-to-date version for [create-styleguide](https://github.com/chlorophyllkid/create-styleguide) is comming soon._
 
 
 ## Project structure
@@ -27,7 +27,7 @@ _An up-to-date option for other [create-styleguide](https://github.com/chlorophy
 | `tasks` | contains build and watch scripts             |
 
 
-## npm scripts
+## NPM scripts
 
 | Script       | Description                                                  |
 | ------------ | ------------------------------------------------------------ |
@@ -44,7 +44,7 @@ _Actually, there are some more scripts. If you're interested, go look them up in
 
 ## Contributing
 
-If you found a bug, want to add an awesome feature or simply want to get involved, please follow our [contribution guidelines](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CONTRIBUTING.md) and respect the [code of conduct](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CODE_OF_CONDUCT.md).
+If you found a bug, have an idea for a feature or simply want to get involved, please follow our [contribution guidelines](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CONTRIBUTING.md) and respect the [code of conduct](https://github.com/chlorophyllkid/styleguide/blob/master/.github/CODE_OF_CONDUCT.md).
 
 
 ## License
