@@ -2,7 +2,7 @@
 
 This sample project serves as a starting point for styleguides and module libraries.
 
-Visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide) for an example.
+_Go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide) for example._
 
 
 ## Setup
@@ -13,6 +13,8 @@ Visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide)
 4.  run `npm install` in project root
 5.  start developing :smile:
 
+_An up-to-date option for other [create-styleguide](https://github.com/chlorophyllkid/create-styleguide) is comming soon._
+
 
 ## Project structure
 
@@ -20,23 +22,25 @@ Visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide)
 | ------- | -------------------------------------------- |
 | `app`   | contains the styleguide *(in .gitignore)*    |
 | `dist`  | contains compiled and reusable modules       |
-| `docs`  | contains usable example of the styleguide    |
+| `docs`  | contains the styleguide example for github   |
 | `src`   | contains sourcecode, media and static assets |
 | `tasks` | contains build and watch scripts             |
 
 
-## NPM script overview
+## npm scripts
 
-| Script       | Description                                  |
-| ------------ | -------------------------------------------- |
-| `start`      | runs build and watch task (for development)  |
-| `build`      | builds `app` directory (for styleguide)      |
-| `docs`       | builds `docs` directory                      |
-| `test`       | runs linting tests                           |
-| `dist-patch` | builds `dist` directory and increments 0.0.x |
-| `dist-minor` | builds `dist` directory and increments 0.x.0 |
-| `dist-major` | builds `dist` directory and increments x.0.0 |
+| Script       | Description                                                  |
+| ------------ | ------------------------------------------------------------ |
+| `start`      | runs build and watch task (for development)                  |
+| `build`      | builds `app` directory (for styleguide)                      |
+| `docs`       | builds `docs` directory (for github)                         |
+| `test`       | runs linting and tape tests                                  |
+| `lint`       | runs linting                                                 |
+| `dist-patch` | builds `dist` directory and increments package version 0.0.x |
+| `dist-minor` | builds `dist` directory and increments package version 0.x.0 |
+| `dist-major` | builds `dist` directory and increments package version x.0.0 |
 
+_Actually, there are some more scripts. If you're interested, go look them up in our [package.json](https://github.com/chlorophyllkid/styleguide/blob/master/package.json). :wink:_
 
 ## Contributing
 
