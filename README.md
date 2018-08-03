@@ -2,7 +2,7 @@
 
 This sample project serves as a starting point for styleguides and module libraries.
 
-[Learn More](https://chlorophyllkid.github.io/styleguide/)
+Visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide) for an example.
 
 
 ## Setup
