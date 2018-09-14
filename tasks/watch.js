@@ -42,7 +42,7 @@ function startWatchTask() {
       await rebuildCSS(event, name);
     } else if (/\.js$/.test(name)) {
       await rebuildJS(event, name);
-    } else if (/\.jpg$|\.png$|\.svg$|\.ico$/.test(name)) {
+    } else if (/\.jpg$|\.png$|\.gif$|\.svg$|\.ico$/.test(name)) {
       await rebuildIMG(event, name);
     } else if (/\.eot$|\.woff$|\.woff2$|\.ttf$|\.json$/.test(name)) {
       await rebuildSTATIC(event, name);

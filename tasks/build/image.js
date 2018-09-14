@@ -39,7 +39,7 @@ function rebuild(event, module) {
 
 async function run() {
   await new Promise((imgResolve) => {
-    glob(`${srcFolder}/**/*{.jpg,.png,.svg,.ico}`, async (error, files) => {
+    glob(`${srcFolder}/**/*{.jpg,.png,.gif,.svg,.ico}`, async (error, files) => {
       if (error) {
         log.error('image', error);
       } else {
