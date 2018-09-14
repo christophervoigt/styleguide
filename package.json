@@ -34,9 +34,9 @@
     "version:patch": "node tasks/version.js patch && git add -u",
     "version:minor": "node tasks/version.js minor && git add -u",
     "version:major": "node tasks/version.js major && git add -u",
-    "dist-patch": "npm run version:patch | npm version patch -m \"Upgrade assets to %s\"",
-    "dist-minor": "npm run version:minor | npm version minor -m \"Upgrade assets to %s\"",
-    "dist-major": "npm run version:major | npm version major -m \"Upgrade assets to %s\""
+    "dist-patch": "npm run version:patch | npm version patch -m \"upgrade assets to %s\"",
+    "dist-minor": "npm run version:minor | npm version minor -m \"upgrade assets to %s\"",
+    "dist-major": "npm run version:major | npm version major -m \"upgrade assets to %s\""
   },
   "devDependencies": {
     "app-root-path": "2.0.1",
