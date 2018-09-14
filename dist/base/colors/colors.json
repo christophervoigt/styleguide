@@ -1,0 +1,57 @@
+{
+  "colors": [
+    {
+      "name": "orange",
+      "hex_code": "e95420",
+      "rgb_code": "233 84 32",
+      "variables": [
+        "brand-orange"
+      ]
+    },
+
+    {
+      "name": "aubergine",
+      "hex_code": "77216f",
+      "rgb_code": "119 33 111",
+      "variables": [
+        "brand-aubergine"
+      ]
+    },
+
+    {
+      "name": "text",
+      "hex_code": "111111",
+      "rgb_code": "17 17 17",
+      "variables": [
+        "text-color"
+      ]
+    },
+
+    {
+      "name": "text inverse",
+      "hex_code": "eeeeee",
+      "rgb_code": "238 238 238",
+      "variables": [
+        "text-color-inverse"
+      ]
+    },
+
+    {
+      "name": "warm gray",
+      "hex_code": "AEA79F",
+      "rgb_code": "174 167 159",
+      "variables": [
+        "gray-warm"
+      ]
+    },
+
+    {
+      "name": "dark gray",
+      "hex_code": "333333",
+      "rgb_code": "51 51 51",
+      "variables": [
+        "gray-dark"
+      ]
+    }
+  ]
+}
