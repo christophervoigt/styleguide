@@ -5,7 +5,7 @@ const fs = require('fs');
 const glob = require('glob');
 const shell = require('shelljs');
 const appRootPath = require('app-root-path');
-const log = require('./utils/logger');
+const log = require('./utils/log');
 
 const srcFolder = 'app';
 const distFolder = 'docs';

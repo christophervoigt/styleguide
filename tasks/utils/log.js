@@ -51,7 +51,7 @@ module.exports.finish = finish;
 
 
 function error(task = 'task', err = {}) {
-  const message = err.formatted || err.message || 'no error message';
+  const message = err.formatted || err.message || err;
 
   console.log(
     `[${chalk.gray(new Date().toLocaleTimeString('de-DE'))}]`,

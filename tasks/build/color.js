@@ -3,7 +3,7 @@
 const fs = require('fs');
 const { performance } = require('perf_hooks');
 const glob = require('glob');
-const log = require('../utils/logger');
+const log = require('../utils/log');
 
 const srcFolder = 'src';
 

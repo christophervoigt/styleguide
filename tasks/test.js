@@ -8,7 +8,7 @@ const glob = require('glob');
 const tape = require('tape');
 const browserSync = require('browser-sync').create();
 const appRootPath = require('app-root-path');
-const log = require('./utils/logger');
+const log = require('./utils/log');
 
 const srcFolder = 'src';
 const distFolder = 'app';

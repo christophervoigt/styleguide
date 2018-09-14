@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
-const log = require('../utils/logger');
+const log = require('../utils/log');
 
 const srcFolder = 'src';
 
