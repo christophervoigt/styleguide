@@ -5,6 +5,7 @@
 const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 const log = require('./utils/log');
+const { execute } = require('./utils/execute');
 
 const rebuildICON = require('./build/icon').rebuild;
 const rebuildCOLOR = require('./build/color').rebuild;
@@ -16,14 +17,14 @@ const rebuildSTATIC = require('./build/static').rebuild;
 
 const srcFolder = 'src';
 const distFolder = 'app';
-const tasks = ['icon', 'color', 'html', 'css', 'javascript', 'image', 'static'];
 
 function startBrowserSync() {
   log.start('Browsersync');
 
   browserSync.init({
-    server: { baseDir: distFolder },
-    open: 'local',
+    server: {
+      baseDir: distFolder,
+    },
   });
 }
 
@@ -52,15 +53,10 @@ function startWatchTask() {
 }
 
 (async () => {
-  await Promise.all(tasks.map(async (task) => {
-    const startTime = new Date().getTime();
+  await (execute(
+    ['static', 'image', 'javascript', execute(['color', 'icon'], 'css')],
     'html',
-
-    const { run } = require(`./build/${task}`);
-    await run();
-
-    const time = new Date().getTime() - startTime;
-  }));
+  ))();
 
   startBrowserSync();
   startWatchTask();
