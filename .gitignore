@@ -9,3 +9,4 @@ node_modules/
 
 # Ignore IDE folders
 .idea/
+.DS_Store
