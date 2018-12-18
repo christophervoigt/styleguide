@@ -12,11 +12,5 @@
       { "title": "Header", "url": "/modules/organisms/header/sg-documentation.html" },
       { "title": "Footer", "url": "/modules/organisms/footer/sg-documentation.html" }
     ]
-  },  
-  {
-    "title": "Guides",
-    "subMenu": [
-      { "title": "Dependencies", "url": "/guides/dependencies.html" }
-    ]
   }
 ]
