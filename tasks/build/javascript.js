@@ -34,7 +34,12 @@ async function build(module) {
   const bundle = await rollup.rollup({
     input: module,
     plugins: [
-      babel({ exclude: 'node_modules/**' }),
+      babel({
+        babelrc: false,
+        exclude: 'node_modules/**',
+        presets: [['env', { modules: false }]],
+        plugins: ['external-helpers'],
+      }),
       resolve({ jsnext: true, main: true }),
       commonjs(),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
