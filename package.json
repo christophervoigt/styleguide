@@ -24,8 +24,7 @@
     "build:js": "node tasks/build/javascript.js",
     "build:static": "node tasks/build/static.js",
     "docs": "rimraf docs/ && npm run build && node tasks/docs.js",
-    "test": "npm run lint && npm run test:tape",
-    "test:tape": "node tasks/test.js | tap-min",
+    "test": "npm run lint",
     "lint": "npm run lint:css && npm run lint:js && npm run lint:markdown",
     "lint:css": "stylelint -q ./src/**/*.scss",
     "lint:js": "eslint --quiet ./src/**/*.js ./tasks/**/*.js",
@@ -59,7 +58,6 @@
     "node-watch": "0.5.8",
     "pug": "2.0.3",
     "pug-dependency": "1.0.1",
-    "puppeteer": "1.4.0",
     "remark-cli": "5.0.0",
     "remark-preset-lint-recommended": "3.0.1",
     "rimraf": "2.6.2",
@@ -73,8 +71,6 @@
     "stylelint": "9.2.0",
     "stylelint-order": "0.8.1",
     "stylelint-scss": "3.1.0",
-    "tap-min": "1.2.2",
-    "tape": "4.9.0",
     "uglify-es": "3.3.9"
   },
   "dependencies": {
