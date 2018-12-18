@@ -32,7 +32,7 @@ function buildPUG(module, colorGroups) {
   generatedText += 'mixin colorOverview()\n';
 
   colorGroups.forEach((group) => {
-    if (group.hasOwnProperty('name') && group.name !== '') {
+    if (group.name && group.name !== '') {
       generatedText += `  h2 ${group.name}\n`;
     }
     generatedText += '  .sg-colorOverview\n';
