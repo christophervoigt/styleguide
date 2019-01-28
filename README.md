@@ -40,7 +40,7 @@ _An up-to-date version for [create-styleguide](https://github.com/chlorophyllkid
 | `dist-minor` | builds `dist` directory and increments package version 0.x.0 |
 | `dist-major` | builds `dist` directory and increments package version x.0.0 |
 
-_Actually, there are some more scripts. If you're interested, go look them up in our [package.json](https://github.com/chlorophyllkid/styleguide/blob/master/package.json). :wink:_
+_Actually, there are some more scripts. If you're interested, go look them up in our [package.json](https://github.com/chlorophyllkid/styleguide/blob/master/package.json)._ :wink:
 
 ## Contributing
 
