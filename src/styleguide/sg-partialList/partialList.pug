@@ -1,0 +1,11 @@
+
+mixin sg-partialList()
+  -
+    var partialList = self.partialList
+
+  if (partialList.length)
+    .sg-partialList
+      | Used partials:
+      ul
+        each partial in partialList
+          li=partial

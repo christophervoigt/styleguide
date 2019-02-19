@@ -29,7 +29,7 @@ function build(module) {
     const fn = pug.compileFile(module, { self: true });
     const html = fn({
       require,
-      usedModules: dependence.find_dependencies(module)
+      partialList: dependence.find_dependencies(module)
         .filter(filename => filename.includes('modules'))
         .map(str => shorten(str)),
     });
