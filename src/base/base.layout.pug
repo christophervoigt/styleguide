@@ -4,22 +4,27 @@ include _functions/_all
 doctype html
 html(lang='en')
   head
-    meta(charset="utf-8")
+    meta(charset='utf-8')
     meta(name='viewport' content='initial-scale=1.0, width=device-width')
-    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
-    meta(name="theme-color", content="#000000")
+    meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+    meta(name='theme-color', content='#000000')
     block meta
 
     block title
       title styleguide
 
     block stylesheets
-      link(rel='stylesheet', type='text/css', href='/base/base.css')
-      block extraStylesheets
+      if self.useModules
+        link(rel='stylesheet', type='text/css', href='/base/base.css')
+      else
+        link(rel='stylesheet', type='text/css', href='/bundle.css')
 
     block javascripts
-      script(src="/base/base.js", type='text/javascript', defer)
-      block extraJavascripts
+      if self.useModules
+        script(src='/base/base.js', type='text/javascript')
+      else
+        script(src='/bundle.js', type='text/javascript')
+
 
   body
     a(href='#main') Skip to main content

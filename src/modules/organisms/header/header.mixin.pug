@@ -2,6 +2,14 @@
 include ../../molecules/searchbar/searchbar.mixin.pug
 include ../../molecules/navigation/navigation.mixin.pug
 
+append stylesheets
+  if self.useModules
+    link(rel='stylesheet', type='text/css', href='/modules/organisms/header/header.css')
+
+append javascripts
+  if self.useModules
+    script(src='/modules/organisms/header/header.js', type='text/javascript')
+
 mixin header()
   header.header&attributes(attributes)
     +searchbar().header_searchbar

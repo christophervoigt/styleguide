@@ -12,13 +12,17 @@ include sg-sidebar/sidebar.pug
 include sg-example/example.pug
 
 block stylesheets
-  link(rel='stylesheet', type='text/css', href='/base/base.css')
   link(rel='stylesheet', type='text/css', href='/styleguide/styleguide.css')
-  block extraStylesheets
+  link(rel='stylesheet', type='text/css', href='/bundle.css', media=(self.useModules ? 'none' : 'all'))
+  link(rel='stylesheet', type='text/css', href='/base/base.css', media=(self.useModules ? 'all' : 'none'))
 
 block javascripts
-  script(src="/styleguide/styleguide.js", type='text/javascript', defer)
-  block extraJavascripts
+  script(src='/styleguide/styleguide.js', type='text/javascript')
+
+  if self.useModules
+    script(src='/base/base.js', type='text/javascript')
+  else
+    script(src='/bundle.js', type='text/javascript')
 
 
 block page

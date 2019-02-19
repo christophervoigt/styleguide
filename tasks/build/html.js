@@ -32,6 +32,7 @@ function build(module) {
       partialList: dependence.find_dependencies(module)
         .filter(filename => filename.includes('modules'))
         .map(str => shorten(str)),
+      useModules: false,
     });
 
     if (!fs.existsSync(targetDir)) {

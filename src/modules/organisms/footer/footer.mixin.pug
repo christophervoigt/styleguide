@@ -1,6 +1,10 @@
 
 include ../../atoms/link/link.mixin.pug
 
+append stylesheets
+  if self.useModules
+    link(rel='stylesheet', type='text/css', href='/modules/organisms/footer/footer.css')
+
 mixin footer()
   footer.footer
     +link('Impressum','#')
