@@ -37,8 +37,7 @@ async function build(module) {
       babel({
         babelrc: false,
         exclude: 'node_modules/**',
-        presets: [['env', { modules: false }]],
-        plugins: ['external-helpers'],
+        presets: [['@babel/preset-env', { modules: false }]],
       }),
       resolve({ jsnext: true, main: true }),
       commonjs(),
@@ -58,7 +57,8 @@ async function build(module) {
     await bundle.write(outputOptions);
 
     if (process.env.NODE_ENV !== 'production') {
-      const { map } = await bundle.generate(outputOptions);
+      const { output } = await bundle.generate(outputOptions);
+      const { map } = output[0]; // output.length is always 1
 
       const obj = JSON.parse(map.toString());
       obj.sources = obj.sources.reverse();
