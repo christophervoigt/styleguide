@@ -5,6 +5,15 @@ This sample project serves as a starting point for styleguides and module librar
 _For example, go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide)._
 
 
+## Features
+
+- [pug](https://pugjs.org/) - template engine 
+- [sass](https://sass-lang.com/) - CSS preprocessor
+- [babel](https://babeljs.io/) - JavaScript compiler
+- [rollup](https://rollupjs.org/) - module bundler
+- [browser-sync](https://www.browsersync.io/) - static server for HTML, JS and CSS
+
+
 ## Setup
 
 1.  make sure your system runs Node 7.6 or higher (`node -v`)
@@ -38,6 +47,7 @@ _An up-to-date version for [create-styleguide](https://github.com/chlorophyllkid
 | `dist-major` | builds `dist` directory and increments package version x.0.0 |
 
 _Actually, there are some more scripts. If you're interested, go look them up in our [package.json](https://github.com/chlorophyllkid/styleguide/blob/master/package.json)._ :wink:
+
 
 ## Contributing
 
