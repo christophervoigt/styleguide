@@ -22,7 +22,6 @@ _An up-to-date version for [create-styleguide](https://github.com/chlorophyllkid
 | ------- | -------------------------------------------- |
 | `app`   | contains the styleguide *(in .gitignore)*    |
 | `dist`  | contains compiled and reusable modules       |
-| `docs`  | contains the styleguide example for github   |
 | `src`   | contains sourcecode, media and static assets |
 | `tasks` | contains build and watch scripts             |
 
@@ -33,9 +32,7 @@ _An up-to-date version for [create-styleguide](https://github.com/chlorophyllkid
 | ------------ | ------------------------------------------------------------ |
 | `start`      | runs build and watch task (for development)                  |
 | `build`      | builds `app` directory (for styleguide)                      |
-| `docs`       | builds `docs` directory (for github)                         |
-| `test`       | runs linting and tape tests                                  |
-| `lint`       | runs linting                                                 |
+| `test`       | runs linting tests                                           |
 | `dist-patch` | builds `dist` directory and increments package version 0.0.x |
 | `dist-minor` | builds `dist` directory and increments package version 0.x.0 |
 | `dist-major` | builds `dist` directory and increments package version x.0.0 |
