@@ -23,7 +23,6 @@
     "build:img": "node tasks/build/image.js",
     "build:js": "node tasks/build/javascript.js",
     "build:static": "node tasks/build/static.js",
-    "docs": "rimraf docs/ && npm run build && node tasks/docs.js",
     "test": "npm run lint",
     "lint": "npm run lint:css && npm run lint:js && npm run lint:markdown",
     "lint:css": "stylelint -q ./src/**/*.scss",
