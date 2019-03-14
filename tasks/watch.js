@@ -5,7 +5,8 @@
 const browserSync = require('browser-sync').create();
 const watch = require('node-watch');
 const log = require('./utils/log');
-const { execute } = require('./utils/execute');
+
+const { build } = require('./build');
 
 const rebuildICON = require('./build/icon').rebuild;
 const rebuildCOLOR = require('./build/color').rebuild;
@@ -53,10 +54,7 @@ function startWatchTask() {
 }
 
 (async () => {
-  await (execute(
-    ['static', 'image', 'javascript', execute(['color', 'icon'], 'css')],
-    'html',
-  ))();
+  await build();
 
   startBrowserSync();
   startWatchTask();
