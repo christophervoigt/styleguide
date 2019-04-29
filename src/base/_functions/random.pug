@@ -13,9 +13,14 @@
     return Math.floor(x);
   };
 
-  function randomDate () {
+  function randomDate(isFutureDate) {
     var date = new Date();
-    date.setDate(date.getDate() - rnd(0, 100))
+
+    if (isFutureDate) {
+      date.setDate(date.getDate() + random(0, 100))
+    } else {
+      date.setDate(date.getDate() - random(0, 100))
+    }
 
     return ('0' + date.getDate()).slice(-2) + '.' + ('0' + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear()
   }
