@@ -19,6 +19,13 @@ const rebuildSTATIC = require('./build/static').rebuild;
 const srcFolder = 'src';
 const distFolder = 'app';
 
+function mockPostRequests(req, res, next) {
+  if (/\.json|\.html/.test(req.url) && req.method.toUpperCase() === 'POST') {
+    req.method = 'GET';
+  }
+  next();
+}
+
 function startBrowserSync() {
   log.start('Browsersync');
 
@@ -26,6 +33,7 @@ function startBrowserSync() {
     server: {
       baseDir: distFolder,
     },
+    middleware: mockPostRequests
   });
 }
 
