@@ -39,7 +39,7 @@ async function build(module) {
         exclude: 'node_modules/**',
         presets: [['@babel/preset-env', { modules: false }]],
       }),
-      resolve({ jsnext: true, main: true }),
+      resolve(),
       commonjs(),
       process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],

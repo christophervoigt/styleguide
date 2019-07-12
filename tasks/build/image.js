@@ -16,9 +16,12 @@ async function build(module) {
   const targetDir = file.dir.replace(srcFolder, distFolder);
 
   if (file.ext === '.svg') {
-    await imagemin([module], targetDir, { use: [imageminSvgo()] });
+    await imagemin([module], {
+      destination: targetDir,
+      use: [imageminSvgo()],
+    });
   } else {
-    await imagemin([module], targetDir);
+    await imagemin([module], { destination: targetDir });
   }
 }
 
