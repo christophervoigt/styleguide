@@ -59,7 +59,7 @@ function format(html) {
       result += `${parts[0].trim()}>\n`;
 
       if (parts[1].trim() !== '') { result += `${indentation(indentLevel) + parts[1].trim().replace(/\s+/g, ' ')}\n`; }
-      if (parts[0].match(/^(img|hr|br|input)/)) { indentLevel -= 1; }
+      if (parts[0].match(/^(img|hr|br|input|source|meta)/)) { indentLevel -= 1; }
     } else {
       result += `${indentation(indentLevel) + parts[0]}\n`;
     }
