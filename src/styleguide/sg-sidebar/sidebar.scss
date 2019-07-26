@@ -5,7 +5,9 @@
   justify-content: space-between;
 
   border-right: 3px solid $brand-orange;
-  background: $brand-aubergine;
+  background: #2a313b;
+
+  font-family: Fira Code, monospace;
 
   &_handle {
     position: absolute;

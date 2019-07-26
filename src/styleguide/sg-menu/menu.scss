@@ -3,7 +3,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity .125s ease-in, visibility .125s ease-in;
-  padding: 1em;
+  margin: 2rem auto;
 
   @include media('>md') {
     opacity: 1;
@@ -23,6 +23,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    text-align: center;
   }
 
   span {

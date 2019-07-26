@@ -24,6 +24,9 @@
   }
 
   code {
+    font-family: FiraCode, monospace;
+    font-size: 1.2em;
+
     &:not(.hljs) {
       display: none;
     }

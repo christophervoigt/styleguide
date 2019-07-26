@@ -12,11 +12,11 @@
           ]
         },
         {
-          "name": "aubergine",
-          "hex_code": "77216f",
-          "rgb_code": "119 33 111",
+          "name": "grey",
+          "hex_code": "2a313b",
+          "rgb_code": "42 49 59",
           "variables": [
-            "brand-aubergine"
+            "brand-grey"
           ]
         }
       ]
@@ -38,14 +38,6 @@
           "rgb_code": "238 238 238",
           "variables": [
             "text-color-inverse"
-          ]
-        },
-        {
-          "name": "warm gray",
-          "hex_code": "AEA79F",
-          "rgb_code": "174 167 159",
-          "variables": [
-            "gray-warm"
           ]
         },
         {
