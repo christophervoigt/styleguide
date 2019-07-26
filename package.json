@@ -31,9 +31,9 @@
     "dist-major": "npm run version:major | npm version major -m \"upgrade assets to %s\""
   },
   "devDependencies": {
-    "app-root-path": "2.2.1",
     "@babel/core": "7.5.5",
     "@babel/preset-env": "7.5.5",
+    "app-root-path": "2.2.1",
     "browser-sync": "2.26.7",
     "chalk": "2.4.2",
     "cross-env": "5.2.0",
@@ -56,13 +56,12 @@
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.0.1",
     "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-uglify": "6.0.2",
     "semver": "6.3.0",
     "shelljs": "0.8.3",
     "stylelint": "10.1.0",
     "stylelint-order": "3.0.1",
     "stylelint-scss": "3.9.2",
-    "uglify-es": "3.3.9"
+    "terser": "4.1.2"
   },
   "dependencies": {
     "cookieconsent": "3.1.1",

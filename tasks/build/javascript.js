@@ -3,12 +3,12 @@
 const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
+const shell = require('shelljs');
 const rollup = require('rollup');
 const babel = require('rollup-plugin-babel');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
-const uglify = require('rollup-plugin-uglify');
-const { minify } = require('uglify-es');
+const terser = require('terser');
 const log = require('../utils/log');
 
 const srcFolder = 'src';
@@ -34,14 +34,13 @@ async function build(module) {
   const bundle = await rollup.rollup({
     input: module,
     plugins: [
+      resolve(),
+      commonjs(),
       babel({
         babelrc: false,
         exclude: 'node_modules/**',
         presets: [['@babel/preset-env', { modules: false }]],
       }),
-      resolve(),
-      commonjs(),
-      process.env.NODE_ENV === 'production' && uglify({}, minify),
     ],
   }).catch(error => log.error('javascript', error));
 
@@ -54,12 +53,24 @@ async function build(module) {
   };
 
   if (bundle) {
-    await bundle.write(outputOptions);
+    const { output } = await bundle.generate(outputOptions);
+    const { code, map } = output[0];
 
-    if (process.env.NODE_ENV !== 'production') {
-      const { output } = await bundle.generate(outputOptions);
-      const { map } = output[0]; // output.length is always 1
+    if (!fs.existsSync(targetDir)) {
+      shell.mkdir('-p', targetDir);
+    }
 
+    fs.writeFileSync(path.join(targetDir, `${file.name}.js`), code);
+
+    const minified = terser.minify(code);
+    if (minified.error) {
+      log.error('javascript', minified.error);
+    } else {
+      fs.writeFileSync(path.join(targetDir, `${file.name}.min.js`), minified.code);
+    }
+
+    if (map) {
+      fs.writeFileSync(path.join(targetDir, `${file.name}.js.map`), map);
       const obj = JSON.parse(map.toString());
       obj.sources = obj.sources.reverse();
       const sourceFile = shorten(obj.sources[0]);
