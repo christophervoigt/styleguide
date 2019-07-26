@@ -2,7 +2,7 @@
 
 This sample project serves as a starting point for styleguides and module libraries.
 
-_For example, go and visit [chlorophyllkid.com/styleguide](https://www.chlorophyllkid.com/styleguide)._
+_For example, go and visit [chlorophyllkid-styleguide.netlify.com](https://chlorophyllkid-styleguide.netlify.com/)._
 
 
 ## Features
