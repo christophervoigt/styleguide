@@ -1,1 +1,39 @@
-var base=function(){"use strict";function t(t){var e=document.querySelectorAll(t);e.length&&Array.prototype.forEach.call(e,function(t){!function(t){var e=t.dataset.src;t.removeAttribute("data-src"),t.setAttribute("src",e)}(t)})}function e(){!function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"img[data-src]";t(e),new MutationObserver(function(){t(e)}).observe(document.body,{childList:!0})}()}return document.addEventListener("DOMContentLoaded",function(){e()}),e}();
+var base = (function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded',function(){base()});
+
+  function lazyImages() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'img[data-src]';
+    checkElements(selector);
+    var observer = new MutationObserver(function () {
+      checkElements(selector);
+    });
+    observer.observe(document.body, {
+      childList: true
+    });
+  }
+
+  function load(element) {
+    var src = element.dataset.src;
+    element.removeAttribute('data-src');
+    element.setAttribute('src', src);
+  }
+
+  function checkElements(selector) {
+    var elements = document.querySelectorAll(selector);
+
+    if (elements.length) {
+      Array.prototype.forEach.call(elements, function (element) {
+        load(element);
+      });
+    }
+  }
+
+  function base() {
+    lazyImages();
+  }
+
+  return base;
+
+}());

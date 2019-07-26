@@ -1,1 +1,35 @@
-var collapsable=function(){"use strict";function e(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"[data-collapse]",t=document.querySelectorAll(e);t.length&&Array.prototype.forEach.call(t,function(e){e.addEventListener("click",function(){var t=e.parentNode,s=e.dataset.collapse,a=t.querySelector(s);if(a.classList.contains("expanded"))a.style.cssText="";else{a.style.cssText="height: auto";var l=a.scrollHeight;a.style.cssText="height: 0",a.style.cssText="max-height: "+l+"px;"}e.classList.toggle("expanded"),a.classList.toggle("expanded")})})}return document.addEventListener("DOMContentLoaded",function(){e()}),e}();
+var collapsable = (function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded',function(){collapsable()});
+
+  function collapsable() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-collapse]';
+    var elements = document.querySelectorAll(selector);
+
+    if (elements.length) {
+      Array.prototype.forEach.call(elements, function (element) {
+        element.addEventListener('click', function () {
+          var parent = element.parentNode;
+          var targetSelector = element.dataset.collapse;
+          var target = parent.querySelector(targetSelector);
+
+          if (!target.classList.contains('expanded')) {
+            target.style.cssText = 'height: auto';
+            var height = target.scrollHeight;
+            target.style.cssText = 'height: 0';
+            target.style.cssText = "max-height: ".concat(height, "px;");
+          } else {
+            target.style.cssText = '';
+          }
+
+          element.classList.toggle('expanded');
+          target.classList.toggle('expanded');
+        });
+      });
+    }
+  }
+
+  return collapsable;
+
+}());

@@ -1,1 +1,42 @@
-var searchbar=function(){"use strict";return document.addEventListener("DOMContentLoaded",function(){searchbar()}),function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:".searchbar",n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},t=document.querySelector(e);t&&Object.keys(n).forEach(function(e){t.addEventListener(e,n[e])});var r=document.querySelector(".searchbar .button");r&&r.addEventListener("click",function(){console.log("searchbar:","you clicked my button")});var c=document.querySelector(".searchbar input");return c&&c.addEventListener("change",function(){console.log("searchbar:","you changed my input")}),this}}();
+var searchbar = (function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded',function(){searchbar()});
+
+  function Searchbar() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.searchbar';
+    var callbacks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var element = document.querySelector(selector);
+
+    if (element) {
+      // ermöglicht das Erweitern der Funktionalität
+      var keys = Object.keys(callbacks);
+      keys.forEach(function (key) {
+        element.addEventListener(key, callbacks[key]);
+      });
+    }
+
+    var button = document.querySelector('.searchbar .button');
+
+    if (button) {
+      button.addEventListener('click', function () {
+        console.log('searchbar:', 'you clicked my button');
+      });
+    }
+
+    var input = document.querySelector('.searchbar input');
+
+    if (input) {
+      input.addEventListener('change', function () {
+        console.log('searchbar:', 'you changed my input');
+      });
+    } // Atome können ebenfalls als Objekt initialisiert werden, wenn
+    // interne Logik vorhanden ist (bspw. video-player)
+
+
+    return this;
+  }
+
+  return Searchbar;
+
+}());
