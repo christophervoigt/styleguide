@@ -33,7 +33,7 @@ function startBrowserSync() {
     server: {
       baseDir: distFolder,
     },
-    middleware: mockPostRequests
+    middleware: mockPostRequests,
   });
 }
 
