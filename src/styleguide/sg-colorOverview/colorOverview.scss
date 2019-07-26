@@ -1,24 +1,31 @@
 
 .sg-colorOverview {
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: repeat(1, 1fr);
   padding: 1em;
 
-  @include media('>xs', '<sm') {
-    grid-template-columns: repeat(2, 1fr);
+  h2 {
+    margin-bottom: .5em;
   }
 
-  @include media('>sm', '<md') {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  &_group {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(1, 1fr);
 
-  @include media('>md', '<lg') {
-    grid-template-columns: repeat(4, 1fr);
-  }
+    @include media('>xs', '<sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-  @include media('>lg') {
-    grid-template-columns: repeat(5, 1fr);
+    @include media('>sm', '<md') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include media('>md', '<lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include media('>lg') {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 }
 
