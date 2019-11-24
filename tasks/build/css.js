@@ -5,7 +5,6 @@ const fs = require('fs');
 const glob = require('glob');
 const shell = require('shelljs');
 const sass = require('sass');
-const Fiber = require('fibers');
 const tildeImporter = require('node-sass-tilde-importer');
 const log = require('../utils/log');
 
@@ -31,7 +30,6 @@ function build(module) {
     outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
     sourceMap: process.env.NODE_ENV !== 'production',
     includePaths: ['node_modules'],
-    fiber: Fiber,
   }, (error, result) => {
     if (error) {
       log.error('css', error);
